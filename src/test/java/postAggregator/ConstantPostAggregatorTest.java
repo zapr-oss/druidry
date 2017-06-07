@@ -20,7 +20,7 @@ package postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.postAggregator.ConstantPostAggregator;
+import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 
 import org.json.JSONException;
 import org.json.JSONObject;

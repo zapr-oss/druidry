@@ -20,11 +20,11 @@ package postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.postAggregator.ArithmeticFunction;
-import com.zapr.druidquery.postAggregator.ArithmeticOrdering;
-import com.zapr.druidquery.postAggregator.ArithmeticPostAggregator;
-import com.zapr.druidquery.postAggregator.DruidPostAggregator;
-import com.zapr.druidquery.postAggregator.FieldAccessPostAggregator;
+import in.zapr.druid.druidry.postAggregator.ArithmeticFunction;
+import in.zapr.druid.druidry.postAggregator.ArithmeticOrdering;
+import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -20,7 +20,7 @@ package filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.filter.SelectorFilter;
+import in.zapr.druid.druidry.filter.SelectorFilter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

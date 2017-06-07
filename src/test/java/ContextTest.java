@@ -18,7 +18,7 @@
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.Context;
+import in.zapr.druid.druidry.Context;
 
 import org.json.JSONException;
 import org.json.JSONObject;

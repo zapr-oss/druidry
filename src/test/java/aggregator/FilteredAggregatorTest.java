@@ -20,9 +20,9 @@ package aggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.aggregator.CountAggregator;
-import com.zapr.druidquery.aggregator.FilteredAggregator;
-import com.zapr.druidquery.filter.SelectorFilter;
+import in.zapr.druid.druidry.aggregator.CountAggregator;
+import in.zapr.druid.druidry.aggregator.FilteredAggregator;
+import in.zapr.druid.druidry.filter.SelectorFilter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

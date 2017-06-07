@@ -20,8 +20,8 @@ package extractionFunctions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.extractionFunctions.TimeFormatExtractionFunction;
-import com.zapr.druidquery.granularity.DurationGranularity;
+import in.zapr.druid.druidry.extractionFunctions.TimeFormatExtractionFunction;
+import in.zapr.druid.druidry.granularity.DurationGranularity;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

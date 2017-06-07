@@ -20,7 +20,7 @@ package dimension;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.dimension.SimpleDimension;
+import in.zapr.druid.druidry.dimension.SimpleDimension;
 
 import org.json.JSONException;
 import org.testng.annotations.BeforeClass;

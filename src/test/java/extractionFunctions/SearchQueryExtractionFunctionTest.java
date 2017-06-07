@@ -20,8 +20,8 @@ package extractionFunctions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.extractionFunctions.SearchQueryExtractionFunction;
-import com.zapr.druidquery.filter.searchQuerySpec.RegexSearchQuerySpec;
+import in.zapr.druid.druidry.extractionFunctions.SearchQueryExtractionFunction;
+import in.zapr.druid.druidry.filter.searchQuerySpec.RegexSearchQuerySpec;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;

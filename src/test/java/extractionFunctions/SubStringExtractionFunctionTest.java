@@ -20,7 +20,7 @@ package extractionFunctions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.extractionFunctions.SubStringExtractionFunction;
+import in.zapr.druid.druidry.extractionFunctions.SubStringExtractionFunction;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;

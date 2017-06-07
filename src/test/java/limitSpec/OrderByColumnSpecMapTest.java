@@ -20,8 +20,8 @@ package limitSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.SortingOrder;
-import com.zapr.druidquery.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
+import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;

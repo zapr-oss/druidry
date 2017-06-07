@@ -4,9 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zapr.druid</groupId>
+    <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
     <version>1.0</version>
+
+    <name>Druidry - Druid Query Generator</name>
+    <description>Druidry is an open-source Java based utility library which supports creating
+        query to Druid
+    </description>
+    <url>https://github.com/zapr-oss/druidry</url>
 
     <properties>
         <jackson.version>2.8.6</jackson.version>
@@ -71,15 +77,6 @@
 
     </dependencies>
 
-    <licenses>
-        <license>
-            <name>GNU General Public License, Version 3</name>
-            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
-            <distribution>manual</distribution>
-            <comments>A free, copyleft license for software and other kinds of works</comments>
-        </license>
-    </licenses>
-
     <build>
         <plugins>
             <plugin>
@@ -109,7 +106,88 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+            <distribution>manual</distribution>
+            <comments>A free, copyleft license for software and other kinds of works</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Gagan Gupta</name>
+            <email>gagan@zapr.in</email>
+            <organization>ZAPR Media Labs</organization>
+            <organizationUrl>http://www.zapr.in</organizationUrl>
+        </developer>
+        <developer>
+            <name>Nihit Alamuru</name>
+            <email>nihit@zapr.in</email>
+            <organization>ZAPR Media Labs</organization>
+            <organizationUrl>http://www.zapr.in</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/zapr-oss/druidry.git</connection>
+        <developerConnection>scm:git:ssh://github.com:zapr-oss/druidry.git</developerConnection>
+        <url>https://github.com/zapr-oss/druidry</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>

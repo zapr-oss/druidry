@@ -20,10 +20,10 @@ package dimension;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.dimension.ExtractionDimension;
-import com.zapr.druidquery.dimension.enums.OutputType;
-import com.zapr.druidquery.extractionFunctions.ExtractionFunction;
-import com.zapr.druidquery.extractionFunctions.PartialExtractionFunction;
+import in.zapr.druid.druidry.dimension.ExtractionDimension;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
+import in.zapr.druid.druidry.extractionFunctions.ExtractionFunction;
+import in.zapr.druid.druidry.extractionFunctions.PartialExtractionFunction;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;

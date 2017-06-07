@@ -20,8 +20,8 @@ package dimension;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.dimension.DefaultDimension;
-import com.zapr.druidquery.dimension.enums.OutputType;
+import in.zapr.druid.druidry.dimension.DefaultDimension;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;

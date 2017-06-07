@@ -20,7 +20,7 @@ package filter.searchQuerySpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.filter.searchQuerySpec.ContainsSearchQuerySpec;
+import in.zapr.druid.druidry.filter.searchQuerySpec.ContainsSearchQuerySpec;
 
 import org.json.JSONException;
 import org.json.JSONObject;

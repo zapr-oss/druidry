@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zapr.druidquery.Interval;
+import in.zapr.druid.druidry.Interval;
 
 import org.joda.time.DateTime;
 import org.testng.annotations.Test;

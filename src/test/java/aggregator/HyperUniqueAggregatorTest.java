@@ -20,7 +20,7 @@ package aggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zapr.druidquery.aggregator.HyperUniqueAggregator;
+import in.zapr.druid.druidry.aggregator.HyperUniqueAggregator;
 
 import org.json.JSONException;
 import org.json.JSONObject;

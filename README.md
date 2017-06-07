@@ -25,6 +25,21 @@ This library is still growing and does not support each and every constructs, ho
 Getting Started
 ---------------
 
+Usage
+-----
+
+Add this in your pom.xml (assuming maven based project)
+
+```xml
+        <dependency>
+            <groupId>in.zapr.druid</groupId>
+            <artifactId>druidry</artifactId>
+            <version>${LATEST_VERSION}</version>
+        </dependency>
+```
+
+Replace ${LATEST_VERSION} with latest release version 
+
 Examples
 --------
 
@@ -134,7 +149,7 @@ DruidTopNQuery query = DruidTopNQuery.builder()
         .build();
 
 ObjectMapper mapper = new ObjectMapper();
-String requiredJson = mapper.writeValueAsString();
+String requiredJson = mapper.writeValueAsString(query);
 ```
 
 Supported Features
