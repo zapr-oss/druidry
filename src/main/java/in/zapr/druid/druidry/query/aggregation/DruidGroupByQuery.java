@@ -19,21 +19,53 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import in.zapr.druid.druidry.Context;
+import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 
 import java.util.List;
 
+import in.zapr.druid.druidry.filter.DruidFilter;
+import in.zapr.druid.druidry.granularity.Granularity;
+import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import in.zapr.druid.druidry.query.QueryType;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
 
-//TODO test this class
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DruidGroupByQuery extends DruidAggregationQuery {
 
-    private String limitSpec;
+    private DefaultLimitSpec limitSpec;
     private String having;
 
     @NonNull
     private List<DruidDimension> dimensions;
 
-}
+    @Builder
+    private DruidGroupByQuery(@NonNull String dataSource,
+                              @NonNull List<DruidDimension> dimensions,
+                              DefaultLimitSpec limitSpec,
+                              @NonNull Granularity granularity,
+                              DruidFilter filter,
+                              List<DruidAggregator> aggregators,
+                              List<DruidPostAggregator> postAggregators,
+                              @NonNull List<Interval> intervals,
+                              Context context) {
 
+        this.queryType = QueryType.GROUP_BY;
+        this.dataSource = dataSource;
+        this.dimensions = dimensions;
+        this.limitSpec = limitSpec;
+        this.granularity = granularity;
+        this.filter = filter;
+        this.aggregations = aggregators;
+        this.postAggregations = postAggregators;
+        this.intervals = intervals;
+        this.context = context;
+    }
+}

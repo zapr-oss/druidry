@@ -70,4 +70,10 @@ public class FieldAccessPostAggregatorTest {
         FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator("Name",
                 null);
     }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullFieldNameSingleConstructor() throws JsonProcessingException, JSONException {
+
+        FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator(null);
+    }
 }

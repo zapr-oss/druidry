@@ -18,10 +18,13 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldAccessPostAggregator extends DruidPostAggregator {
 
     private final static String FIELD_ACCESS_POST_AGGREGATOR_TYPE = "fieldAccess";
@@ -31,6 +34,11 @@ public class FieldAccessPostAggregator extends DruidPostAggregator {
     public FieldAccessPostAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = FIELD_ACCESS_POST_AGGREGATOR_TYPE;
         this.name = name;
+        this.fieldName = fieldName;
+    }
+
+    public FieldAccessPostAggregator(@NonNull String fieldName) {
+        this.type = FIELD_ACCESS_POST_AGGREGATOR_TYPE;
         this.fieldName = fieldName;
     }
 }
