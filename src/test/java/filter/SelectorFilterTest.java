@@ -39,7 +39,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testStringField() throws JSONException, JsonProcessingException {
         SelectorFilter filter = new SelectorFilter("Hello", "World");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -51,8 +51,22 @@ public class SelectorFilterTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
+    @Test
+    public void testIntegerField() throws JSONException, JsonProcessingException {
+        SelectorFilter filter = new SelectorFilter("Hello", 5);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "selector");
+        jsonObject.put("dimension", "Hello");
+        jsonObject.put("value", 5);
+
+        String actualJSON = objectMapper.writeValueAsString(filter);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
     @Test(expectedExceptions = NullPointerException.class)
     public void testDimensionMissing() {
-        SelectorFilter filter = new SelectorFilter(null, "World");
+        String dimension = null;
+        SelectorFilter filter = new SelectorFilter(dimension, "World");
     }
 }

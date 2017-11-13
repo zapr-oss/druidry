@@ -27,11 +27,20 @@ public class SelectorFilter extends DruidFilter {
     private static String SELECTOR_DRUID_FILTER_TYPE = "selector";
 
     private String dimension;
-    private String value;
+    private Object value;
 
-    public SelectorFilter(@NonNull String dimension, String value) {
+    private SelectorFilter(@NonNull String dimension) {
         this.type = SELECTOR_DRUID_FILTER_TYPE;
         this.dimension = dimension;
+    }
+
+    public SelectorFilter(@NonNull String dimension, String value) {
+        this(dimension);
+        this.value = value;
+    }
+
+    public SelectorFilter(@NonNull String dimension, Integer value) {
+        this(dimension);
         this.value = value;
     }
 }

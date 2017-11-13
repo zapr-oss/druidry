@@ -20,16 +20,20 @@ package in.zapr.druid.druidry.granularity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.Date;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PeriodGranularity {
+public class PeriodGranularity extends Granularity {
     private static final String PERIOD_GRANULARITY_TYPE = "period";
+    private static final String DEFAULT_TIMEZONE = "UTC";
 
     private final String type = PERIOD_GRANULARITY_TYPE;
 
@@ -39,5 +43,13 @@ public class PeriodGranularity {
 
     // TODO: Check if it is alright
     private DateTimeZone timeZone;
-    private Date origin;
+    private DateTime origin;
+
+    public String getOrigin() {
+        return origin == null ? null : origin.toDateTimeISO().toString();
+    }
+
+    public String getTimeZone() {
+        return timeZone == null ? DEFAULT_TIMEZONE : timeZone.getID();
+    }
 }
