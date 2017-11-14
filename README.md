@@ -1,7 +1,7 @@
 Welcome to project Druidry!
 =======================================
 
-[![build_status](https://api.travis-ci.org/zapr-oss/druidry.svg?branch=master)]
+![build_status](https://api.travis-ci.org/zapr-oss/druidry.svg?branch=master)
 
 Druid is an extremely popular tool to perform OLAP queries on event data. Druid drives real-time dashboards in most of the organisations right now. We@Zapr love Druid! Therefore we want to contribute towards making Druid, even more, friendlier to the ever expanding community. 
 
