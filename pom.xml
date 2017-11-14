@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
 
     <name>Druidry - Druid Query Generator</name>
     <description>Druidry is an open-source Java based utility library which supports creating
