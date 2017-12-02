@@ -1,5 +1,9 @@
 language: java
 
+cache:
+  directories:
+  - $HOME/.m2
+
 before_install:
     - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
     - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
@@ -7,19 +11,16 @@ before_install:
 install:
     mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
     
-script:
-    mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+#script:
+#    mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
 before_deploy:
   - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
   
 deploy:
-  provider: releases
-  api_key:
-    secure: GITHUB_DEPLOYMENT_KEY
-  branch: master
+  provider: script
+  script:  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
   skip_cleanup: true
   on:
-    repo: zapr-oss/druidry
     branch: master
