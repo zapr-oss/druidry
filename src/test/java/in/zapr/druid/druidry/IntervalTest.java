@@ -52,5 +52,11 @@ public class IntervalTest {
         Interval interval3 = new Interval(startTime, endTime.plusDays(1));
 
         Assert.assertNotEquals(interval1, interval3);
+
+        DateTime otherStartTime = new DateTime(startTime);
+        DateTime otherEndTime = new DateTime(endTime);
+
+        Interval interval4 = new Interval(otherStartTime, otherEndTime);
+        Assert.assertEquals(interval1, interval4);
     }
 }
