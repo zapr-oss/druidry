@@ -21,6 +21,7 @@
         <testng.version>6.11</testng.version>
         <logback.version>1.2.1</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
+        <commons.version>3.5</commons.version>
     </properties>
 
     <dependencies>
@@ -73,6 +74,12 @@
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.version}</version>
         </dependency>
 
     </dependencies>
