@@ -20,10 +20,14 @@ package in.zapr.druid.druidry;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
+import lombok.Getter;
 import lombok.NonNull;
 
+@Getter
 public class Interval {
 
     private final static String DRUID_INTERVAL_FORMAT = "%s/%s";
@@ -39,5 +43,29 @@ public class Interval {
     @JsonValue
     private String getIntervalAsString() {
         return String.format(DRUID_INTERVAL_FORMAT, startTime.toDateTimeISO(), endTime.toDateTimeISO());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Interval)) {
+            return false;
+        }
+
+        Interval other = (Interval)obj;
+        if (this == other) {
+            return true;
+        }
+        return new EqualsBuilder()
+                .append(startTime, other.startTime)
+                .append(endTime, other.endTime)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(startTime)
+                .append(endTime)
+                .toHashCode();
     }
 }

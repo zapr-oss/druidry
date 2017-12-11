@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5</version>
 
     <name>Druidry - Druid Query Generator</name>
     <description>Druidry is an open-source Java based utility library which supports creating
@@ -15,12 +15,14 @@
     <url>https://github.com/zapr-oss/druidry</url>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.8.6</jackson.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.16.14</lombok.version>
         <testng.version>6.11</testng.version>
         <logback.version>1.2.1</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
+        <commons.version>3.5</commons.version>
     </properties>
 
     <dependencies>
@@ -73,6 +75,12 @@
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.version}</version>
         </dependency>
 
     </dependencies>
