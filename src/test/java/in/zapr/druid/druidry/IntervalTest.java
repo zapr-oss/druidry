@@ -41,7 +41,7 @@ public class IntervalTest {
     }
 
     @Test
-    public void intervalEualityTest() {
+    public void intervalEqualityTest() {
         DateTime startTime = new DateTime();
         DateTime endTime = startTime.plusDays(1);
 
