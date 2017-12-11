@@ -1,4 +1,4 @@
-/*
+package in.zapr.druid.druidry;/*
  * Copyright (c) 2017-present, Red Brick Lane Marketing Solutions Pvt. Ltd.
  * All rights reserved.
  *
@@ -16,31 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.filter;
+import in.zapr.druid.druidry.Interval;
 
-import lombok.Getter;
-import lombok.NonNull;
+import org.joda.time.DateTime;
+import org.testng.annotations.Test;
 
-@Getter
-public class SelectorFilter extends DruidFilter {
+public class IntervalTest {
 
-    private static String SELECTOR_DRUID_FILTER_TYPE = "selector";
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testMissingStartField() {
 
-    private String dimension;
-    private Object value;
-
-    private SelectorFilter(@NonNull String dimension) {
-        this.type = SELECTOR_DRUID_FILTER_TYPE;
-        this.dimension = dimension;
+        DateTime startTime = new DateTime();
+        Interval interval = new Interval(startTime, null);
     }
 
-    public SelectorFilter(@NonNull String dimension, String value) {
-        this(dimension);
-        this.value = value;
-    }
-
-    public SelectorFilter(@NonNull String dimension, Integer value) {
-        this(dimension);
-        this.value = value;
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testMissingEndField() {
+        DateTime endTime = new DateTime();
+        Interval interval = new Interval(null, endTime);
     }
 }
