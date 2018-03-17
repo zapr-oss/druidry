@@ -1,5 +1,7 @@
 package in.zapr.druid.druidry.client;
 
+import java.util.List;
+
 import in.zapr.druid.druidry.client.exception.ConnectionException;
 import in.zapr.druid.druidry.client.exception.QueryException;
 import in.zapr.druid.druidry.query.DruidQuery;
@@ -37,5 +39,5 @@ public interface DruidClient {
      * @return Druid Result in the form of class T object
      * @throws QueryException
      */
-    <T> T query(DruidQuery druidQuery, T className) throws QueryException;
+    <T> List<T> query(DruidQuery druidQuery, Class<T> className) throws QueryException;
 }
