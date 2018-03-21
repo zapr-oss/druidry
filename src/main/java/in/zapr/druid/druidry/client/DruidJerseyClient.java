@@ -94,6 +94,9 @@ public class DruidJerseyClient implements DruidClient {
 
             return response.readEntity(String.class);
 
+        } catch (QueryException e) {
+            log.error("Exception while querying {}", e);
+            throw e;
         } catch (Exception e) {
             log.error("Exception while querying {}", e);
             throw new QueryException(e);
@@ -112,6 +115,9 @@ public class DruidJerseyClient implements DruidClient {
 
             return response.readEntity(new GenericType<List<T>>() {
             });
+        } catch (QueryException e) {
+            log.error("Exception while querying {}", e);
+            throw e;
         } catch (Exception e) {
             log.error("Exception while querying {}", e);
             throw new QueryException(e);

@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 public class DruidConfiguration {
 
-    private final int DEFAULT_HTTP_PORT = 80;
-    private final int DEFAULT_HTTPS_PORT = 443;
+    private static final int DEFAULT_HTTP_PORT = 80;
+    private static final int DEFAULT_HTTPS_PORT = 443;
 
     private DruidQueryProtocol protocol;
     private String host;
