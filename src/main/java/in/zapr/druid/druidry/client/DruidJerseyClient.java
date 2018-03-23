@@ -1,5 +1,6 @@
 package in.zapr.druid.druidry.client;
 
+import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
@@ -45,24 +46,14 @@ public class DruidJerseyClient implements DruidClient {
     @Override
     public void connect() throws ConnectionException {
 
-        PoolingHttpClientConnectionManager connectionManager
-                = new PoolingHttpClientConnectionManager();
-
-        int numberOfConnectionsInPool = DEFAULT_CONNECTION_POOL_LIMIT;
-
-        if (this.druidConfiguration.getConcurrentConnectionsRequired() != null) {
-            numberOfConnectionsInPool = this.druidConfiguration.getConcurrentConnectionsRequired();
-        }
-
-        connectionManager.setDefaultMaxPerRoute(numberOfConnectionsInPool);
-
         try {
             if (jerseyConfig == null) {
-                this.jerseyConfig = new ClientConfig();
-            }
 
-            this.jerseyConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
-            this.jerseyConfig.connectorProvider(new ApacheConnectorProvider());
+                HttpClientConnectionManager connectionManager = createConnectionManager();
+                this.jerseyConfig = new ClientConfig();
+                this.jerseyConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
+                this.jerseyConfig.connectorProvider(new ApacheConnectorProvider());
+            }
 
             this.client = ClientBuilder.newClient(this.jerseyConfig);
             this.queryWebTarget = this.client.target(this.druidUrl);
@@ -127,5 +118,19 @@ public class DruidJerseyClient implements DruidClient {
     private void handleInternalServerResponse(Response response) throws QueryException {
         String message = response.readEntity(String.class);
         throw new QueryException(message);
+    }
+
+    private HttpClientConnectionManager createConnectionManager() {
+        PoolingHttpClientConnectionManager connectionManager
+                = new PoolingHttpClientConnectionManager();
+
+        int numberOfConnectionsInPool = DEFAULT_CONNECTION_POOL_LIMIT;
+
+        if (this.druidConfiguration.getConcurrentConnectionsRequired() != null) {
+            numberOfConnectionsInPool = this.druidConfiguration.getConcurrentConnectionsRequired();
+        }
+
+        connectionManager.setDefaultMaxPerRoute(numberOfConnectionsInPool);
+        return connectionManager;
     }
 }
