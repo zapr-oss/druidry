@@ -34,8 +34,8 @@ public class DruidConfigurationTest {
                 .build();
 
         Assert.assertEquals(config.getProtocol(), DruidQueryProtocol.HTTP);
-        Assert.assertEquals(config.getPort().intValue(), 80);
-        Assert.assertEquals(config.getUrl(), "http://druid.zapr.in:80/druid/v2/");
+        Assert.assertEquals(config.getPort().intValue(), 8082);
+        Assert.assertEquals(config.getUrl(), "http://druid.zapr.in:8082/druid/v2/");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
