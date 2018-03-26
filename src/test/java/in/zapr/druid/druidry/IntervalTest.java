@@ -16,14 +16,9 @@ package in.zapr.druid.druidry;/*
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import in.zapr.druid.druidry.Interval;
-
 import org.joda.time.DateTime;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class IntervalTest {
 

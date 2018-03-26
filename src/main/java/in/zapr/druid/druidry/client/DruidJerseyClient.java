@@ -66,6 +66,10 @@ public class DruidJerseyClient implements DruidClient {
     @Override
     public void close() throws ConnectionException {
         try {
+            if (this.client == null) {
+                return;
+            }
+
             this.client.close();
         } catch (Exception e) {
             throw new ConnectionException(e);
@@ -115,9 +119,9 @@ public class DruidJerseyClient implements DruidClient {
         }
     }
 
-    private void handleInternalServerResponse(Response response) throws QueryException {
-        String message = response.readEntity(String.class);
-        throw new QueryException(message);
+    private DruidError handleInternalServerResponse(Response response) throws Exception {
+        DruidError error = response.readEntity(DruidError.class);
+        throw new QueryException(error);
     }
 
     private HttpClientConnectionManager createConnectionManager() {
