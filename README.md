@@ -154,6 +154,19 @@ ObjectMapper mapper = new ObjectMapper();
 String requiredJson = mapper.writeValueAsString(query);
 ```
 
+``` java
+DruidConfiguration config =  DruidConfiguration
+               .builder()
+               .host("druid.io")
+               .endpoint("druid/v2/")
+               .build();
+
+DruidClient client = new DruidJerseyClient(druidConfiguration);
+client.connect();
+List<DruidResponse> responses = client.query(query, DruidResponse.class);
+client.close();
+```
+
 Supported Features
 ------------------
 

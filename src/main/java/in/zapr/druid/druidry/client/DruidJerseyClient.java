@@ -33,6 +33,10 @@ public class DruidJerseyClient implements DruidClient {
     private Client client;
     private WebTarget queryWebTarget;
 
+    public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration){
+        this(druidConfiguration, null);
+    }
+
     public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration,
                              ClientConfig jerseyConfig) {
 
