@@ -13,10 +13,33 @@ public class DruidConfiguration {
     private static final int DEFAULT_HTTP_PORT = 8082;
     private static final int DEFAULT_HTTPS_PORT = 8282;
 
+    /**
+     * Protocol by which Druid Broker is accessible
+     * Defaults to HTTP
+     */
     private DruidQueryProtocol protocol;
+
+    /**
+     * Address of Druid Broker Instance
+     */
     private String host;
+
+    /**
+     * Port at which Druid Broker is listening.
+     * {@value DEFAULT_HTTP_PORT} if protocol is 8082
+     * {@value DEFAULT_HTTPS_PORT} if protocol is 8282
+     */
     private Integer port;
+
+    /**
+     * Endpoint (without host address) at which query needs to be fired
+     */
     private String endpoint;
+
+    /**
+     * Number of connections to be maintained in connection pool
+     * Is Ignored when custom JerseyConfig is passed.
+     */
     private Integer concurrentConnectionsRequired;
 
     @Builder
