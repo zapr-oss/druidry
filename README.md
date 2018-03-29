@@ -27,6 +27,12 @@ This library is still growing and does not support each and every constructs, ho
 Getting Started
 ---------------
 
+Prerequisite
+-----------
+
+* Maven
+* Java 8
+
 Usage
 -----
 
