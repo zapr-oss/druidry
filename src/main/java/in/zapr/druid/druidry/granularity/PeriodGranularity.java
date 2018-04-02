@@ -23,8 +23,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import java.util.Date;
-
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 Welcome to project Druidry!
 =======================================
 
-![build_status](https://api.travis-ci.org/zapr-oss/druidry.svg?branch=master)
+![build_status](https://api.travis-ci.org/zapr-oss/druidry.svg?branch=master) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 Druid is an extremely popular tool to perform OLAP queries on event data. Druid drives real-time dashboards in most of the organisations right now. We@Zapr love Druid! Therefore we want to contribute towards making Druid, even more, friendlier to the ever expanding community. 
 
@@ -26,6 +26,12 @@ This library is still growing and does not support each and every constructs, ho
 
 Getting Started
 ---------------
+
+Prerequisite
+-----------
+
+* Maven
+* Java 8
 
 Usage
 -----
@@ -152,6 +158,19 @@ DruidTopNQuery query = DruidTopNQuery.builder()
 
 ObjectMapper mapper = new ObjectMapper();
 String requiredJson = mapper.writeValueAsString(query);
+```
+
+``` java
+DruidConfiguration config =  DruidConfiguration
+               .builder()
+               .host("druid.io")
+               .endpoint("druid/v2/")
+               .build();
+
+DruidClient client = new DruidJerseyClient(druidConfiguration);
+client.connect();
+List<DruidResponse> responses = client.query(query, DruidResponse.class);
+client.close();
 ```
 
 Supported Features
