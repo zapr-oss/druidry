@@ -46,7 +46,7 @@ public class DurationGranularityTest {
         DurationGranularity spec = new DurationGranularity(3141, originDate);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "duration");
-        jsonObject.put("duration", 3141l);
+        jsonObject.put("duration", 3141L);
         jsonObject.put("origin", originDate);
 
         String actualJSON = objectMapper.writeValueAsString(spec);
@@ -59,7 +59,7 @@ public class DurationGranularityTest {
         DurationGranularity spec = new DurationGranularity(3141);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "duration");
-        jsonObject.put("duration", 3141l);
+        jsonObject.put("duration", 3141L);
 
         String actualJSON = objectMapper.writeValueAsString(spec);
         String expectedJSON = jsonObject.toString();
