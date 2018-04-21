@@ -22,9 +22,11 @@ import in.zapr.druid.druidry.Interval;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class IntervalFilter extends DruidFilter {
 
     private static String INTERVAL_DRUID_FILTER_TYPE = "interval";

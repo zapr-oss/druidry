@@ -20,10 +20,12 @@ package in.zapr.druid.druidry.filter;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class OrFilter extends DruidFilter {
 
     private static String OR_DRUID_FILTER_TYPE = "or";

@@ -18,10 +18,12 @@
 
 package in.zapr.druid.druidry.filter;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class RegexFilter extends DruidFilter {
 
     private static String REGEX_DRUID_FILTER_TYPE = "regex";

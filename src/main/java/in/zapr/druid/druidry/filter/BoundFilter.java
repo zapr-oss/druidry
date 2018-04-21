@@ -19,10 +19,11 @@
 package in.zapr.druid.druidry.filter;
 
 import in.zapr.druid.druidry.SortingOrder;
-
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class BoundFilter extends DruidFilter {
 
     private static String BOUND_DRUID_FILTER_TYPE = "bound";
