@@ -1,7 +1,9 @@
 package in.zapr.druid.druidry.aggregator;
 
+import lombok.Getter;
 import lombok.NonNull;
 
+@Getter
 public class ThetaSketchAggregator extends DruidAggregator{
 
     private static final String THETA_SKETCH_TYPE_AGGREGATOR = "thetaSketch";
