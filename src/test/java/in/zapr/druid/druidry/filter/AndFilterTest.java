@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -72,6 +73,14 @@ public class AndFilterTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testFieldsMissing() {
         AndFilter andFilter = new AndFilter(null);
+    }
+
+    @Test
+    public void testEquals() {
+        DruidFilter selectorFilter = new SelectorFilter("Hello", "World");
+        DruidFilter selectorFilter1 = new SelectorFilter("Hello", "World");
+
+        Assert.assertEquals(selectorFilter, selectorFilter1);
     }
 
 }
