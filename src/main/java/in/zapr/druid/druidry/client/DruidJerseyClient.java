@@ -1,5 +1,6 @@
 package in.zapr.druid.druidry.client;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
@@ -112,7 +113,7 @@ public class DruidJerseyClient implements DruidClient {
                 handleInternalServerResponse(response);
             }
 
-            return response.readEntity(new GenericType<List<T>>() {
+            return response.readEntity(new GenericType<List<T>>(TypeUtils.parameterize(List.class, className)) {
             });
         } catch (QueryException e) {
             log.error("Exception while querying {}", e);
