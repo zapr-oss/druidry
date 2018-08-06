@@ -23,6 +23,7 @@ import in.zapr.druid.druidry.Interval;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
 public class IntervalFilter extends DruidFilter {
@@ -33,7 +34,8 @@ public class IntervalFilter extends DruidFilter {
     private String dimension;
     private List<Interval> intervals;
 
-    public IntervalFilter(String dimension, List<Interval> intervals) {
+    public IntervalFilter(@NonNull String dimension, @NonNull List<Interval> intervals) {
+        this.type = INTERVAL_DRUID_FILTER_TYPE;
         this.dimension = dimension;
         this.intervals = intervals;
     }
