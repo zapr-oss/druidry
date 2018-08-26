@@ -97,8 +97,6 @@ public class PeriodGranularityTest {
                 .timeZone(DateTimeZone.forID(TIMEZONE))
                 .build();
 
-        Assert.assertNotNull(granularity1);
-        Assert.assertNotNull(granularity2);
         Assert.assertNotEquals(granularity1, granularity2);
     }
 
