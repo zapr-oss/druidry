@@ -19,8 +19,8 @@
 package in.zapr.druid.druidry.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import in.zapr.druid.druidry.filter.DruidFilter;
 
+import in.zapr.druid.druidry.filter.DruidFilter;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -28,7 +28,7 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FilteredAggregator extends DruidAggregator {
 
-    private static String FILTERED_AGGREGATOR_TYPE = "filtered";
+    private static final String FILTERED_AGGREGATOR_TYPE = "filtered";
 
     private DruidFilter filter;
     private DruidAggregator aggregator;

@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class LongMinAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        LongMinAggregator countAggregator = new LongMinAggregator("CarpeDiem",
+        LongMinAggregator longMinAggregator = new LongMinAggregator("CarpeDiem",
                 "Hey");
 
         JSONObject jsonObject = new JSONObject();
@@ -51,7 +52,7 @@ public class LongMinAggregatorTest {
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
 
-        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String actualJSON = objectMapper.writeValueAsString(longMinAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -66,5 +67,29 @@ public class LongMinAggregatorTest {
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
         LongMinAggregator longMinAggregator = new LongMinAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        LongMinAggregator aggregator1 = new LongMinAggregator("name", "field");
+        LongMinAggregator aggregator2 = new LongMinAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        LongMinAggregator aggregator1 = new LongMinAggregator("name", "field");
+        LongMinAggregator aggregator2 = new LongMinAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        LongMinAggregator aggregator1 = new LongMinAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

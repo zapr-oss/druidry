@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class DoubleMaxAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        DoubleMaxAggregator countAggregator = new DoubleMaxAggregator("CarpeDiem",
+        DoubleMaxAggregator doubleMaxAggregator = new DoubleMaxAggregator("CarpeDiem",
                 "Hey");
 
         JSONObject jsonObject = new JSONObject();
@@ -51,7 +52,7 @@ public class DoubleMaxAggregatorTest {
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
 
-        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String actualJSON = objectMapper.writeValueAsString(doubleMaxAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -59,12 +60,36 @@ public class DoubleMaxAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
 
-        DoubleMaxAggregator countAggregator = new DoubleMaxAggregator(null, "Haha");
+        DoubleMaxAggregator doubleMaxAggregator = new DoubleMaxAggregator(null, "Haha");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
-        DoubleMaxAggregator countAggregator = new DoubleMaxAggregator("Name", null);
+        DoubleMaxAggregator doubleMaxAggregator = new DoubleMaxAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        DoubleMaxAggregator aggregator1 = new DoubleMaxAggregator("name", "field");
+        DoubleMaxAggregator aggregator2 = new DoubleMaxAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        DoubleMaxAggregator aggregator1 = new DoubleMaxAggregator("name", "field");
+        DoubleMaxAggregator aggregator2 = new DoubleMaxAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        DoubleMaxAggregator aggregator1 = new DoubleMaxAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

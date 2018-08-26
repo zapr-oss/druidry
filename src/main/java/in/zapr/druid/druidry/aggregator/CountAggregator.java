@@ -18,8 +18,10 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+@EqualsAndHashCode(callSuper = true)
 public class CountAggregator extends DruidAggregator {
 
     private static final String COUNT_TYPE_AGGREGATOR = "count";
