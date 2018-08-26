@@ -18,10 +18,12 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode
 public abstract class ExtractionFunction {
     protected static final String REGEX_TYPE = "regex";
     protected static final String PARTIAL_TYPE = "partial";
