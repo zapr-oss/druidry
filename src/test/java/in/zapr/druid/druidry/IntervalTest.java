@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry;/*
+/*
  * Copyright (c) 2017-present, Red Brick Lane Marketing Solutions Pvt. Ltd.
  * All rights reserved.
  *
@@ -15,6 +15,8 @@ package in.zapr.druid.druidry;/*
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package in.zapr.druid.druidry;
 
 import org.joda.time.DateTime;
 import org.testng.Assert;

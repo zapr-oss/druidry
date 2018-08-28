@@ -24,6 +24,7 @@ import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -35,7 +36,8 @@ public class IntervalFilter extends DruidFilter {
     private String dimension;
     private List<Interval> intervals;
 
-    public IntervalFilter(String dimension, List<Interval> intervals) {
+    public IntervalFilter(@NonNull String dimension, @NonNull List<Interval> intervals) {
+        this.type = INTERVAL_DRUID_FILTER_TYPE;
         this.dimension = dimension;
         this.intervals = intervals;
     }
