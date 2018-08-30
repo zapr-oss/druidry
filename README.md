@@ -196,6 +196,7 @@ Aggregation Queries
 * LongMax
 * LongMin
 * LongSum
+* ThetaSketch
 
 #### Filters
 
@@ -216,6 +217,8 @@ Aggregation Queries
 * FieldAccess
 * HyperUniqueCardinality
 * Javascript
+* ThetaSketchEstimate
+* ThetaSketchSetOp
 
 #### Granularity
 * Duration
