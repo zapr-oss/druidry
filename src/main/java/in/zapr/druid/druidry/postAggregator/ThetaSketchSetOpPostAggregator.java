@@ -15,17 +15,19 @@ public class ThetaSketchSetOpPostAggregator extends DruidPostAggregator {
 
     @JsonProperty("func")
     private  ThetaSketchFunction function;
-    //TODO: Limit fields to only two implementation FieldAccess and ThetaSketchOp
     private List<DruidPostAggregator> fields;
+    private Long size;
 
     @Builder
     private ThetaSketchSetOpPostAggregator(@NonNull String name,
                                            @NonNull ThetaSketchFunction function,
-                                           @NonNull List<DruidPostAggregator> fields) {
+                                           @NonNull List<DruidPostAggregator> fields,
+                                           Long size) {
         this.type = THETA_SKETCH_SET_OP_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.function = function;
         this.fields = fields;
+        this.size = size;
     }
 
 }
