@@ -21,10 +21,12 @@ package in.zapr.druid.druidry.limitSpec;
 import java.util.List;
 
 import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpec;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode
 public class DefaultLimitSpec {
     private static final String DEFAULT_LIMIT_SPEC_TYPE = "default";
 

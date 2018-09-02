@@ -19,13 +19,15 @@
 package in.zapr.druid.druidry.query;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import in.zapr.druid.druidry.Context;
 
+import in.zapr.druid.druidry.Context;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode()
 public abstract class DruidQuery {
 
     @NonNull

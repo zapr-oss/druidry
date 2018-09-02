@@ -19,19 +19,21 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
+
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.DruidQuery;
-
-import java.util.List;
-
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public abstract class DruidAggregationQuery extends DruidQuery {
     protected List<Interval> intervals;
     protected Granularity granularity;

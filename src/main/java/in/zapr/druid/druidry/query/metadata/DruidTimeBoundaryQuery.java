@@ -18,6 +18,9 @@
 
 package in.zapr.druid.druidry.query.metadata;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
 class DruidTimeBoundaryQuery extends DruidMetadataQuery {
 
     public String bound;
