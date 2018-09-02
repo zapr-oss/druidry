@@ -27,7 +27,7 @@ import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode()
+@EqualsAndHashCode
 public abstract class DruidQuery {
 
     @NonNull
