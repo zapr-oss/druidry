@@ -25,7 +25,13 @@ public class ApproxHistogramAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-    	ApproxHistogramAggregator approxHistogramAgg = new ApproxHistogramAggregator("histogram", "_loadtime", 100, "-Infinity", "+Infinity");
+    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+    			.name("histogram")
+    			.fieldName("_loadtime")
+    			.resolution(100)
+    			.lowerLimit("-Infinity")
+    			.upperLimit("+Infinity")
+    			.build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "approxHistogram");
@@ -42,14 +48,25 @@ public class ApproxHistogramAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
+    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+    			.name(null)
+    			.fieldName("_loadtime")
+    			.resolution(100)
+    			.lowerLimit("-Infinity")
+    			.upperLimit("+Infinity")
+    			.build();
 
-    	ApproxHistogramAggregator approxHistogramAgg = new ApproxHistogramAggregator(null, "_loadtime", 100, "-Infinity", "+Infinity");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
-
-    	ApproxHistogramAggregator approxHistogramAgg = new ApproxHistogramAggregator("histogram", null,100, "-Infinity", "+Infinity");
+    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+    			.name("druidry")
+    			.fieldName(null)
+    			.resolution(100)
+    			.lowerLimit("-Infinity")
+    			.upperLimit("+Infinity")
+    			.build();
     }
 
 }

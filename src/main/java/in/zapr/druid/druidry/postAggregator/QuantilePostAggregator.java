@@ -2,6 +2,7 @@ package in.zapr.druid.druidry.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -15,7 +16,8 @@ public class QuantilePostAggregator extends DruidPostAggregator {
 	 private String fieldName;
 	 private Double probability;
 	 
-	 public QuantilePostAggregator(@NonNull final String name, @NonNull final String fieldName, @NonNull final Double probability){
+	 @Builder
+	 private QuantilePostAggregator(@NonNull final String name, @NonNull final String fieldName, @NonNull final Double probability){
 		this.type = QUANTILE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;

@@ -18,6 +18,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -31,8 +32,8 @@ public class ApproxHistogramAggregator extends DruidAggregator {
     private String lowerLimit;
     private String upperLimit;
 
-    
-    public ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName, @NonNull int resolution,
+    @Builder
+    private ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName, @NonNull int resolution,
     		@NonNull String lowerLimit, @NonNull String upperLimit) {
         this.type = APPROX_HISTOGRAM_AGGREGATOR_TYPE;
         this.name = name;

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -17,7 +18,8 @@ public class QuantilesPostAggregator extends DruidPostAggregator {
 	 private String fieldName;
 	 private Set<Double> probabilities;
 	 
-	 public QuantilesPostAggregator(@NonNull final String name, @NonNull final String fieldName, @NonNull final Set<Double> probabilities){
+	 @Builder
+	 private QuantilesPostAggregator(@NonNull final String name, @NonNull final String fieldName, @NonNull final Set<Double> probabilities){
 		this.type = QUANTILE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;
