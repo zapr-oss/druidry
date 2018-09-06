@@ -23,10 +23,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.joda.time.DateTime;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class DurationGranularity extends Granularity {
 
     private static final String DURATION_GRANULARITY_TYPE = "duration";

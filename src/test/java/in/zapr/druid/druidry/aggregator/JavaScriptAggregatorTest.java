@@ -26,10 +26,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +51,7 @@ public class JavaScriptAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        JavaScriptAggregator cardinalityAggregator = JavaScriptAggregator.builder()
+        JavaScriptAggregator javaScriptAggregator = JavaScriptAggregator.builder()
                 .name("Hello")
                 .fieldNames(fields)
                 .functionAggregate("aggregate")
@@ -67,7 +69,7 @@ public class JavaScriptAggregatorTest {
         jsonObject.put("fnCombine", "combine");
         jsonObject.put("fnReset", "reset");
 
-        String actualJSON = objectMapper.writeValueAsString(cardinalityAggregator);
+        String actualJSON = objectMapper.writeValueAsString(javaScriptAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -78,7 +80,6 @@ public class JavaScriptAggregatorTest {
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
         JavaScriptAggregator javaScriptAggregator = JavaScriptAggregator.builder()
-                //.name("Hello")
                 .fieldNames(fields)
                 .functionAggregate("aggregate")
                 .functionCombine("combine")
@@ -93,7 +94,6 @@ public class JavaScriptAggregatorTest {
 
         JavaScriptAggregator javaScriptAggregator = JavaScriptAggregator.builder()
                 .name("Hello")
-                //.fieldNames(fields)
                 .functionAggregate("aggregate")
                 .functionCombine("combine")
                 .functionReset("reset")
@@ -108,7 +108,6 @@ public class JavaScriptAggregatorTest {
         JavaScriptAggregator javaScriptAggregator = JavaScriptAggregator.builder()
                 .name("Hello")
                 .fieldNames(fields)
-                //.functionAggregate("aggregate")
                 .functionCombine("combine")
                 .functionReset("reset")
                 .build();
@@ -123,7 +122,6 @@ public class JavaScriptAggregatorTest {
                 .name("Hello")
                 .fieldNames(fields)
                 .functionAggregate("aggregate")
-                //.functionCombine("combine")
                 .functionReset("reset")
                 .build();
     }
@@ -138,8 +136,64 @@ public class JavaScriptAggregatorTest {
                 .fieldNames(fields)
                 .functionAggregate("aggregate")
                 .functionCombine("combine")
-                //.functionReset("reset")
                 .build();
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        JavaScriptAggregator aggregator1 = JavaScriptAggregator.builder()
+                .name("Hello")
+                .fieldNames(Collections.singletonList("ListElement1"))
+                .functionAggregate("aggregate")
+                .functionCombine("combine")
+                .functionReset("reset")
+                .build();
+
+        JavaScriptAggregator aggregator2 = JavaScriptAggregator.builder()
+                .name("Hello")
+                .fieldNames(Collections.singletonList("ListElement1"))
+                .functionAggregate("aggregate")
+                .functionCombine("combine")
+                .functionReset("reset")
+                .build();
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        JavaScriptAggregator aggregator1 = JavaScriptAggregator.builder()
+                .name("Hello")
+                .fieldNames(Collections.singletonList("ListElement1"))
+                .functionAggregate("aggregate")
+                .functionCombine("combine")
+                .functionReset("reset")
+                .build();
+
+        JavaScriptAggregator aggregator2 = JavaScriptAggregator.builder()
+                .name("Hello1")
+                .fieldNames(Collections.singletonList("ListElement1"))
+                .functionAggregate("aggregate")
+                .functionCombine("combine")
+                .functionReset("reset")
+                .build();
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        JavaScriptAggregator aggregator1 = JavaScriptAggregator.builder()
+                .name("Hello")
+                .fieldNames(Collections.singletonList("ListElement1"))
+                .functionAggregate("aggregate")
+                .functionCombine("combine")
+                .functionReset("reset")
+                .build();
+
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 
 }

@@ -22,8 +22,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 
 public class SimpleDimensionTest {
 
@@ -39,11 +42,34 @@ public class SimpleDimensionTest {
         SimpleDimension simpleDimension = new SimpleDimension("name");
 
         String actualString = objectMapper.writeValueAsString(simpleDimension);
-
         String expectedString = "\"name\"";
 
-        if (!actualString.equals(expectedString)) {
-            throw new AssertionError();
-        }
+        Assert.assertEquals(expectedString, actualString);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        SimpleDimension dimension1 = new SimpleDimension("name");
+        SimpleDimension dimension2 = new SimpleDimension("name");
+
+        Assert.assertEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        SimpleDimension dimension1 = new SimpleDimension("name");
+        SimpleDimension dimension2 = new SimpleDimension("name1");
+
+        Assert.assertNotEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        SimpleDimension dimension1 = new SimpleDimension("name");
+        DefaultDimension dimension2 = new DefaultDimension("name",
+                "output",
+                OutputType.LONG);
+
+        Assert.assertNotEquals(dimension1, dimension2);
     }
 }

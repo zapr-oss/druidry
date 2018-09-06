@@ -19,6 +19,9 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
+
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -28,15 +31,14 @@ import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
 import in.zapr.druid.druidry.topNMetric.TopNMetric;
-
-import java.util.List;
-
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class DruidTopNQuery extends DruidAggregationQuery {
 
     private DruidDimension dimension;
@@ -44,12 +46,16 @@ public class DruidTopNQuery extends DruidAggregationQuery {
     private TopNMetric metric;
 
     @Builder
-    private DruidTopNQuery(@NonNull String dataSource, @NonNull List<Interval> intervals,
-                           @NonNull Granularity granularity, DruidFilter filter,
+    private DruidTopNQuery(@NonNull String dataSource,
+                           @NonNull List<Interval> intervals,
+                           @NonNull Granularity granularity,
+                           DruidFilter filter,
                            List<DruidAggregator> aggregators,
                            List<DruidPostAggregator> postAggregators,
-                           @NonNull DruidDimension dimension, int threshold,
-                           @NonNull TopNMetric topNMetric, Context context) {
+                           @NonNull DruidDimension dimension,
+                           int threshold,
+                           @NonNull TopNMetric topNMetric,
+                           Context context) {
 
         this.queryType = QueryType.TOPN;
         this.dataSource = dataSource;

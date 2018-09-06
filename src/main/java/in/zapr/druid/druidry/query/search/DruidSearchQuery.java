@@ -20,7 +20,9 @@ package in.zapr.druid.druidry.query.search;
 
 
 import in.zapr.druid.druidry.query.DruidQuery;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 public class DruidSearchQuery extends DruidQuery {
     public String granularity;
     public String filter;

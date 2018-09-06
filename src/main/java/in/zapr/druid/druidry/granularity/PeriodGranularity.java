@@ -24,11 +24,13 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Builder
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class PeriodGranularity extends Granularity {
     private static final String PERIOD_GRANULARITY_TYPE = "period";
     private static final String DEFAULT_TIMEZONE = "UTC";

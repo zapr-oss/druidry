@@ -24,11 +24,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class ArithmeticPostAggregator extends DruidPostAggregator {
 
     private final static String ARITHMETIC_POST_AGGREGATOR_TYPE = "arithmetic";

@@ -68,4 +68,6 @@ public class FilteredAggregatorTest {
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
+
+    // TODO: Add testcase for equals
 }
