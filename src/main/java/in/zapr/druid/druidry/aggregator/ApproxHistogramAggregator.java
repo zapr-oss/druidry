@@ -28,19 +28,21 @@ public class ApproxHistogramAggregator extends DruidAggregator {
     private static final String APPROX_HISTOGRAM_AGGREGATOR_TYPE = "approxHistogram";
     private String name;
     private String fieldName;
-    private int resolution;
-    private String lowerLimit;
-    private String upperLimit;
+    private int resolution = 50;
+    private String lowerLimit = "-Infinity";
+    private String upperLimit = "+Infinity";
+    private int numberOfBuckets = 7;
 
     @Builder
-    private ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName, @NonNull int resolution,
-    		@NonNull String lowerLimit, @NonNull String upperLimit) {
+    private ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName,int resolution,
+    		String lowerLimit, String upperLimit, int numberOfBuckets) {
         this.type = APPROX_HISTOGRAM_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;
         this.resolution = resolution;
         this.lowerLimit = lowerLimit;
         this.upperLimit = upperLimit;
+        this.numberOfBuckets = numberOfBuckets;
     }
 
 }

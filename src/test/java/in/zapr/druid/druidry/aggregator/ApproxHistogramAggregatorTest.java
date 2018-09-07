@@ -31,6 +31,7 @@ public class ApproxHistogramAggregatorTest {
     			.resolution(100)
     			.lowerLimit("-Infinity")
     			.upperLimit("+Infinity")
+    			.numberOfBuckets(10)
     			.build();
 
         JSONObject jsonObject = new JSONObject();
@@ -40,6 +41,7 @@ public class ApproxHistogramAggregatorTest {
         jsonObject.put("resolution", 100);
         jsonObject.put("lowerLimit", "-Infinity");
         jsonObject.put("upperLimit", "+Infinity");
+        jsonObject.put("numberOfBuckets", 10);
 
         String actualJSON = objectMapper.writeValueAsString(approxHistogramAgg);
         String expectedJSON = jsonObject.toString();
@@ -54,6 +56,7 @@ public class ApproxHistogramAggregatorTest {
     			.resolution(100)
     			.lowerLimit("-Infinity")
     			.upperLimit("+Infinity")
+    			.numberOfBuckets(10)
     			.build();
 
     }
