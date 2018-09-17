@@ -20,9 +20,11 @@ package in.zapr.druid.druidry.limitSpec.orderByColumnSpec;
 
 import in.zapr.druid.druidry.SortingOrder;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class OrderByColumnSpecMap extends OrderByColumnSpec {
 
     private static final String ASCENDING_ORDER = "ascending";

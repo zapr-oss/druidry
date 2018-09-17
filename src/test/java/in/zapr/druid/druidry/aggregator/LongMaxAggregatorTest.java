@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -66,5 +67,29 @@ public class LongMaxAggregatorTest {
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
         LongMaxAggregator longMaxAggregator = new LongMaxAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
+        LongMaxAggregator aggregator2 = new LongMaxAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
+        LongMaxAggregator aggregator2 = new LongMaxAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

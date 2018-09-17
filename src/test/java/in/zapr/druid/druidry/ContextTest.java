@@ -18,12 +18,12 @@ package in.zapr.druid.druidry;/*
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.Context;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -81,5 +81,76 @@ public class ContextTest {
         String actualJSON = objectMapper.writeValueAsString(context);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testContextEquals() {
+        Context context1 = Context.builder()
+                .timeoutInMilliSeconds(3141)
+                .priority(1)
+                .queryId("How are you?")
+                .useCache(true)
+                .populateCache(true)
+                .bySegment(true)
+                .finalize(true)
+                .chunkPeriod("P1M")
+                .minTopNThreshold(1407)
+                .maxResults(1611)
+                .maxIntermediateRows(1103)
+                .groupByIsSingleThreaded(true)
+                .build();
+
+        Context context2 = Context.builder()
+                .timeoutInMilliSeconds(3141)
+                .priority(1)
+                .queryId("How are you?")
+                .useCache(true)
+                .populateCache(true)
+                .bySegment(true)
+                .finalize(true)
+                .chunkPeriod("P1M")
+                .minTopNThreshold(1407)
+                .maxResults(1611)
+                .maxIntermediateRows(1103)
+                .groupByIsSingleThreaded(true)
+                .build();
+
+        Assert.assertEquals(context1, context2);
+    }
+
+    @Test
+    public void testContextUnequals() {
+        Context context1 = Context.builder()
+                .timeoutInMilliSeconds(3141)
+                .priority(1)
+                .queryId("How are you?")
+                .useCache(true)
+                .populateCache(true)
+                .bySegment(true)
+                .finalize(true)
+                .chunkPeriod("P1M")
+                .minTopNThreshold(1407)
+                .maxResults(1611)
+                .maxIntermediateRows(1103)
+                .groupByIsSingleThreaded(true)
+                .build();
+
+        Context context2 = Context.builder()
+                .timeoutInMilliSeconds(3141)
+                .priority(1)
+                .queryId("How are you?")
+                .useCache(true)
+                .populateCache(true)
+                .bySegment(true)
+                .finalize(true)
+                .chunkPeriod("P1M")
+                .minTopNThreshold(1407)
+                .maxResults(1611)
+                .maxIntermediateRows(1103)
+                // Differentiator
+                .groupByIsSingleThreaded(false)
+                .build();
+
+        Assert.assertNotEquals(context1, context2);
     }
 }

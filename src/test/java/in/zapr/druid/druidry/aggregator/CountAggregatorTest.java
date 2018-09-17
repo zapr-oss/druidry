@@ -25,8 +25,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Collections;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,5 +61,33 @@ public class CountAggregatorTest {
     public void testNullName() throws JsonProcessingException, JSONException {
 
         CountAggregator countAggregator = new CountAggregator(null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        CountAggregator aggregator1 = new CountAggregator("countAgg");
+        CountAggregator aggregator2 = new CountAggregator("countAgg");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        CountAggregator aggregator1 = new CountAggregator("countAgg1");
+        CountAggregator aggregator2 = new CountAggregator("countAgg2");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha"))
+                .byRow(true)
+                .build();
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

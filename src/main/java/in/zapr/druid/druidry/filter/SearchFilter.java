@@ -21,10 +21,12 @@ package in.zapr.druid.druidry.filter;
 import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class SearchFilter extends DruidFilter {
 
     private static String SEARCH_DRUID_FILTER_TYPE = "search";

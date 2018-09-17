@@ -18,10 +18,12 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class HyperUniqueCardinalityPostAggregator extends DruidPostAggregator {
     private final static String HYPER_UNIQUE_POST_AGGREGATOR_TYPE = "hyperUniqueCardinality";
 

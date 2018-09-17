@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class HyperUniqueAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        HyperUniqueAggregator countAggregator = new HyperUniqueAggregator("CarpeDiem",
+        HyperUniqueAggregator hyperUniqueAggregator = new HyperUniqueAggregator("CarpeDiem",
                 "Hey");
 
         JSONObject jsonObject = new JSONObject();
@@ -51,7 +52,7 @@ public class HyperUniqueAggregatorTest {
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
 
-        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String actualJSON = objectMapper.writeValueAsString(hyperUniqueAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -66,5 +67,29 @@ public class HyperUniqueAggregatorTest {
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
         HyperUniqueAggregator hyperUniqueAggregator = new HyperUniqueAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
+        HyperUniqueAggregator aggregator2 = new HyperUniqueAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
+        HyperUniqueAggregator aggregator2 = new HyperUniqueAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }
