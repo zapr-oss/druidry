@@ -18,10 +18,12 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class DoubleMinAggregator extends DruidAggregator {
 
     private static final String DOUBLE_MIN_TYPE_AGGREGATOR = "doubleMin";

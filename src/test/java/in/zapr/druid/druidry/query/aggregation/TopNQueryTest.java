@@ -20,6 +20,21 @@ package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
@@ -39,22 +54,8 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
-import in.zapr.druid.druidry.query.aggregation.DruidTopNQuery;
 import in.zapr.druid.druidry.topNMetric.SimpleMetric;
 import in.zapr.druid.druidry.topNMetric.TopNMetric;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 public class TopNQueryTest {
     private static ObjectMapper objectMapper;
@@ -273,5 +274,99 @@ public class TopNQueryTest {
         expectedQuery.put("context", expectedContext);
 
         JSONAssert.assertEquals(actualJson, expectedQuery, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testEquals() {
+        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidDimension dimension = new SimpleDimension("Demo");
+        TopNMetric metric = new SimpleMetric("Let it work");
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
+
+        DruidFilter filter = new SelectorFilter("Spread", "Peace");
+        DruidAggregator aggregator = new CountAggregator("Chill");
+        DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
+        Context context = Context.builder()
+                .populateCache(true)
+                .build();
+
+        DruidTopNQuery query1 = DruidTopNQuery.builder()
+                .dataSource("sample_data")
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .dimension(dimension)
+                .threshold(7)
+                .topNMetric(metric)
+                .context(context)
+                .build();
+
+        DruidTopNQuery query2 = DruidTopNQuery.builder()
+                .dataSource("sample_data")
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .dimension(dimension)
+                .threshold(7)
+                .topNMetric(metric)
+                .context(context)
+                .build();
+
+        Assert.assertEquals(query1, query2);
+    }
+
+    @Test
+    public void testUnequals() {
+        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidDimension dimension = new SimpleDimension("Demo");
+        TopNMetric metric = new SimpleMetric("Let it work");
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
+
+        DruidFilter filter = new SelectorFilter("Spread", "Peace");
+        DruidAggregator aggregator = new CountAggregator("Chill");
+        DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
+        Context context = Context.builder()
+                .populateCache(true)
+                .build();
+
+        DruidTopNQuery query1 = DruidTopNQuery.builder()
+                .dataSource("sample_data")
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .dimension(dimension)
+                .threshold(7)
+                .topNMetric(metric)
+                .context(context)
+                .build();
+
+        DruidTopNQuery query2 = DruidTopNQuery.builder()
+                .dataSource("sample_data")
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .dimension(dimension)
+                .threshold(314)
+                .topNMetric(metric)
+                .context(context)
+                .build();
+
+        Assert.assertNotEquals(query1, query2);
     }
 }

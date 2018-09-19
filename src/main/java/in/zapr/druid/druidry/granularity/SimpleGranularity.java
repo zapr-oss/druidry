@@ -20,9 +20,11 @@ package in.zapr.druid.druidry.granularity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class SimpleGranularity extends Granularity {
 
     private PredefinedGranularity granularity;

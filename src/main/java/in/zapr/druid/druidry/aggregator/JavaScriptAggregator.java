@@ -23,10 +23,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class JavaScriptAggregator extends DruidAggregator {
 
     private static final String JAVASCRIPT_AGGREGATOR_TYPE = "javascript";

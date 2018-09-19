@@ -21,15 +21,16 @@ package in.zapr.druid.druidry.dimension;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.dimension.enums.OutputType;
-import in.zapr.druid.druidry.extractionFunctions.ExtractionFunction;
-import in.zapr.druid.druidry.extractionFunctions.PartialExtractionFunction;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import in.zapr.druid.druidry.dimension.enums.OutputType;
+import in.zapr.druid.druidry.extractionFunctions.ExtractionFunction;
+import in.zapr.druid.druidry.extractionFunctions.PartialExtractionFunction;
 
 public class ExtractionDimensionTest {
     private static ObjectMapper objectMapper;
@@ -39,11 +40,12 @@ public class ExtractionDimensionTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testSampleExtractionFunction() throws JSONException, JsonProcessingException {
 
-        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder().expr("abcd").build();
+        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
 
         ExtractionDimension extractionDimension = ExtractionDimension.builder()
                 .dimension("name")
@@ -54,7 +56,10 @@ public class ExtractionDimensionTest {
 
         String actualJSON = objectMapper.writeValueAsString(extractionDimension);
 
-        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  \"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n  \"outputType\": \"FLOAT\",\n  \"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
+        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  " +
+                "\"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n " +
+                " \"outputType\": \"FLOAT\",\n  " +
+                "\"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -71,14 +76,18 @@ public class ExtractionDimensionTest {
 
         String actualJSON = objectMapper.writeValueAsString(extractionDimension);
 
-        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  \"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n  \"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
+        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  " +
+                "\"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n  " +
+                "\"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testDimensionMissingFields() {
-        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder().expr("abcd").build();
+        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
 
         ExtractionDimension extractionDimension = ExtractionDimension.builder()
                 .outputName("nombre")
@@ -88,7 +97,9 @@ public class ExtractionDimensionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testOutputNameMissingFields() {
-        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder().expr("abcd").build();
+        ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
 
         ExtractionDimension extractionDimension = ExtractionDimension.builder()
                 .dimension("name")
@@ -103,5 +114,76 @@ public class ExtractionDimensionTest {
                 .dimension("name")
                 .outputName("nombre")
                 .build();
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        ExtractionFunction partialExtractionFunction1 = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
+
+        ExtractionDimension dimension1 = ExtractionDimension.builder()
+                .dimension("name")
+                .outputName("nombre")
+                .outputType(OutputType.FLOAT)
+                .extractionFunction(partialExtractionFunction1)
+                .build();
+
+        ExtractionFunction partialExtractionFunction2 = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
+
+        ExtractionDimension dimension2 = ExtractionDimension.builder()
+                .dimension("name")
+                .outputName("nombre")
+                .outputType(OutputType.FLOAT)
+                .extractionFunction(partialExtractionFunction2)
+                .build();
+
+        Assert.assertEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        ExtractionFunction partialExtractionFunction1 = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
+
+        ExtractionDimension dimension1 = ExtractionDimension.builder()
+                .dimension("name")
+                .outputName("nombre")
+                .outputType(OutputType.LONG)
+                .extractionFunction(partialExtractionFunction1)
+                .build();
+
+        ExtractionFunction partialExtractionFunction2 = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
+
+        ExtractionDimension dimension2 = ExtractionDimension.builder()
+                .dimension("name")
+                .outputName("nombre")
+                .outputType(OutputType.FLOAT)
+                .extractionFunction(partialExtractionFunction2)
+                .build();
+
+        Assert.assertNotEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        SimpleDimension dimension1 = new SimpleDimension("name");
+        ExtractionFunction partialExtractionFunction1 = PartialExtractionFunction.builder()
+                .expr("abcd")
+                .build();
+
+        ExtractionDimension dimension2 = ExtractionDimension.builder()
+                .dimension("name")
+                .outputName("nombre")
+                .outputType(OutputType.LONG)
+                .extractionFunction(partialExtractionFunction1)
+                .build();
+
+        Assert.assertNotEquals(dimension1, dimension2);
     }
 }

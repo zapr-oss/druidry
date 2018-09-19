@@ -30,11 +30,13 @@ import in.zapr.druid.druidry.query.QueryType;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class DruidTimeSeriesQuery extends DruidAggregationQuery {
     // TODO: String or Boolean??
     private Boolean descending;

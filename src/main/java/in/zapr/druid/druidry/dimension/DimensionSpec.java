@@ -19,11 +19,12 @@
 package in.zapr.druid.druidry.dimension;
 
 import in.zapr.druid.druidry.dimension.enums.OutputType;
-
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public abstract class DimensionSpec extends DruidDimension {
 
     @NonNull
