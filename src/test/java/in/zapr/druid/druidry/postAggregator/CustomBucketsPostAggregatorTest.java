@@ -1,4 +1,7 @@
-package in.zapr.druid.druidry.aggregator;
+package in.zapr.druid.druidry.postAggregator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,62 +16,54 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ApproxHistogramAggregatorTest {
+public class CustomBucketsPostAggregatorTest {
 
 	private static ObjectMapper objectMapper;
+	private final List<Float> breaks = new ArrayList<>();
 
     @BeforeClass
     public void init() {
         objectMapper = new ObjectMapper();
+    	breaks.add(0.50F);
+    	breaks.add(0.90F);
     }
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
     			.name("histogram")
     			.fieldName("_loadtime")
-    			.resolution(100)
-    			.lowerLimit("-Infinity")
-    			.upperLimit("+Infinity")
-    			.numberOfBuckets(10)
+    			.breaks(breaks)
     			.build();
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "approxHistogram");
-        jsonObject.put("name", "histogram");
+        jsonObject.put("type", "customBuckets");
+        jsonObject.put("name", "custom_buckets");
         jsonObject.put("fieldName", "_loadtime");
-        jsonObject.put("resolution", 100);
-        jsonObject.put("lowerLimit", Float.NEGATIVE_INFINITY);
-        jsonObject.put("upperLimit", Float.POSITIVE_INFINITY);
-        jsonObject.put("numberOfBuckets", 10);
+        jsonObject.put("breaks", breaks);
 
-        String actualJSON = objectMapper.writeValueAsString(approxHistogramAgg);
+        String actualJSON = objectMapper.writeValueAsString(customBucketsPostAgg);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
-    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
     			.name(null)
     			.fieldName("_loadtime")
-    			.resolution(100)
-    			.lowerLimit(Float.NEGATIVE_INFINITY)
-    			.upperLimit(Float.POSITIVE_INFINITY)
-    			.numberOfBuckets(10)
+    			.breaks(breaks)
     			.build();
 
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
-    	ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
-    			.name("druidry")
+    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
+    			.name("histogram")
     			.fieldName(null)
-    			.resolution(100)
-    			.lowerLimit(Float.NEGATIVE_INFINITY)
-    			.upperLimit(Float.POSITIVE_INFINITY)
+    			.breaks(breaks)
     			.build();
     }
 

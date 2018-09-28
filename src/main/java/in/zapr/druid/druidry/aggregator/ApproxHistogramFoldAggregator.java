@@ -26,9 +26,9 @@ import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApproxHistogramAggregator extends DruidAggregator {
+public class ApproxHistogramFoldAggregator extends DruidAggregator {
 
-    private static final String APPROX_HISTOGRAM_AGGREGATOR_TYPE = "approxHistogram";
+    private static final String APPROX_HISTOGRAM_AGGREGATOR_TYPE = "approxHistogramFold";
     private String name;
     private String fieldName;
     private Integer resolution;
@@ -37,7 +37,7 @@ public class ApproxHistogramAggregator extends DruidAggregator {
     private Integer numberOfBuckets;
 
     @Builder
-    private ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName, Integer resolution,
+    private ApproxHistogramFoldAggregator(@NonNull String name, @NonNull String fieldName, Integer resolution,
     		Float lowerLimit, Float upperLimit, Integer numberOfBuckets) {
         this.type = APPROX_HISTOGRAM_AGGREGATOR_TYPE;
         this.name = name;

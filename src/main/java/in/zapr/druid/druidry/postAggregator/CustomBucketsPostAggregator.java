@@ -1,6 +1,6 @@
 package in.zapr.druid.druidry.postAggregator;
 
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -16,10 +16,10 @@ public class CustomBucketsPostAggregator extends DruidPostAggregator {
 	 private static final String CUSTOMBUCKET_POST_AGGREGATOR_TYPE = "customBuckets";
 	 private String name;
 	 private String fieldName;
-	 private Set<Double> breaks;
+	 private List<Float> breaks;
 	 
 	 @Builder
-	 private CustomBucketsPostAggregator(@NonNull final String name, @NonNull final String fieldName, @NonNull final Set<Double> breaks){
+	 private CustomBucketsPostAggregator(@NonNull String name, @NonNull String fieldName, @NonNull List<Float> breaks){
 		this.type = CUSTOMBUCKET_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;
