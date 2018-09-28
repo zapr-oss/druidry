@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.skyscreamer.jsonassert.comparator.ArraySizeComparator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -19,55 +18,54 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CustomBucketsPostAggregatorTest {
+public class QuantilesPostAggregatorTest {
 
 	private static ObjectMapper objectMapper;
-	private final Set<Float> breaks = new HashSet<>();
+	private final Set<Float> probabilities = new HashSet<>();
 
     @BeforeClass
     public void init() {
         objectMapper = new ObjectMapper();
-    	breaks.add(0.50F);
-    	breaks.add(0.90F);
+        probabilities.add(0.50F);
+        probabilities.add(0.90F);
     }
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
-    			.name("custom_buckets")
-    			.fieldName("_loadtime")
-    			.breaks(breaks)
+    	QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder()
+    			.name("quantiles")
+    			.fieldName("timeAgg")
+    			.probabilities(probabilities)
     			.build();
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "customBuckets");
-        jsonObject.put("name", "custom_buckets");
-        jsonObject.put("fieldName", "_loadtime");
-        JsonNode listNode = objectMapper.valueToTree(breaks);
+        jsonObject.put("type", "quantiles");
+        jsonObject.put("name", "quantiles");
+        jsonObject.put("fieldName", "timeAgg");
+        JsonNode listNode = objectMapper.valueToTree(probabilities);
         final JSONArray jsonArr = new JSONArray(listNode.toString());
-        jsonObject.put("breaks", jsonArr);
-        String actualJSON = objectMapper.writeValueAsString(customBucketsPostAgg);
+        jsonObject.put("probabilities", jsonArr);
+        String actualJSON = objectMapper.writeValueAsString(quantilesPostAgg);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
-    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
+    	QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder()
     			.name(null)
-    			.fieldName("_loadtime")
-    			.breaks(breaks)
+    			.fieldName("timeAgg")
+    			.probabilities(probabilities)
     			.build();
-
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
-    	CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
-    			.name("custom_buckets")
+    	QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder()
+    			.name("quantiles")
     			.fieldName(null)
-    			.breaks(breaks)
+    			.probabilities(probabilities)
     			.build();
     }
 

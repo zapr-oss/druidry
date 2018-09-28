@@ -29,8 +29,8 @@ public class ApproxHistogramFoldAggregatorTest {
     			.name("histogram")
     			.fieldName("_loadtime")
     			.resolution(100)
-    			.lowerLimit("-Infinity")
-    			.upperLimit("+Infinity")
+    			.lowerLimit(-2.50F)
+    			.upperLimit(2.50F)
     			.numberOfBuckets(10)
     			.build();
 
@@ -39,8 +39,8 @@ public class ApproxHistogramFoldAggregatorTest {
         jsonObject.put("name", "histogram");
         jsonObject.put("fieldName", "_loadtime");
         jsonObject.put("resolution", 100);
-        jsonObject.put("lowerLimit", Float.NEGATIVE_INFINITY);
-        jsonObject.put("upperLimit", Float.POSITIVE_INFINITY);
+        jsonObject.put("lowerLimit", -2.50F);
+        jsonObject.put("upperLimit", 2.50F);
         jsonObject.put("numberOfBuckets", 10);
 
         String actualJSON = objectMapper.writeValueAsString(approxHistogramFoldAgg);
