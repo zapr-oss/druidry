@@ -1,7 +1,8 @@
-package in.zapr.druid.druidry.aggregator;
+package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import in.zapr.druid.druidry.extensions.datasketches.aggregator.ThetaSketchAggregator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -59,6 +60,16 @@ public class ThetaSketchAggregatorTest {
         String actualJSON = objectMapper.writeValueAsString(thetaSketchAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionCheck(){
+
+        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
+                .name("estimated_stars")
+                .fieldName("stars")
+                .size(420L)
+                .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)

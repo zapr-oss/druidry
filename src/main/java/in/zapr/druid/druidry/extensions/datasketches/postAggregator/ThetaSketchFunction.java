@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.postAggregator;
+package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

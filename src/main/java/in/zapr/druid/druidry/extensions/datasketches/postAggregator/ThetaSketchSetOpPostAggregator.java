@@ -1,7 +1,8 @@
-package in.zapr.druid.druidry.postAggregator;
+package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,7 +15,7 @@ public class ThetaSketchSetOpPostAggregator extends DruidPostAggregator {
     private static final String THETA_SKETCH_SET_OP_POST_AGGREGATOR_TYPE = "thetaSketchSetOp";
 
     @JsonProperty("func")
-    private  ThetaSketchFunction function;
+    private ThetaSketchFunction function;
     private List<DruidPostAggregator> fields;
     private Long size;
 
