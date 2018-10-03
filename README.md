@@ -181,6 +181,7 @@ Aggregation Queries
 * TopN
 * TimeSeries
 * GroupBy
+* DruidScanQuery
 
 
 #### Aggregators
@@ -190,6 +191,8 @@ Aggregation Queries
 * DoubleMax
 * DoubleMin
 * DoubleSum
+* DoubleLast
+* DoubleFirst
 * Filtered
 * HyperUnique
 * Javascript

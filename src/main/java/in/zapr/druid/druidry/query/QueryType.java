@@ -21,14 +21,14 @@ package in.zapr.druid.druidry.query;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum QueryType {
-
-    TIMESERIES("timeseries"),
-    TOPN("topN"),
-    GROUP_BY("groupBy"),
-    TIME_BOUNDARY("timeBoundary"),
-    SEGMENT_METADATA("segmentMetadata"),
     DATASOURCE_METADATA("dataSourceMetadata"),
-    SEARCH("search");
+    GROUP_BY("groupBy"),
+    SCAN("scan"),
+    SEARCH("search"),
+    SEGMENT_METADATA("segmentMetadata"),
+    TIMESERIES("timeseries"),
+    TIME_BOUNDARY("timeBoundary"),
+    TOPN("topN");
 
     private String value;
 
