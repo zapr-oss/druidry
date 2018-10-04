@@ -2,9 +2,7 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.extensions.datasketches.postAggregator.ThetaSketchFunction;
-import in.zapr.druid.druidry.extensions.datasketches.postAggregator.ThetaSketchSetOpPostAggregator;
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +12,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
+
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 
 public class ThetaSketchSetOpPostAggregatorTest {
 
@@ -89,7 +89,7 @@ public class ThetaSketchSetOpPostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName(){
+    public void testNullName() {
 
         ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
                 .function(ThetaSketchFunction.INTERSECT)
@@ -98,7 +98,7 @@ public class ThetaSketchSetOpPostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFunction(){
+    public void testNullFunction() {
 
         ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
                 .name("estimate_stars")
@@ -107,7 +107,7 @@ public class ThetaSketchSetOpPostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFields(){
+    public void testNullFields() {
 
         ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
                 .name("estimate_stars")

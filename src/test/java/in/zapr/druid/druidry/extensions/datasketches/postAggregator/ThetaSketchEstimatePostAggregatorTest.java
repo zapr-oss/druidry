@@ -2,10 +2,7 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.extensions.datasketches.postAggregator.ThetaSketchEstimatePostAggregator;
-import in.zapr.druid.druidry.extensions.datasketches.postAggregator.ThetaSketchFunction;
-import in.zapr.druid.druidry.extensions.datasketches.postAggregator.ThetaSketchSetOpPostAggregator;
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +12,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
+
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 
 public class ThetaSketchEstimatePostAggregatorTest {
 
@@ -47,7 +46,7 @@ public class ThetaSketchEstimatePostAggregatorTest {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "thetaSketchEstimate");
-        jsonObject.put("name","estimate_stars");
+        jsonObject.put("name", "estimate_stars");
         jsonObject.put("field", fieldAccess);
 
         String actualJSON = objectMapper.writeValueAsString(thetaSketchEstimatePostAggregator);
@@ -84,7 +83,7 @@ public class ThetaSketchEstimatePostAggregatorTest {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "thetaSketchEstimate");
-        jsonObject.put("name","estimate_stars");
+        jsonObject.put("name", "estimate_stars");
         jsonObject.put("field", thetaSketchSetOp);
 
         String actualJSON = objectMapper.writeValueAsString(thetaSketchEstimatePostAggregator);
@@ -93,14 +92,14 @@ public class ThetaSketchEstimatePostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName(){
+    public void testNullName() {
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
                 new ThetaSketchEstimatePostAggregator(null, new FieldAccessPostAggregator("stars"));
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullField(){
+    public void testNullField() {
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
                 new ThetaSketchEstimatePostAggregator("estimate_stars", null);

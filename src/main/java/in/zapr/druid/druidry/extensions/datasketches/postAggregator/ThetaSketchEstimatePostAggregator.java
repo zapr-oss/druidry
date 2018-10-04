@@ -12,7 +12,7 @@ public class ThetaSketchEstimatePostAggregator extends DruidPostAggregator {
     private DruidPostAggregator field;
 
     public ThetaSketchEstimatePostAggregator(@NonNull String name,
-                                              @NonNull DruidPostAggregator field) {
+                                             @NonNull DruidPostAggregator field) {
         this.type = THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;

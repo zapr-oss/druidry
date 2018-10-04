@@ -1,8 +1,10 @@
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import com.google.common.math.LongMath;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,14 +24,14 @@ public class ThetaSketchAggregator extends DruidAggregator {
             @NonNull String name,
             @NonNull String fieldName,
             Boolean isInputThetaSketch,
-            Long size){
+            Long size) {
         this.type = THETA_SKETCH_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
         this.isInputThetaSketch = isInputThetaSketch;
         this.size = size;
 
-        if(size != null) {
+        if (size != null) {
             Preconditions.checkArgument(LongMath.isPowerOfTwo(size), "size must be a power of 2");
         }
     }
