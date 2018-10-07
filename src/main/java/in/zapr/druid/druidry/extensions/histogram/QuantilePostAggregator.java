@@ -1,7 +1,8 @@
-package in.zapr.druid.druidry.postAggregator;
+package in.zapr.druid.druidry.extensions.histogram;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

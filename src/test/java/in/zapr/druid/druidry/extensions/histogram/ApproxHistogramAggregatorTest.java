@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.aggregator;
+package in.zapr.druid.druidry.extensions.histogram;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.extensions.histogram.ApproxHistogramAggregator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

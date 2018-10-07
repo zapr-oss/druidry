@@ -16,28 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.aggregator;
+package in.zapr.druid.druidry.extensions.histogram;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApproxHistogramAggregator extends DruidAggregator {
+public class ApproxHistogramFoldAggregator extends DruidAggregator {
 
-    private static final String APPROX_HISTOGRAM_AGGREGATOR_TYPE = "approxHistogram";
+    private static final String APPROX_HISTOGRAM_AGGREGATOR_TYPE = "approxHistogramFold";
     private String name;
     private String fieldName;
     private Integer resolution;
-    private Float lowerLimit = Float.NEGATIVE_INFINITY;
-    private Float upperLimit = Float.POSITIVE_INFINITY;
+    private Float lowerLimit;
+    private Float upperLimit;
     private Integer numberOfBuckets;
 
     @Builder
-    private ApproxHistogramAggregator(@NonNull String name, @NonNull String fieldName, Integer resolution,
+    private ApproxHistogramFoldAggregator(@NonNull String name, @NonNull String fieldName, Integer resolution,
     		Float lowerLimit, Float upperLimit, Integer numberOfBuckets) {
         this.type = APPROX_HISTOGRAM_AGGREGATOR_TYPE;
         this.name = name;
