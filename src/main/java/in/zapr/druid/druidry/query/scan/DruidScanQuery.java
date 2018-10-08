@@ -24,16 +24,25 @@ public class DruidScanQuery extends DruidQuery {
     private List<Interval> intervals;
     private List<DruidDimension> columns;
     private String resultFormat;
+    private Long limit;
+    private Boolean legacy;
 
     @Builder
-    private DruidScanQuery(@NonNull String dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<DruidDimension> columns, String resultFormat, Context context) {
+    private DruidScanQuery(@NonNull String dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<DruidDimension> columns, String resultFormat, Long limit, Boolean legacy, Context context) {
         this.filter = filter;
-        this.batchSize = batchSize;
         this.intervals = intervals;
         this.columns = columns;
         this.resultFormat = resultFormat;
         this.queryType = QueryType.SCAN;
         this.context = context;
         this.dataSource = dataSource;
+        this.legacy = legacy;
+        if (limit != null && limit > 0) {
+            this.limit = limit;
+        }
+        if (batchSize != null && batchSize > 0) {
+
+            this.batchSize = batchSize;
+        }
     }
 }
