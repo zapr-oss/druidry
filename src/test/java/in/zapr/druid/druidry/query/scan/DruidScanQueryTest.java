@@ -50,14 +50,13 @@ public class DruidScanQueryTest {
                 .resultFormat("list")
                 .intervals(Collections.singletonList(interval))
                 .batchSize(10000)
-                .limit(10000L)
+                .limit(1000L)
                 .legacy(true)
                 .build();
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"scan\",\n" +
                 "  \"dataSource\": \"sample_datasource\",\n" +
-
                 "  \"columns\": [\n" +
                 "    \"dim1\",\n" +
                 "    \"dim2\"\n" +
@@ -69,7 +68,7 @@ public class DruidScanQueryTest {
                 "  },\n" +
                 "  \"resultFormat\": \"list\",\n" +
                 "  \"batchSize\": 10000,\n" +
-                "  \"limit\": 10000,\n" +
+                "  \"limit\": 1000,\n" +
                 "  \"legacy\": true,\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
@@ -79,40 +78,6 @@ public class DruidScanQueryTest {
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
 
-
-        query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
-                .columns(searchDimensions)
-                .filter(filter)
-                .resultFormat("list")
-                .intervals(Collections.singletonList(interval))
-                .batchSize(-1)
-                .limit(-1L)
-                .legacy(true)
-                .build();
-
-        expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
-
-                "  \"columns\": [\n" +
-                "    \"dim1\",\n" +
-                "    \"dim2\"\n" +
-                "  ],\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"selector\",\n" +
-                "    \"dimension\": \"dim1\",\n" +
-                "    \"value\": \"value1\"\n" +
-                "  },\n" +
-                "  \"resultFormat\": \"list\",\n" +
-                "  \"legacy\": true,\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
-
-        actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
@@ -141,5 +106,40 @@ public class DruidScanQueryTest {
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionLimitCheck() {
+
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidScanQuery query = DruidScanQuery.builder()
+                .dataSource("sample_datasource")
+                .intervals(Collections.singletonList(interval))
+                .limit(-1L)
+                .build();
+
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionBatchSizeCheck() {
+
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidScanQuery query = DruidScanQuery.builder()
+                .dataSource("sample_datasource")
+                .intervals(Collections.singletonList(interval))
+                .batchSize(-1)
+                .build();
+
+    }
+
 
 }

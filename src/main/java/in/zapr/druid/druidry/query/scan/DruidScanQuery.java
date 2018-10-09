@@ -1,6 +1,7 @@
 package in.zapr.druid.druidry.query.scan;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.base.Preconditions;
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.dimension.DruidDimension;
@@ -37,12 +38,17 @@ public class DruidScanQuery extends DruidQuery {
         this.context = context;
         this.dataSource = dataSource;
         this.legacy = legacy;
-        if (limit != null && limit > 0) {
+
+        if (limit != null) {
+            Preconditions.checkArgument(limit > 0, "limit specified must be more than 0");
             this.limit = limit;
         }
-        if (batchSize != null && batchSize > 0) {
+        if (batchSize != null) {
 
+            Preconditions.checkArgument(batchSize > 0, "batchSize specified must be more than 0");
             this.batchSize = batchSize;
         }
+
+
     }
 }
