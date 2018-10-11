@@ -19,6 +19,9 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
+
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -26,9 +29,6 @@ import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
-
-import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -19,7 +19,6 @@
 package in.zapr.druid.druidry.filter;
 
 import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
