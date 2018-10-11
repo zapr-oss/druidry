@@ -52,7 +52,7 @@ public class DruidJerseyClient implements DruidClient {
     private Client client;
     private WebTarget queryWebTarget;
 
-    public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration){
+    public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration) {
         this(druidConfiguration, null);
     }
 

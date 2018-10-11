@@ -35,6 +35,7 @@ public interface DruidClient {
 
     /**
      * Closes connection with Druid
+     *
      * @throws ConnectionException When connection is not closed
      */
     void close() throws ConnectionException;
@@ -52,8 +53,8 @@ public interface DruidClient {
      * Queries druid
      *
      * @param druidQuery Druid Query Object
-     * @param className Class according to which DruidResult should be converted to
-     * @param <T> Class according to which DruidResult should be converted to
+     * @param className  Class according to which DruidResult should be converted to
+     * @param <T>        Class according to which DruidResult should be converted to
      * @return Druid Result in the form of class T object
      * @throws QueryException Error while querying
      */

@@ -32,8 +32,7 @@ public class DruidConfiguration {
     private static final int DEFAULT_HTTPS_PORT = 8282;
 
     /**
-     * Protocol by which Druid Broker is accessible
-     * Defaults to HTTP
+     * Protocol by which Druid Broker is accessible Defaults to HTTP
      */
     private DruidQueryProtocol protocol;
 
@@ -43,8 +42,7 @@ public class DruidConfiguration {
     private String host;
 
     /**
-     * Port at which Druid Broker is listening.
-     * {@value DEFAULT_HTTP_PORT} if protocol is 8082
+     * Port at which Druid Broker is listening. {@value DEFAULT_HTTP_PORT} if protocol is 8082
      * {@value DEFAULT_HTTPS_PORT} if protocol is 8282
      */
     private Integer port;
@@ -55,8 +53,8 @@ public class DruidConfiguration {
     private String endpoint;
 
     /**
-     * Number of connections to be maintained in connection pool
-     * Is Ignored when custom JerseyConfig is passed.
+     * Number of connections to be maintained in connection pool Is Ignored when custom JerseyConfig
+     * is passed.
      */
     private Integer concurrentConnectionsRequired;
 
