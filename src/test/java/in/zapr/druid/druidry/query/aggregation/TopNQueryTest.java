@@ -369,4 +369,36 @@ public class TopNQueryTest {
 
         Assert.assertNotEquals(query1, query2);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionCheck(){
+        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidDimension dimension = new SimpleDimension("Demo");
+        TopNMetric metric = new SimpleMetric("Let it work");
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
+
+        DruidFilter filter = new SelectorFilter("Spread", "Peace");
+        DruidAggregator aggregator = new CountAggregator("Chill");
+        DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
+        Context context = Context.builder()
+                .populateCache(true)
+                .build();
+
+        DruidTopNQuery query1 = DruidTopNQuery.builder()
+                .dataSource("sample_data")
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .dimension(dimension)
+                .threshold(-5)
+                .topNMetric(metric)
+                .context(context)
+                .build();
+    }
 }

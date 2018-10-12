@@ -18,6 +18,8 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
+import com.google.common.base.Preconditions;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -42,7 +44,7 @@ import lombok.NonNull;
 public class DruidTopNQuery extends DruidAggregationQuery {
 
     private DruidDimension dimension;
-    private int threshold;
+    private Integer threshold;
     private TopNMetric metric;
 
     @Builder
@@ -53,7 +55,7 @@ public class DruidTopNQuery extends DruidAggregationQuery {
                            List<DruidAggregator> aggregators,
                            List<DruidPostAggregator> postAggregators,
                            @NonNull DruidDimension dimension,
-                           int threshold,
+                           @NonNull Integer threshold,
                            @NonNull TopNMetric topNMetric,
                            Context context) {
 
@@ -68,5 +70,7 @@ public class DruidTopNQuery extends DruidAggregationQuery {
         this.threshold = threshold;
         this.metric = topNMetric;
         this.context = context;
+
+        Preconditions.checkArgument(threshold > 0, "threshold must be greater than 0");
     }
 }
