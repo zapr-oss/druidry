@@ -196,8 +196,8 @@ Aggregation Queries
 * LongMax
 * LongMin
 * LongSum
-* ApproxHistogram
-* ApproxHistogramFold
+* ThetaSketch
+* Histogram
 
 #### Filters
 
@@ -218,8 +218,8 @@ Aggregation Queries
 * FieldAccess
 * HyperUniqueCardinality
 * Javascript
-* Quantile
-* Quantiles
+* ThetaSketchEstimate
+* ThetaSketchSetOp
 
 #### Granularity
 * Duration
