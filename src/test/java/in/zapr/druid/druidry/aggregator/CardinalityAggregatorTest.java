@@ -26,10 +26,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CardinalityAggregatorTest {
@@ -107,5 +109,49 @@ public class CardinalityAggregatorTest {
                 .name("Haha")
                 .byRow(true)
                 .build();
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha"))
+                .byRow(true)
+                .build();
+        CardinalityAggregator aggregator2 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha"))
+                .byRow(true)
+                .build();
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha"))
+                .byRow(true)
+                .build();
+        CardinalityAggregator aggregator2 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha1"))
+                .byRow(false)
+                .build();
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
+                .name("Agg1")
+                .fields(Collections.singletonList("Haha"))
+                .byRow(true)
+                .build();
+        CountAggregator aggregator2 = new CountAggregator("count");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

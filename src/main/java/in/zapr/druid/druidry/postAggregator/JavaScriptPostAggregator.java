@@ -21,10 +21,12 @@ package in.zapr.druid.druidry.postAggregator;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class JavaScriptPostAggregator extends DruidPostAggregator {
 
     private final static String JAVASCRIPT_POST_AGGREGATOR_TYPE = "javascript";

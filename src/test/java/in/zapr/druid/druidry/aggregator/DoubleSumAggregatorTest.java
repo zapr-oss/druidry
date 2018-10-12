@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class DoubleSumAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator countAggregator = new DoubleSumAggregator("CarpeDiem",
+        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem",
                 "Hey");
 
         JSONObject jsonObject = new JSONObject();
@@ -51,7 +52,7 @@ public class DoubleSumAggregatorTest {
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
 
-        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String actualJSON = objectMapper.writeValueAsString(doubleSumAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -59,12 +60,36 @@ public class DoubleSumAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator countAggregator = new DoubleSumAggregator(null, "Haha");
+        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator(null, "Haha");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator countAggregator = new DoubleSumAggregator("Name", null);
+        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

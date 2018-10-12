@@ -18,10 +18,12 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class HyperUniqueAggregator extends DruidAggregator {
 
     private static final String HYPER_UNIQUE_TYPE_AGGREGATOR = "hyperUnique";

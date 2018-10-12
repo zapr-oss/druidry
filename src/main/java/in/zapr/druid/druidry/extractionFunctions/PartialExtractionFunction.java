@@ -19,10 +19,12 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class PartialExtractionFunction extends ExtractionFunction {
 
     private String expr;

@@ -21,13 +21,14 @@ package in.zapr.druid.druidry.dimension;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.dimension.enums.OutputType;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 
 public class DefaultDimensionTest {
     private static ObjectMapper objectMapper;
@@ -40,11 +41,13 @@ public class DefaultDimensionTest {
     @Test
     public void testAllFields() throws JSONException, JsonProcessingException {
 
-        DefaultDimension defaultDimension = new DefaultDimension("name", "nombre", OutputType.STRING);
+        DefaultDimension defaultDimension = new DefaultDimension("name",
+                "nombre", OutputType.STRING);
 
         String actualJSON = objectMapper.writeValueAsString(defaultDimension);
 
-        String expectedJSONString = "{\n  \"type\": \"default\",\n  \"dimension\": \"name\",\n  \"outputName\": \"nombre\",\n  \"outputType\": \"STRING\"\n}";
+        String expectedJSONString = "{\n  \"type\": \"default\",\n  \"dimension\": " +
+                "\"name\",\n  \"outputName\": \"nombre\",\n  \"outputType\": \"STRING\"\n}";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
 
@@ -52,12 +55,14 @@ public class DefaultDimensionTest {
 
     @Test
     public void testRequiredFields() throws JsonProcessingException, JSONException {
-        DefaultDimension defaultDimension = new DefaultDimension("name", "nombre", null);
+        DefaultDimension defaultDimension = new DefaultDimension("name",
+                "nombre", null);
 
         String actualJSON = objectMapper.writeValueAsString(defaultDimension);
 
 
-        String expectedJSONString = "{\n  \"type\": \"default\",\n  \"dimension\": \"name\",\n  \"outputName\": \"nombre\"\n}";
+        String expectedJSONString = "{\n  \"type\": \"default\",\n  \"dimension\": " +
+                "\"name\",\n  \"outputName\": \"nombre\"\n}";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -69,8 +74,38 @@ public class DefaultDimensionTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testPutputNameMissingFields() throws JsonProcessingException, JSONException {
-        DefaultDimension defaultDimension = new DefaultDimension("name", null, OutputType.STRING);
+    public void testOutputNameMissingFields() throws JsonProcessingException, JSONException {
+        DefaultDimension defaultDimension = new DefaultDimension("name",
+                null, OutputType.STRING);
     }
 
+    @Test
+    public void testEqualsPositive() {
+        DefaultDimension dimension1 = new DefaultDimension("name",
+                "nombre", OutputType.STRING);
+        DefaultDimension dimension2 = new DefaultDimension("name",
+                "nombre", OutputType.STRING);
+
+        Assert.assertEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        DefaultDimension dimension1 = new DefaultDimension("name",
+                "nombre", OutputType.STRING);
+        DefaultDimension dimension2 = new DefaultDimension("name",
+                "nombre", OutputType.LONG);
+
+        Assert.assertNotEquals(dimension1, dimension2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        SimpleDimension dimension1 = new SimpleDimension("name");
+        DefaultDimension dimension2 = new DefaultDimension("name",
+                "output",
+                OutputType.LONG);
+
+        Assert.assertNotEquals(dimension1, dimension2);
+    }
 }

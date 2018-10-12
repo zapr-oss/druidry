@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -57,22 +58,52 @@ public class FieldAccessPostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    public void testNullName() {
 
         FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator(null,
                 "Haha");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
+    public void testNullFieldName() {
 
         FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator("Name",
                 null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldNameSingleConstructor() throws JsonProcessingException, JSONException {
+    public void testNullFieldNameSingleConstructor() {
 
         FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator(null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        FieldAccessPostAggregator aggregator1
+                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator aggregator2
+                = new FieldAccessPostAggregator("Hello", "World");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        FieldAccessPostAggregator aggregator1
+                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator aggregator2
+                = new FieldAccessPostAggregator("Hola", "Duniya");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        ConstantPostAggregator aggregator1
+                = new ConstantPostAggregator("Hello", 10.57);
+        FieldAccessPostAggregator aggregator2
+                = new FieldAccessPostAggregator("Hello", "Yaha");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }
