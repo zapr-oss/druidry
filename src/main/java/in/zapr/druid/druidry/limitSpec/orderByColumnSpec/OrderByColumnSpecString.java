@@ -20,8 +20,10 @@ package in.zapr.druid.druidry.limitSpec.orderByColumnSpec;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+@EqualsAndHashCode(callSuper = true)
 public class OrderByColumnSpecString extends OrderByColumnSpec {
 
     private String name;

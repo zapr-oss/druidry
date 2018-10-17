@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class LongSumAggregatorTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        LongSumAggregator countAggregator = new LongSumAggregator("CarpeDiem",
+        LongSumAggregator longSumAggregator = new LongSumAggregator("CarpeDiem",
                 "Hey");
 
         JSONObject jsonObject = new JSONObject();
@@ -51,7 +52,7 @@ public class LongSumAggregatorTest {
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
 
-        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String actualJSON = objectMapper.writeValueAsString(longSumAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -66,5 +67,29 @@ public class LongSumAggregatorTest {
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
         LongSumAggregator longSumAggregator = new LongSumAggregator("Name", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        LongSumAggregator aggregator1 = new LongSumAggregator("name", "field");
+        LongSumAggregator aggregator2 = new LongSumAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        LongSumAggregator aggregator1 = new LongSumAggregator("name", "field");
+        LongSumAggregator aggregator2 = new LongSumAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        LongSumAggregator aggregator1 = new LongSumAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 }

@@ -19,14 +19,16 @@
 package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import in.zapr.druid.druidry.dimension.enums.OutputType;
 
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class DefaultDimension extends DimensionSpec {
 
     private static final String DEFAULT_TYPE = "default";

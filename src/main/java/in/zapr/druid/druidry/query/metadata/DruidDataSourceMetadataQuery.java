@@ -18,5 +18,8 @@
 
 package in.zapr.druid.druidry.query.metadata;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
 class DruidDataSourceMetadataQuery extends DruidMetadataQuery {
 }

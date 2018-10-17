@@ -18,8 +18,10 @@
 
 package in.zapr.druid.druidry.dimension;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public abstract class DruidDimension {
 }

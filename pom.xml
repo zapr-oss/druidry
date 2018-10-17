@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>2.4-SNAPSHOT</version>
+    <version>2.6-SNAPSHOT</version>
 
     <name>Druidry - Druid Java Client</name>
     <description>Druidry is an open-source Java based utility library which supports creating
@@ -24,6 +24,7 @@
         <jsonassert.version>1.4.0</jsonassert.version>
         <commons.version>3.5</commons.version>
         <jersey.version>2.26</jersey.version>
+        <guava.version>23.0</guava.version>
     </properties>
 
     <dependencies>
@@ -107,6 +108,13 @@
             <artifactId>jersey-apache-connector</artifactId>
             <version>${jersey.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
 
     </dependencies>
 

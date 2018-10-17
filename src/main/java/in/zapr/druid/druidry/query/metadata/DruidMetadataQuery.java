@@ -19,6 +19,8 @@
 package in.zapr.druid.druidry.query.metadata;
 
 import in.zapr.druid.druidry.query.DruidQuery;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 abstract class DruidMetadataQuery extends DruidQuery {
 }

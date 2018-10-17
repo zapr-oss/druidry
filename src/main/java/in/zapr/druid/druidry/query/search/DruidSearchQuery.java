@@ -19,14 +19,59 @@
 package in.zapr.druid.druidry.query.search;
 
 
-import in.zapr.druid.druidry.query.DruidQuery;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
+import in.zapr.druid.druidry.Context;
+import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.dimension.DruidDimension;
+import in.zapr.druid.druidry.filter.DruidFilter;
+import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
+import in.zapr.druid.druidry.granularity.Granularity;
+import in.zapr.druid.druidry.query.DruidQuery;
+import in.zapr.druid.druidry.query.QueryType;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class DruidSearchQuery extends DruidQuery {
-    public String granularity;
-    public String filter;
-    public int limit;
-    public String intervals;
-    public String searchDimensions;
-    public String query;
-    public String sort;
+
+    private Granularity granularity;
+    private DruidFilter filter;
+    private Integer limit;
+    private List<Interval> intervals;
+    private List<DruidDimension> searchDimensions;
+    private SearchQuerySpec query;
+    private SearchSortSpec sort;
+
+    @Builder
+    private DruidSearchQuery(@NonNull String dataSource,
+                             @NonNull Granularity granularity,
+                             DruidFilter filter,
+                             Integer limit,
+                             @NonNull List<Interval> intervals,
+                             List<DruidDimension> searchDimensions,
+                             @NonNull SearchQuerySpec query,
+                             SortingOrder sort,
+                             Context context) {
+
+        this.queryType = QueryType.SEARCH;
+        this.dataSource = dataSource;
+        this.granularity = granularity;
+        this.filter = filter;
+        this.limit = limit;
+        this.intervals = intervals;
+        this.searchDimensions = searchDimensions;
+        this.query = query;
+        if (sort != null) {
+            this.sort = new SearchSortSpec(sort);
+        }
+        this.context = context;
+    }
 }

@@ -18,9 +18,11 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public abstract class DruidPostAggregator {
     protected String type;
     protected String name;

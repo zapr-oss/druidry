@@ -23,11 +23,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class CardinalityAggregator extends DruidAggregator {
 
     private static final String CARDINALITY_AGGREGATOR_TYPE = "cardinality";
