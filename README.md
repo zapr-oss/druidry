@@ -197,6 +197,7 @@ Aggregation Queries
 * LongMin
 * LongSum
 * ThetaSketch
+* Histogram
 
 #### Filters
 
