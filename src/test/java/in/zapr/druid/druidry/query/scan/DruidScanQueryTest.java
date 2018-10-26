@@ -50,8 +50,8 @@ public class DruidScanQueryTest {
     public void testSampleQuery() throws JsonProcessingException, JSONException {
 
 
-        List<DruidDimension> searchDimensions
-                = Arrays.asList(new SimpleDimension("dim1"), new SimpleDimension("dim2"));
+        List<String> searchDimensions
+                = Arrays.asList("dim1","dim2");
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
@@ -65,7 +65,7 @@ public class DruidScanQueryTest {
                 .dataSource("sample_datasource")
                 .columns(searchDimensions)
                 .filter(filter)
-                .resultFormat("list")
+                .resultFormat(ResultFormat.LIST)
                 .intervals(Collections.singletonList(interval))
                 .batchSize(10000)
                 .limit(1000L)

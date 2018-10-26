@@ -43,13 +43,13 @@ public class DruidScanQuery extends DruidQuery {
     private DruidFilter filter;
     private Integer batchSize;
     private List<Interval> intervals;
-    private List<DruidDimension> columns;
-    private String resultFormat;
+    private List<String> columns;
+    private ResultFormat resultFormat;
     private Long limit;
     private Boolean legacy;
 
     @Builder
-    private DruidScanQuery(@NonNull String dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<DruidDimension> columns, String resultFormat, Long limit, Boolean legacy, Context context) {
+    private DruidScanQuery(@NonNull String dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat, Long limit, Boolean legacy, Context context) {
         this.filter = filter;
         this.intervals = intervals;
         this.columns = columns;
