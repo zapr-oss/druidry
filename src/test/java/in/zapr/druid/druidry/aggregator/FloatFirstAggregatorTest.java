@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -52,6 +53,44 @@ public class FloatFirstAggregatorTest {
         String actualJSON = objectMapper.writeValueAsString(floatFirstAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullName() throws JsonProcessingException, JSONException {
+
+        FloatFirstAggregator floatFirstAggregator = new FloatFirstAggregator(null, "Hey");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testFieldName() throws JsonProcessingException, JSONException {
+
+        FloatFirstAggregator floatFirstAggregator = new FloatFirstAggregator("CarpeDiem", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        FloatFirstAggregator aggregator1 = new FloatFirstAggregator("name", "field");
+        FloatFirstAggregator aggregator2 = new FloatFirstAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        FloatFirstAggregator aggregator1 = new FloatFirstAggregator("name", "field");
+        FloatFirstAggregator aggregator2 = new FloatFirstAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        FloatFirstAggregator aggregator1 = new FloatFirstAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 
 }

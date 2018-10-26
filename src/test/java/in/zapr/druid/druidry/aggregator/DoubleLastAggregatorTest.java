@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -52,6 +53,42 @@ public class DoubleLastAggregatorTest {
         String actualJSON = objectMapper.writeValueAsString(doubleLastAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullName() throws JsonProcessingException, JSONException {
+
+        DoubleLastAggregator doubleLastAggregator = new DoubleLastAggregator(null, "Hey");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testFieldName() throws JsonProcessingException, JSONException {
+
+        DoubleLastAggregator doubleLastAggregator = new DoubleLastAggregator("CarpeDiem", null);
+    }
+
+    @Test
+    public void testEqualsPositive() {
+        DoubleLastAggregator aggregator1 = new DoubleLastAggregator("name", "field");
+        DoubleLastAggregator aggregator2 = new DoubleLastAggregator("name", "field");
+
+        Assert.assertEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsNegative() {
+        DoubleLastAggregator aggregator1 = new DoubleLastAggregator("name", "field");
+        DoubleLastAggregator aggregator2 = new DoubleLastAggregator("name1", "field1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
+    }
+
+    @Test
+    public void testEqualsWithAnotherSubClass() {
+        DoubleLastAggregator aggregator1 = new DoubleLastAggregator("name", "field");
+        CountAggregator aggregator2 = new CountAggregator("countAgg1");
+
+        Assert.assertNotEquals(aggregator1, aggregator2);
     }
 
 }
