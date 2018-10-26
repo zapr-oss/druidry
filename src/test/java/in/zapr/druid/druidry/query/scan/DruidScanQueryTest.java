@@ -159,5 +159,54 @@ public class DruidScanQueryTest {
 
     }
 
+    @Test
+    public void testSampleQueryWithEmptyLines() throws JsonProcessingException, JSONException {
+
+
+        List<String> searchDimensions
+                = Arrays.asList();
+
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidFilter filter = new SelectorFilter("dim1", "value1");
+
+        DruidScanQuery query = DruidScanQuery.builder()
+                .dataSource("sample_datasource")
+                .columns(searchDimensions)
+                .filter(filter)
+                .resultFormat(ResultFormat.LIST)
+                .intervals(Collections.singletonList(interval))
+                .batchSize(10000)
+                .limit(1000L)
+                .legacy(true)
+                .build();
+
+        String expectedJsonAsString = "{\n" +
+                "  \"queryType\": \"scan\",\n" +
+                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"columns\": [\n" +
+                "],\n" +
+                "  \"filter\": {\n" +
+                "    \"type\": \"selector\",\n" +
+                "    \"dimension\": \"dim1\",\n" +
+                "    \"value\": \"value1\"\n" +
+                "  },\n" +
+                "  \"resultFormat\": \"list\",\n" +
+                "  \"batchSize\": 10000,\n" +
+                "  \"limit\": 1000,\n" +
+                "  \"legacy\": true,\n" +
+                "  \"intervals\": [" +
+                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
+                "  ]" +
+                "}";
+
+        String actualJson = objectMapper.writeValueAsString(query);
+        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+
+    }
 }
 
