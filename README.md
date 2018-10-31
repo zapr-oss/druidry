@@ -177,11 +177,12 @@ Supported Features
 ------------------
 
 #### Queries
-Aggregation Queries
-* TopN
-* TimeSeries
-* GroupBy
+* Aggregation Queries
+    * TopN
+    * TimeSeries
+    * GroupBy
 * DruidScanQuery
+* DruidSelectQuery
 
 
 #### Aggregators
