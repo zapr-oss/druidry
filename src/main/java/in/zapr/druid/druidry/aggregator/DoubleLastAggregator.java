@@ -16,26 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.client.exception;
+package in.zapr.druid.druidry.aggregator;
 
-import in.zapr.druid.druidry.client.DruidError;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
-public class QueryException extends DruidryException {
+@Getter
+@EqualsAndHashCode(callSuper = true)
+public class DoubleLastAggregator extends DruidAggregator {
+    private static final String DOUBLE_LAST_AGGREGATOR = "doubleLast";
+    private String fieldName;
 
-    @Getter
-    private DruidError druidError;
-
-    public QueryException(Exception e) {
-        super(e);
-    }
-
-    public QueryException(String message) {
-        super(message);
-    }
-
-    public QueryException(DruidError error) {
-        super(error.getErrorMessage());
-        this.druidError = error;
+    public DoubleLastAggregator(@NonNull String name, @NonNull String fieldName) {
+        this.type = DOUBLE_LAST_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
     }
 }

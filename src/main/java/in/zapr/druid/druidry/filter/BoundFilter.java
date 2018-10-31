@@ -19,8 +19,8 @@
 package in.zapr.druid.druidry.filter;
 
 import in.zapr.druid.druidry.SortingOrder;
-import lombok.EqualsAndHashCode;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

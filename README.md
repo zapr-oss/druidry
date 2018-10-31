@@ -181,6 +181,7 @@ Aggregation Queries
 * TopN
 * TimeSeries
 * GroupBy
+* DruidScanQuery
 
 
 #### Aggregators
@@ -190,12 +191,18 @@ Aggregation Queries
 * DoubleMax
 * DoubleMin
 * DoubleSum
+* DoubleLast
+* DoubleFirst
+* FloatFirst
+* FloatLast
 * Filtered
 * HyperUnique
 * Javascript
 * LongMax
 * LongMin
 * LongSum
+* LongFirst
+* LongLast
 * ThetaSketch
 
 #### Filters

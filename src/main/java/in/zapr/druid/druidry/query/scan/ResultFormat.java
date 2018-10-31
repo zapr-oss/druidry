@@ -16,26 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.client.exception;
+package in.zapr.druid.druidry.query.scan;
 
-import in.zapr.druid.druidry.client.DruidError;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-public class QueryException extends DruidryException {
+public enum ResultFormat {
 
-    @Getter
-    private DruidError druidError;
+    LIST("list"),
+    COMPACTED_LIST("compactedList"),
+    VALUE_VECTOR("valueVector");
 
-    public QueryException(Exception e) {
-        super(e);
+    private String value;
+     ResultFormat(String value){
+        this.value = value;
     }
 
-    public QueryException(String message) {
-        super(message);
-    }
-
-    public QueryException(DruidError error) {
-        super(error.getErrorMessage());
-        this.druidError = error;
+    @JsonValue
+    public String getResultFormat() {
+        return value;
     }
 }

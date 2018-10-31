@@ -19,8 +19,8 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import in.zapr.druid.druidry.lookUpSpec.LookUpSpec;
 
+import in.zapr.druid.druidry.lookUpSpec.LookUpSpec;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -16,11 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.query.search;
+package in.zapr.druid.druidry.query.scan;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dimension.DruidDimension;
+import in.zapr.druid.druidry.dimension.SimpleDimension;
+import in.zapr.druid.druidry.filter.DruidFilter;
+import in.zapr.druid.druidry.filter.SelectorFilter;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -33,19 +37,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.SortingOrder;
-import in.zapr.druid.druidry.dimension.DruidDimension;
-import in.zapr.druid.druidry.dimension.SimpleDimension;
-import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.filter.SelectorFilter;
-import in.zapr.druid.druidry.filter.searchQuerySpec.InsensitiveContainsSearchQuerySpec;
-import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
-import in.zapr.druid.druidry.granularity.PredefinedGranularity;
-import in.zapr.druid.druidry.granularity.SimpleGranularity;
-
-public class DruidSearchQueryTest {
+public class DruidScanQueryTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -53,13 +45,13 @@ public class DruidSearchQueryTest {
         objectMapper = new ObjectMapper();
     }
 
+
     @Test
     public void testSampleQuery() throws JsonProcessingException, JSONException {
 
-        List<DruidDimension> searchDimensions
-                = Arrays.asList(new SimpleDimension("dim1"), new SimpleDimension("dim2"));
 
-        SearchQuerySpec searchQuerySpec = new InsensitiveContainsSearchQuerySpec("Ke");
+        List<String> searchDimensions
+                = Arrays.asList("dim1","dim2");
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
@@ -67,30 +59,35 @@ public class DruidSearchQueryTest {
                 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidSearchQuery query = DruidSearchQuery.builder()
+        DruidFilter filter = new SelectorFilter("dim1", "value1");
+
+        DruidScanQuery query = DruidScanQuery.builder()
                 .dataSource("sample_datasource")
-                .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
-                .searchDimensions(searchDimensions)
-                .query(searchQuerySpec)
-                .sort(SortingOrder.LEXICOGRAPHIC)
+                .columns(searchDimensions)
+                .filter(filter)
+                .resultFormat(ResultFormat.LIST)
                 .intervals(Collections.singletonList(interval))
+                .batchSize(10000)
+                .limit(1000L)
+                .legacy(true)
                 .build();
 
         String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
+                "  \"queryType\": \"scan\",\n" +
                 "  \"dataSource\": \"sample_datasource\",\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"searchDimensions\": [\n" +
+                "  \"columns\": [\n" +
                 "    \"dim1\",\n" +
                 "    \"dim2\"\n" +
                 "  ],\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
+                "  \"filter\": {\n" +
+                "    \"type\": \"selector\",\n" +
+                "    \"dimension\": \"dim1\",\n" +
+                "    \"value\": \"value1\"\n" +
                 "  },\n" +
-                "  \"sort\" : {\n" +
-                "    \"type\": \"lexicographic\"\n" +
-                "  }," +
+                "  \"resultFormat\": \"list\",\n" +
+                "  \"batchSize\": 10000,\n" +
+                "  \"limit\": 1000,\n" +
+                "  \"legacy\": true,\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
                 "  ]" +
@@ -98,12 +95,12 @@ public class DruidSearchQueryTest {
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+
     }
 
     @Test
     public void testRequiredFields() throws JsonProcessingException, JSONException {
 
-        SearchQuerySpec searchQuerySpec = new InsensitiveContainsSearchQuerySpec("Ke");
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
@@ -111,21 +108,14 @@ public class DruidSearchQueryTest {
                 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidSearchQuery query = DruidSearchQuery.builder()
+        DruidScanQuery query = DruidScanQuery.builder()
                 .dataSource("sample_datasource")
-                .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
-                .query(searchQuerySpec)
                 .intervals(Collections.singletonList(interval))
                 .build();
 
         String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
+                "  \"queryType\": \"scan\",\n" +
                 "  \"dataSource\": \"sample_datasource\",\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
-                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
                 "  ]" +
@@ -135,13 +125,8 @@ public class DruidSearchQueryTest {
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
-
-        List<DruidDimension> searchDimensions
-                = Arrays.asList(new SimpleDimension("dim1"), new SimpleDimension("dim2"));
-
-        SearchQuerySpec searchQuerySpec = new InsensitiveContainsSearchQuerySpec("Ke");
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionLimitCheck() {
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
@@ -149,54 +134,79 @@ public class DruidSearchQueryTest {
                 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidFilter druidFilter = new SelectorFilter("Dim", "You");
-
-        Context context = Context.builder()
-                .useCache(true)
+        DruidScanQuery query = DruidScanQuery.builder()
+                .dataSource("sample_datasource")
+                .intervals(Collections.singletonList(interval))
+                .limit(-1L)
                 .build();
 
-        DruidSearchQuery query = DruidSearchQuery.builder()
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionBatchSizeCheck() {
+
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidScanQuery query = DruidScanQuery.builder()
                 .dataSource("sample_datasource")
-                .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
-                .filter(druidFilter)
-                .limit(16)
-                .searchDimensions(searchDimensions)
-                .query(searchQuerySpec)
-                .sort(SortingOrder.LEXICOGRAPHIC)
                 .intervals(Collections.singletonList(interval))
-                .context(context)
+                .batchSize(-1)
+                .build();
+
+    }
+
+    @Test
+    public void testSampleQueryWithEmptyLines() throws JsonProcessingException, JSONException {
+
+
+        List<String> searchDimensions
+                = Arrays.asList();
+
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        DruidFilter filter = new SelectorFilter("dim1", "value1");
+
+        DruidScanQuery query = DruidScanQuery.builder()
+                .dataSource("sample_datasource")
+                .columns(searchDimensions)
+                .filter(filter)
+                .resultFormat(ResultFormat.LIST)
+                .intervals(Collections.singletonList(interval))
+                .batchSize(10000)
+                .limit(1000L)
+                .legacy(true)
                 .build();
 
         String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
+                "  \"queryType\": \"scan\",\n" +
                 "  \"dataSource\": \"sample_datasource\",\n" +
-                "  \"granularity\": \"day\",\n" +
+                "  \"columns\": [\n" +
+                "],\n" +
                 "  \"filter\": {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"Dim\",\n" +
-                "        \"value\": \"You\"\n" +
-                "    },\n" +
-                "    \"limit\": 16," +
-                "  \"searchDimensions\": [\n" +
-                "    \"dim1\",\n" +
-                "    \"dim2\"\n" +
-                "  ],\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
+                "    \"type\": \"selector\",\n" +
+                "    \"dimension\": \"dim1\",\n" +
+                "    \"value\": \"value1\"\n" +
                 "  },\n" +
-                "  \"sort\" : {\n" +
-                "    \"type\": \"lexicographic\"\n" +
-                "  }," +
+                "  \"resultFormat\": \"list\",\n" +
+                "  \"batchSize\": 10000,\n" +
+                "  \"limit\": 1000,\n" +
+                "  \"legacy\": true,\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]," +
-                "  \"context\": {\n" +
-                "    \"useCache\" : true\n" +
-                "    }" +
+                "  ]" +
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+
     }
 }
+

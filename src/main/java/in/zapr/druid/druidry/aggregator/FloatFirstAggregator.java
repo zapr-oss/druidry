@@ -15,27 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package in.zapr.druid.druidry.aggregator;
 
-package in.zapr.druid.druidry.client.exception;
-
-import in.zapr.druid.druidry.client.DruidError;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
-public class QueryException extends DruidryException {
+@Getter
+@EqualsAndHashCode(callSuper = true)
+public class FloatFirstAggregator extends DruidAggregator {
+    private static final String FLOAT_FIRST_AGGREGATOR = "floatFirst";
+    private String fieldName;
 
-    @Getter
-    private DruidError druidError;
-
-    public QueryException(Exception e) {
-        super(e);
-    }
-
-    public QueryException(String message) {
-        super(message);
-    }
-
-    public QueryException(DruidError error) {
-        super(error.getErrorMessage());
-        this.druidError = error;
+    public FloatFirstAggregator(@NonNull String name, @NonNull String fieldName) {
+        this.type = FLOAT_FIRST_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
     }
 }
