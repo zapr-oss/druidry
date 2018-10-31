@@ -29,7 +29,8 @@ public enum QueryType {
     SEGMENT_METADATA("segmentMetadata"),
     DATASOURCE_METADATA("dataSourceMetadata"),
     SEARCH("search"),
-    SCAN("scan");
+    SCAN("scan"),
+    SELECT("select");
 
     private String value;
 
