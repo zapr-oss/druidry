@@ -19,7 +19,6 @@
 package in.zapr.druid.druidry.limitSpec.orderByColumnSpec;
 
 import in.zapr.druid.druidry.SortingOrder;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

@@ -28,7 +28,8 @@ public enum QueryType {
     TIME_BOUNDARY("timeBoundary"),
     SEGMENT_METADATA("segmentMetadata"),
     DATASOURCE_METADATA("dataSourceMetadata"),
-    SEARCH("search");
+    SEARCH("search"),
+    SCAN("scan");
 
     private String value;
 

@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package in.zapr.druid.druidry.query.aggregation;
+package in.zapr.druid.druidry.query.scan;
+
+import com.google.common.base.Preconditions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -24,12 +26,9 @@ import java.util.List;
 
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.granularity.Granularity;
-import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
-import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,34 +38,33 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class DruidGroupByQuery extends DruidAggregationQuery {
+public class DruidScanQuery extends DruidQuery {
 
-    private DefaultLimitSpec limitSpec;
-    private String having;
-
-    @NonNull
-    private List<DruidDimension> dimensions;
+    private DruidFilter filter;
+    private Integer batchSize;
+    private List<Interval> intervals;
+    private List<String> columns;
+    private ResultFormat resultFormat;
+    private Long limit;
+    private Boolean legacy;
 
     @Builder
-    private DruidGroupByQuery(@NonNull String dataSource,
-                              @NonNull List<DruidDimension> dimensions,
-                              DefaultLimitSpec limitSpec,
-                              @NonNull Granularity granularity,
-                              DruidFilter filter,
-                              List<DruidAggregator> aggregators,
-                              List<DruidPostAggregator> postAggregators,
-                              @NonNull List<Interval> intervals,
-                              Context context) {
-
-        this.queryType = QueryType.GROUP_BY;
-        this.dataSource = dataSource;
-        this.dimensions = dimensions;
-        this.limitSpec = limitSpec;
-        this.granularity = granularity;
+    private DruidScanQuery(@NonNull String dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat, Long limit, Boolean legacy, Context context) {
         this.filter = filter;
-        this.aggregations = aggregators;
-        this.postAggregations = postAggregators;
         this.intervals = intervals;
+        this.columns = columns;
+        this.resultFormat = resultFormat;
+        this.queryType = QueryType.SCAN;
         this.context = context;
+        this.dataSource = dataSource;
+        this.legacy = legacy;
+        this.limit = limit;
+        this.batchSize = batchSize;
+        if (limit != null) {
+            Preconditions.checkArgument(limit > 0, "limit specified must be more than 0");
+        }
+        if (batchSize != null) {
+            Preconditions.checkArgument(batchSize > 0, "batchSize specified must be more than 0");
+        }
     }
 }
