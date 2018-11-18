@@ -21,25 +21,20 @@ package in.zapr.druid.druidry.query.select;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.filter.SelectorFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;
-import in.zapr.druid.druidry.query.scan.DruidScanQuery;
-import in.zapr.druid.druidry.query.scan.ResultFormat;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class DruidSelectQueryTest {
     private static ObjectMapper objectMapper;
@@ -129,6 +124,58 @@ public class DruidSelectQueryTest {
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullableDataSource() {
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        PagingSpec pagingSpec = new PagingSpec(5, new HashMap<>());
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
+
+        DruidSelectQuery.builder()
+                .descending(false)
+                .granularity(granularity)
+                .intervals(Collections.singletonList(interval))
+                .pagingSpec(pagingSpec)
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullableInterval() {
+        PagingSpec pagingSpec = new PagingSpec(5, new HashMap<>());
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
+
+        DruidSelectQuery.builder()
+                .dataSource("dataSource")
+                .descending(false)
+                .granularity(granularity)
+                .pagingSpec(pagingSpec)
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullablePagingSpec() {
+        DateTime startTime = new DateTime(2013, 1, 1, 0,
+                0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0,
+                0, 0, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+
+        Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
+
+        DruidSelectQuery.builder()
+                .dataSource("dataSource")
+                .descending(false)
+                .granularity(granularity)
+                .intervals(Collections.singletonList(interval))
+                .build();
     }
 }
 
