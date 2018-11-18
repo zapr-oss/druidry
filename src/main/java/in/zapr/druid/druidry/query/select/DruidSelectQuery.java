@@ -30,6 +30,10 @@ import lombok.NonNull;
 
 import java.util.List;
 
+/**
+ * Generate Druid select query.
+ * See documentation http://druid.io/docs/latest/querying/select-query.html
+ */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
