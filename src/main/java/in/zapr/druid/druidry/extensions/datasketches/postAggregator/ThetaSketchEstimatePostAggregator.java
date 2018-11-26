@@ -16,6 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Getter;
 import lombok.NonNull;
@@ -27,11 +28,23 @@ public class ThetaSketchEstimatePostAggregator extends DruidPostAggregator {
 
     private DruidPostAggregator field;
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int errorBoundsStdDev;
+
     public ThetaSketchEstimatePostAggregator(@NonNull String name,
                                              @NonNull DruidPostAggregator field) {
         this.type = THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
+    }
+
+    public ThetaSketchEstimatePostAggregator(@NonNull String name,
+                                             @NonNull DruidPostAggregator field,
+                                             int errorBoundsStdDev) {
+        this.type = THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.field = field;
+        this.errorBoundsStdDev = errorBoundsStdDev;
     }
 
 }
