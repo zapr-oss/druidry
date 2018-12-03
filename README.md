@@ -204,6 +204,7 @@ Aggregation Queries
 * LongFirst
 * LongLast
 * ThetaSketch
+* DistinctCount
 
 #### Filters
 
