@@ -41,11 +41,12 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
 
     private DefaultLimitSpec limitSpec;
     private String having;
+    @NonNull
     private List<DruidDimension> dimensions;
 
     @Builder
     private DruidGroupByQuery(@NonNull String dataSource,
-                              List<DruidDimension> dimensions,
+                              @NonNull List<DruidDimension> dimensions,
                               DefaultLimitSpec limitSpec,
                               @NonNull Granularity granularity,
                               DruidFilter filter,
