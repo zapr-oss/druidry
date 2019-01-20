@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.9.8</jackson.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.16.14</lombok.version>
         <testng.version>6.11</testng.version>
