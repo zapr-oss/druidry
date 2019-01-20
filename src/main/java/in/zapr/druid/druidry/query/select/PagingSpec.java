@@ -13,31 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package in.zapr.druid.druidry.query.select;
 
-package in.zapr.druid.druidry.query;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Map;
 
-public enum QueryType {
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@RequiredArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class PagingSpec {
+    @NonNull
+    private Integer threshold;
 
-    TIMESERIES("timeseries"),
-    TOPN("topN"),
-    GROUP_BY("groupBy"),
-    TIME_BOUNDARY("timeBoundary"),
-    SEGMENT_METADATA("segmentMetadata"),
-    DATASOURCE_METADATA("dataSourceMetadata"),
-    SEARCH("search"),
-    SCAN("scan"),
-    SELECT("select");
+    private Boolean fromNext;
 
-    private String value;
-
-    QueryType(String value) {
-        this.value = value;
-    }
-
-    @JsonValue
-    public String getQueryType() {
-        return value;
-    }
+    @NonNull
+    private Map<String, Integer> pagingIdentifiers;
 }

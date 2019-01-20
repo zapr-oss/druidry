@@ -43,4 +43,9 @@ public class SelectorFilter extends DruidFilter {
         this(dimension);
         this.value = value;
     }
+
+    public SelectorFilter(@NonNull String dimension, Long value) {
+        this(dimension);
+        this.value = value;
+    }
 }

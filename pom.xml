@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>2.10</version>
+    <version>2.11</version>
 
     <name>Druidry - Druid Java Client</name>
     <description>Druidry is an open-source Java based utility library which supports creating
@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.9.8</jackson.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.16.14</lombok.version>
         <testng.version>6.11</testng.version>
@@ -236,13 +236,19 @@
             <name>Gagan Gupta</name>
             <email>gagan@zapr.in</email>
             <organization>ZAPR Media Labs</organization>
-            <organizationUrl>http://www.zapr.in</organizationUrl>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
         </developer>
         <developer>
             <name>Nihit Alamuru</name>
             <email>nihit@zapr.in</email>
             <organization>ZAPR Media Labs</organization>
-            <organizationUrl>http://www.zapr.in</organizationUrl>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
+        </developer>
+        <developer>
+            <name>Abhi Sapariya</name>
+            <email>abhi@zapr.in</email>
+            <organization>ZAPR Media Labs</organization>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
         </developer>
     </developers>
 
