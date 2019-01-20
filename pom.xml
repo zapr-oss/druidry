@@ -236,13 +236,19 @@
             <name>Gagan Gupta</name>
             <email>gagan@zapr.in</email>
             <organization>ZAPR Media Labs</organization>
-            <organizationUrl>http://www.zapr.in</organizationUrl>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
         </developer>
         <developer>
             <name>Nihit Alamuru</name>
             <email>nihit@zapr.in</email>
             <organization>ZAPR Media Labs</organization>
-            <organizationUrl>http://www.zapr.in</organizationUrl>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
+        </developer>
+        <developer>
+            <name>Abhi Sapariya</name>
+            <email>abhi@zapr.in</email>
+            <organization>ZAPR Media Labs</organization>
+            <organizationUrl>https://www.zapr.in</organizationUrl>
         </developer>
     </developers>
 
