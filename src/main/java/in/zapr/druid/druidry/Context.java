@@ -49,6 +49,9 @@ public class Context {
     private Integer maxIntermediateRows;
     private Boolean groupByIsSingleThreaded;
 
+    private Boolean applyLimitPushDown;
+    private Boolean forceLimitPushDown;
+
 
     public Integer getTimeoutInMilliSeconds() {
         return (timeoutInMilliSeconds != null && timeoutInMilliSeconds > 0) ?
