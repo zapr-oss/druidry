@@ -18,7 +18,8 @@ package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.format.DateTimeFormat;
+
 import java.util.Locale;
 
 import in.zapr.druid.druidry.granularity.Granularity;
@@ -29,7 +30,7 @@ import lombok.Getter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TimeFormatExtractionFunction extends ExtractionFunction {
 
-    private SimpleDateFormat format;
+    private String format;
 
     private Locale locale;
     private Granularity granularity;
@@ -39,7 +40,7 @@ public class TimeFormatExtractionFunction extends ExtractionFunction {
     private String timeZone;
 
     @Builder
-    private TimeFormatExtractionFunction(SimpleDateFormat format, Locale locale, Granularity granularity, String
+    private TimeFormatExtractionFunction(String format, Locale locale, Granularity granularity, String
             timeZone, Boolean asMillis) {
         this.type = TIME_FORMAT_TYPE;
         this.format = format;
@@ -52,9 +53,5 @@ public class TimeFormatExtractionFunction extends ExtractionFunction {
 
     public String getLocale() {
         return locale == null ? null : locale.toLanguageTag();
-    }
-
-    public String getFormat() {
-        return format == null ? null : format.toPattern();
     }
 }
