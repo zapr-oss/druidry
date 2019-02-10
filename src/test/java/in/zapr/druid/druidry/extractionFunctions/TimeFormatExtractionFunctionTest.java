@@ -19,8 +19,6 @@ package in.zapr.druid.druidry.extractionFunctions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.granularity.DurationGranularity;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -29,8 +27,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import in.zapr.druid.druidry.granularity.DurationGranularity;
 
 public class TimeFormatExtractionFunctionTest {
 
@@ -44,7 +43,7 @@ public class TimeFormatExtractionFunctionTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String format = "dd-MM-yyyy";
         Locale locale = Locale.FRENCH;
 
         String timeZone = "America/Montreal";
@@ -54,7 +53,7 @@ public class TimeFormatExtractionFunctionTest {
         DurationGranularity spec = new DurationGranularity(7200000, originDate);
 
         TimeFormatExtractionFunction timeFormatExtractonFunction = TimeFormatExtractionFunction.builder()
-                .format(sdf)
+                .format(format)
                 .timeZone(timeZone)
                 .locale(locale)
                 .granularity(spec)
@@ -72,12 +71,11 @@ public class TimeFormatExtractionFunctionTest {
 
     @Test
     public void TestRequiredFields() throws JsonProcessingException, JSONException {
-        TimeFormatExtractionFunction timeFormatExtractonFunction = TimeFormatExtractionFunction.builder().build();
+        TimeFormatExtractionFunction timeFormatExtractionFunction = TimeFormatExtractionFunction.builder().build();
 
-        String actualJSON = objectMapper.writeValueAsString(timeFormatExtractonFunction);
+        String actualJSON = objectMapper.writeValueAsString(timeFormatExtractionFunction);
         String expectedJSONString = "{ \"type\" : \"timeFormat\" }\n";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 }
