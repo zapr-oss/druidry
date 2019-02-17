@@ -134,9 +134,35 @@ public class FilteredDimensionTest {
         JSONAssert.assertEquals(expectedJSONString, jsonOutput, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-
     @Test
     public void testListFilteredDimensionIsWhiteListedFalse() throws JsonProcessingException, JSONException {
+        DimensionSpec dimensionSpec = DefaultDimension.builder()
+                .dimension("system_label_values")
+                .outputName("system_label_values")
+                .build();
+
+        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
+                .dimensionSpec(dimensionSpec)
+                .values(Arrays.asList("compute.googleapis.com/cores`1"))
+                .whitelist(false)
+                .build();
+
+        String jsonOutput = objectMapper.writeValueAsString(listFilteredDimension);
+        String expectedJSONString = "{\n" +
+                "      \"type\": \"listFiltered\",\n" +
+                "      \"delegate\": {\n" +
+                "        \"type\": \"default\",\n" +
+                "        \"dimension\": \"system_label_values\",\n" +
+                "        \"outputName\": \"system_label_values\"\n" +
+                "      },\n" +
+                "      \"values\": [\"compute.googleapis.com/cores`1\"],\n" +
+                "      \"isWhitelist\":false\n" +
+                "    }";
+        JSONAssert.assertEquals(expectedJSONString, jsonOutput, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testListFilteredDimensionIsWhiteListedDefault() throws JsonProcessingException, JSONException {
         DimensionSpec dimensionSpec = DefaultDimension.builder()
                 .dimension("system_label_values")
                 .outputName("system_label_values")
@@ -155,8 +181,7 @@ public class FilteredDimensionTest {
                 "        \"dimension\": \"system_label_values\",\n" +
                 "        \"outputName\": \"system_label_values\"\n" +
                 "      },\n" +
-                "      \"values\": [\"compute.googleapis.com/cores`1\"],\n" +
-                "      \"isWhitelist\":false\n" +
+                "      \"values\": [\"compute.googleapis.com/cores`1\"]\n" +
                 "    }";
         JSONAssert.assertEquals(expectedJSONString, jsonOutput, JSONCompareMode.NON_EXTENSIBLE);
     }

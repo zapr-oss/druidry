@@ -16,10 +16,10 @@ import java.util.List;
 public class ListFilteredDimension extends FilteredDimension {
     protected List<String> values;
     @JsonProperty(value = "isWhitelist")
-    protected boolean whitelist;
+    protected Boolean whitelist;
 
     @Builder
-    public ListFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull List<String> values, boolean whitelist) {
+    public ListFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull List<String> values, Boolean whitelist) {
         this.delegate = dimensionSpec;
         this.type = FilteredDimensionType.LIST_FILTERED;
         this.values = values;
