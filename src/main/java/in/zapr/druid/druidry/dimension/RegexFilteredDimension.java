@@ -12,7 +12,7 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 public class RegexFilteredDimension extends FilteredDimension {
-    protected String pattern;
+    private String pattern;
 
     @Builder
     public RegexFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull String pattern) {
