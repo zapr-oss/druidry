@@ -15,8 +15,10 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +26,10 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.extensions.histogram.postAggregator.QuantilesPostAggregator;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -62,13 +64,13 @@ public class QuantilesPostAggregatorTest {
   }
 
   @Test(expectedExceptions = NullPointerException.class)
-  public void testNullName() throws JsonProcessingException, JSONException {
+  public void testNullName() {
     QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name(null)
         .fieldName("timeAgg").probabilities(probabilities).build();
   }
 
   @Test(expectedExceptions = NullPointerException.class)
-  public void testNullFieldName() throws JsonProcessingException, JSONException {
+  public void testNullFieldName() {
     QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name("quantiles")
         .fieldName(null).probabilities(probabilities).build();
   }
