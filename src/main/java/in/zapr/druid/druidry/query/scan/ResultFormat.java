@@ -25,7 +25,8 @@ public enum ResultFormat {
     VALUE_VECTOR("valueVector");
 
     private String value;
-     ResultFormat(String value){
+
+    ResultFormat(String value) {
         this.value = value;
     }
 

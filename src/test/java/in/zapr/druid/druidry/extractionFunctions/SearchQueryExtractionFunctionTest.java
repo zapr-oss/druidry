@@ -19,13 +19,13 @@ package in.zapr.druid.druidry.extractionFunctions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.filter.searchQuerySpec.RegexSearchQuerySpec;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import in.zapr.druid.druidry.filter.searchQuerySpec.RegexSearchQuerySpec;
 
 public class SearchQueryExtractionFunctionTest {
     private static ObjectMapper objectMapper;

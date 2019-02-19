@@ -16,6 +16,9 @@
 package in.zapr.druid.druidry.query.select;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
+
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.dimension.DruidDimension;
@@ -28,11 +31,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.List;
-
 /**
- * Generate Druid select query.
- * See documentation http://druid.io/docs/latest/querying/select-query.html
+ * Generate Druid select query. See documentation http://druid.io/docs/latest/querying/select-query.html
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)

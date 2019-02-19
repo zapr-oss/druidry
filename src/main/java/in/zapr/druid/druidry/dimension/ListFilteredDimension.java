@@ -2,13 +2,14 @@ package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 import in.zapr.druid.druidry.dimension.enums.FilteredDimensionType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-
-import java.util.List;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
