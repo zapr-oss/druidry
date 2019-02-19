@@ -16,9 +16,14 @@
 package in.zapr.druid.druidry.query.select;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 
 import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)

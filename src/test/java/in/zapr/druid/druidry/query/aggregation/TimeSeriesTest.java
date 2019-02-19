@@ -19,6 +19,20 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
@@ -37,20 +51,6 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
-import in.zapr.druid.druidry.query.aggregation.DruidTimeSeriesQuery;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 public class TimeSeriesTest {
     private static ObjectMapper objectMapper;

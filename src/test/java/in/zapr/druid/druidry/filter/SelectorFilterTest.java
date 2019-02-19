@@ -73,6 +73,7 @@ public class SelectorFilterTest {
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
+
     @Test(expectedExceptions = NullPointerException.class)
     public void testDimensionMissing() {
         String dimension = null;
