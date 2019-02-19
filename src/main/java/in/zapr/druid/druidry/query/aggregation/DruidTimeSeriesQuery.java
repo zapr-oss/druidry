@@ -27,6 +27,7 @@ import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class DruidTimeSeriesQuery extends DruidAggregationQuery {
     @Builder
     private DruidTimeSeriesQuery(@NonNull String dataSource, Boolean descending,
                                  @NonNull List<Interval> intervals, @NonNull Granularity granularity,
+                                 List<DruidVirtualColumn> virtualColumns,
                                  DruidFilter filter, List<DruidAggregator> aggregators,
                                  List<DruidPostAggregator> postAggregators, Context context) {
 
@@ -50,6 +52,7 @@ public class DruidTimeSeriesQuery extends DruidAggregationQuery {
         this.descending = descending;
         this.intervals = intervals;
         this.granularity = granularity;
+        this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.aggregations = aggregators;
         this.postAggregations = postAggregators;

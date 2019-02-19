@@ -29,6 +29,7 @@ import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,6 +51,7 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
                               @NonNull List<DruidDimension> dimensions,
                               DefaultLimitSpec limitSpec,
                               @NonNull Granularity granularity,
+                              List<DruidVirtualColumn> virtualColumns,
                               DruidFilter filter,
                               List<DruidAggregator> aggregators,
                               List<DruidPostAggregator> postAggregators,
@@ -61,6 +63,7 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
         this.dimensions = dimensions;
         this.limitSpec = limitSpec;
         this.granularity = granularity;
+        this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.aggregations = aggregators;
         this.postAggregations = postAggregators;
