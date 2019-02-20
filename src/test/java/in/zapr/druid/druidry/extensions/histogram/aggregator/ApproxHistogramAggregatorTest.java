@@ -30,47 +30,51 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ApproxHistogramAggregatorTest {
 
-  private static ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper;
 
-  @BeforeClass
-  public void init() {
+    @BeforeClass
+    public void init() {
     objectMapper = new ObjectMapper();
   }
 
-  @Test
-  public void testAllFields() throws JsonProcessingException, JSONException {
+    @Test
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-    ApproxHistogramAggregator approxHistogramAgg =
-        ApproxHistogramAggregator.builder().name("histogram").fieldName("_loadtime").resolution(100)
-            .lowerLimit(-2.50F).upperLimit(2.50F).numberOfBuckets(10).build();
+        ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
+                .name("histogram")
+                .fieldName("_loadtime")
+                .resolution(100)
+                .lowerLimit(-2.50F)
+                .upperLimit(2.50F)
+                .numberOfBuckets(10)
+                .build();
 
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("type", "approxHistogram");
-    jsonObject.put("name", "histogram");
-    jsonObject.put("fieldName", "_loadtime");
-    jsonObject.put("resolution", 100);
-    jsonObject.put("lowerLimit", -2.50F);
-    jsonObject.put("upperLimit", 2.50F);
-    jsonObject.put("numBuckets", 10);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "approxHistogram");
+        jsonObject.put("name", "histogram");
+        jsonObject.put("fieldName", "_loadtime");
+        jsonObject.put("resolution", 100);
+        jsonObject.put("lowerLimit", -2.50F);
+        jsonObject.put("upperLimit", 2.50F);
+        jsonObject.put("numBuckets", 10);
 
-    String actualJSON = objectMapper.writeValueAsString(approxHistogramAgg);
-    String expectedJSON = jsonObject.toString();
-    JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-  }
+        String actualJSON = objectMapper.writeValueAsString(approxHistogramAgg);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
 
-  @Test(expectedExceptions = NullPointerException.class)
-  public void testNullName() throws JsonProcessingException, JSONException {
-    ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder().name(null)
-        .fieldName("_loadtime").resolution(100).lowerLimit(Float.NEGATIVE_INFINITY)
-        .upperLimit(Float.POSITIVE_INFINITY).numberOfBuckets(10).build();
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullName() {
+        ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder().name(null)
+            .fieldName("_loadtime").resolution(100).lowerLimit(Float.NEGATIVE_INFINITY)
+            .upperLimit(Float.POSITIVE_INFINITY).numberOfBuckets(10).build();
 
-  }
+    }
 
-  @Test(expectedExceptions = NullPointerException.class)
-  public void testNullFieldName() throws JsonProcessingException, JSONException {
-    ApproxHistogramAggregator approxHistogramAgg =
-        ApproxHistogramAggregator.builder().name("druidry").fieldName(null).resolution(100)
-            .lowerLimit(Float.NEGATIVE_INFINITY).upperLimit(Float.POSITIVE_INFINITY).build();
-  }
-
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNullFieldName() {
+        ApproxHistogramAggregator approxHistogramAgg =
+            ApproxHistogramAggregator.builder().name("druidry").fieldName(null).resolution(100)
+                .lowerLimit(Float.NEGATIVE_INFINITY).upperLimit(Float.POSITIVE_INFINITY).build();
+    }
 }

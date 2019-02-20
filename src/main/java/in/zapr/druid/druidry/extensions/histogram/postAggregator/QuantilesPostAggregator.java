@@ -29,17 +29,16 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class QuantilesPostAggregator extends DruidPostAggregator {
 
-  private static final String QUANTILE_POST_AGGREGATOR_TYPE = "quantiles";
-  private String fieldName;
-  private Set<Float> probabilities;
+    private static final String QUANTILE_POST_AGGREGATOR_TYPE = "quantiles";
+    private String fieldName;
+    private Set<Float> probabilities;
 
-  @Builder
-  private QuantilesPostAggregator(@NonNull String name, @NonNull String fieldName,
-      @NonNull Set<Float> probabilities) {
-    this.type = QUANTILE_POST_AGGREGATOR_TYPE;
-    this.name = name;
-    this.fieldName = fieldName;
-    this.probabilities = probabilities;
-  }
-
+    @Builder
+    private QuantilesPostAggregator(@NonNull String name, @NonNull String fieldName,
+                                    @NonNull Set<Float> probabilities) {
+        this.type = QUANTILE_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.probabilities = probabilities;
+    }
 }
