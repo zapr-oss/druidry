@@ -19,6 +19,7 @@ package in.zapr.druid.druidry.query.select;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource("wikipedia")
+                .dataSource(new TableDataSource("wikipedia"))
                 .descending(false)
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))
@@ -66,7 +67,10 @@ public class DruidSelectQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": \"wikipedia\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"wikipedia\"\n" +
+                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
                 "  ]," +
@@ -97,7 +101,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource("wikipedia")
+                .dataSource(new TableDataSource("wikipedia"))
                 .descending(false)
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))
@@ -106,7 +110,10 @@ public class DruidSelectQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": \"wikipedia\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"wikipedia\"\n" +
+                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
                 "  ]," +
@@ -152,7 +159,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery.builder()
-                .dataSource("dataSource")
+                .dataSource(new TableDataSource("dataSource"))
                 .descending(false)
                 .granularity(granularity)
                 .pagingSpec(pagingSpec)
@@ -170,7 +177,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery.builder()
-                .dataSource("dataSource")
+                .dataSource(new TableDataSource("dataSource"))
                 .descending(false)
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))

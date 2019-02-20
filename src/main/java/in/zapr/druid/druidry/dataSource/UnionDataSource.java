@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query;
+package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.dataSource.DataSource;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.List;
+
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
-public abstract class DruidQuery {
+@EqualsAndHashCode(callSuper = true)
+public class UnionDataSource extends DataSource{
 
     @NonNull
-    protected DataSource dataSource;
+    private List<String> dataSources;
 
-    protected Context context;
-
-    // Not making it public since this should be set by its children's constructor.
-    @NonNull
-    protected QueryType queryType;
+    @Builder
+    public UnionDataSource(@NonNull List<String> dataSources) {
+        this.type = DataSourceType.UNION;
+        this.dataSources = dataSources;
+    }
 }

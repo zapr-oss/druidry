@@ -19,6 +19,7 @@ package in.zapr.druid.druidry.query.scan;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -60,7 +61,7 @@ public class DruidScanQueryTest {
         DruidFilter filter = new SelectorFilter("dim1", "value1");
 
         DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .columns(searchDimensions)
                 .filter(filter)
                 .resultFormat(ResultFormat.LIST)
@@ -72,7 +73,10 @@ public class DruidScanQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"columns\": [\n" +
                 "    \"dim1\",\n" +
                 "    \"dim2\"\n" +
@@ -107,13 +111,16 @@ public class DruidScanQueryTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .intervals(Collections.singletonList(interval))
                 .build();
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
                 "  ]" +
@@ -133,7 +140,7 @@ public class DruidScanQueryTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .intervals(Collections.singletonList(interval))
                 .limit(-1L)
                 .build();
@@ -150,7 +157,7 @@ public class DruidScanQueryTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .intervals(Collections.singletonList(interval))
                 .batchSize(-1)
                 .build();
@@ -173,7 +180,7 @@ public class DruidScanQueryTest {
         DruidFilter filter = new SelectorFilter("dim1", "value1");
 
         DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .columns(searchDimensions)
                 .filter(filter)
                 .resultFormat(ResultFormat.LIST)
@@ -185,7 +192,10 @@ public class DruidScanQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"columns\": [\n" +
                 "],\n" +
                 "  \"filter\": {\n" +

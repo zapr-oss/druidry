@@ -19,6 +19,7 @@ package in.zapr.druid.druidry.query.search;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -66,7 +67,7 @@ public class DruidSearchQueryTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidSearchQuery query = DruidSearchQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
                 .searchDimensions(searchDimensions)
                 .query(searchQuerySpec)
@@ -76,7 +77,10 @@ public class DruidSearchQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"searchDimensions\": [\n" +
                 "    \"dim1\",\n" +
@@ -110,7 +114,7 @@ public class DruidSearchQueryTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidSearchQuery query = DruidSearchQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
                 .query(searchQuerySpec)
                 .intervals(Collections.singletonList(interval))
@@ -118,7 +122,10 @@ public class DruidSearchQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"query\": {\n" +
                 "    \"type\": \"insensitive_contains\",\n" +
@@ -154,7 +161,7 @@ public class DruidSearchQueryTest {
                 .build();
 
         DruidSearchQuery query = DruidSearchQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
                 .filter(druidFilter)
                 .limit(16)
@@ -167,7 +174,10 @@ public class DruidSearchQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"filter\": {\n" +
                 "        \"type\": \"selector\",\n" +
