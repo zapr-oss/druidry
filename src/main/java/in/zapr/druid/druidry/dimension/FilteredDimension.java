@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package in.zapr.druid.druidry.query.select;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+package in.zapr.druid.druidry.dimension;
 
-import java.util.Map;
-
-import lombok.AllArgsConstructor;
+import in.zapr.druid.druidry.dimension.enums.FilteredDimensionType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@RequiredArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class PagingSpec {
+@EqualsAndHashCode(callSuper = true)
+public abstract class FilteredDimension extends DruidDimension {
     @NonNull
-    private Integer threshold;
-
-    private Boolean fromNext;
-
+    protected DimensionSpec delegate;
     @NonNull
-    private Map<String, Integer> pagingIdentifiers;
+    protected FilteredDimensionType type;
+
 }

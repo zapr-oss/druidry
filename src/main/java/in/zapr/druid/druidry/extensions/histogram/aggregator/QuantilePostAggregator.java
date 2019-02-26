@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package in.zapr.druid.druidry.query.select;
+
+package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.Map;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@RequiredArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class PagingSpec {
-    @NonNull
-    private Integer threshold;
+public class QuantilePostAggregator extends DruidPostAggregator {
 
-    private Boolean fromNext;
+    private static final String QUANTILE_POST_AGGREGATOR_TYPE = "quantile";
+    private String fieldName;
+    private Float probability;
 
-    @NonNull
-    private Map<String, Integer> pagingIdentifiers;
+    @Builder
+    private QuantilePostAggregator(@NonNull String name, @NonNull String fieldName,
+                                   @NonNull Float probability) {
+        this.type = QUANTILE_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.probability = probability;
+    }
 }

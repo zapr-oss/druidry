@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.aggregator;
+package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,12 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import in.zapr.druid.druidry.filter.SelectorFilter;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-public class FilteredAggregatorTest {
-
+public class EqualBucketsPostAggregatorTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -41,30 +36,39 @@ public class FilteredAggregatorTest {
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
-
-        SelectorFilter filter = new SelectorFilter("dimension", "value");
-        CountAggregator countAggregator = new CountAggregator("Shakespear");
-
-        FilteredAggregator filteredAggregator = new FilteredAggregator(filter, countAggregator);
-
-        JSONObject filterObject = new JSONObject();
-        filterObject.put("type", "selector");
-        filterObject.put("dimension", "dimension");
-        filterObject.put("value", "value");
-
-        JSONObject aggregationObject = new JSONObject();
-        aggregationObject.put("type", "count");
-        aggregationObject.put("name", "Shakespear");
+        EqualBucketsPostAggregator equalBucketsPostAggregator
+                = new EqualBucketsPostAggregator("CarpeDiem", "Seize the Day",
+                14);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "filtered");
-        jsonObject.put("filter", filterObject);
-        jsonObject.put("aggregator", aggregationObject);
+        jsonObject.put("type", "equalBuckets");
+        jsonObject.put("name", "CarpeDiem");
+        jsonObject.put("fieldName", "Seize the Day");
+        jsonObject.put("numBuckets", 14);
 
-        String actualJSON = objectMapper.writeValueAsString(filteredAggregator);
+        String actualJSON = objectMapper.writeValueAsString(equalBucketsPostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    // TODO: Add testcase for equals
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testMissingNameFields() {
+        EqualBucketsPostAggregator equalBucketsPostAggregator
+                = new EqualBucketsPostAggregator(null, "Seize the day",
+                14);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testMissingFieldNameFields() {
+        EqualBucketsPostAggregator equalBucketsPostAggregator
+                = new EqualBucketsPostAggregator("CarpeDiem", null,
+                14);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIllegalNumBucketValue() {
+        EqualBucketsPostAggregator equalBucketsPostAggregator
+                = new EqualBucketsPostAggregator("CarpeDiem", "Seize the day",
+                1);
+    }
 }

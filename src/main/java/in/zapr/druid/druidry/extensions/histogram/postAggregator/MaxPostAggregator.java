@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package in.zapr.druid.druidry.query.select;
+
+package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Map;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@RequiredArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class PagingSpec {
-    @NonNull
-    private Integer threshold;
+public class MaxPostAggregator extends DruidPostAggregator {
 
-    private Boolean fromNext;
+    private static final String MAX_POST_AGGREGATOR_TYPE = "max";
+    private String fieldName;
 
-    @NonNull
-    private Map<String, Integer> pagingIdentifiers;
+    public MaxPostAggregator(@NonNull String name, @NonNull String fieldName) {
+        this.type = MAX_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fieldName = fieldName;
+    }
 }

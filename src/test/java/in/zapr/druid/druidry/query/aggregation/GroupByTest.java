@@ -56,7 +56,6 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
-import in.zapr.druid.druidry.query.aggregation.DruidGroupByQuery;
 
 public class GroupByTest {
     private static ObjectMapper objectMapper;
@@ -182,7 +181,7 @@ public class GroupByTest {
         JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z"));
         expectedQuery.put("intervals", intervalArray);
         expectedQuery.put("granularity", "all");
-        JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1","dim2"));
+        JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
         expectedQuery.put("dimensions", dimensionArray);
 
         JSONAssert.assertEquals(actualJson, expectedQuery, JSONCompareMode.NON_EXTENSIBLE);
@@ -238,7 +237,7 @@ public class GroupByTest {
 
         JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/" +
                 "2012-01-03T00:00:00.000Z"));
-        JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1","dim2"));
+        JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
 
         JSONObject expectedQuery = new JSONObject();
         expectedQuery.put("queryType", "groupBy");

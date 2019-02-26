@@ -18,8 +18,6 @@ package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import org.joda.time.format.DateTimeFormat;
-
 import java.util.Locale;
 
 import in.zapr.druid.druidry.granularity.Granularity;

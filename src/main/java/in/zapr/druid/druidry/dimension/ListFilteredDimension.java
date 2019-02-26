@@ -13,29 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package in.zapr.druid.druidry.query.select;
+
+package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Map;
+import java.util.List;
 
-import lombok.AllArgsConstructor;
+import in.zapr.druid.druidry.dimension.enums.FilteredDimensionType;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@RequiredArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class PagingSpec {
-    @NonNull
-    private Integer threshold;
+@EqualsAndHashCode(callSuper = true)
+public class ListFilteredDimension extends FilteredDimension {
+    private List<String> values;
+    @JsonProperty(value = "isWhitelist")
+    private Boolean whitelist;
 
-    private Boolean fromNext;
+    @Builder
+    public ListFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull List<String> values, Boolean whitelist) {
+        this.delegate = dimensionSpec;
+        this.type = FilteredDimensionType.LIST_FILTERED;
+        this.values = values;
+        this.whitelist = whitelist;
+    }
 
-    @NonNull
-    private Map<String, Integer> pagingIdentifiers;
 }

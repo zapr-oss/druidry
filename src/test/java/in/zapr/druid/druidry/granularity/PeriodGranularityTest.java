@@ -30,9 +30,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class PeriodGranularityTest {
-    private static ObjectMapper objectMapper;
     private final static String PERIOD = "PT1H";
     private final static String TIMEZONE = "Asia/Kolkata";
+    private static ObjectMapper objectMapper;
 
     @BeforeClass
     public void init() {

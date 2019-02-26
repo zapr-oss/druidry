@@ -369,7 +369,7 @@ public class TopNQueryTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void preconditionCheck(){
+    public void preconditionCheck() {
         DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);

@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.extractionFunctions;
+package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import in.zapr.druid.druidry.filter.searchQuerySpec.RegexSearchQuerySpec;
+public class MaxPostAggregatorTest {
 
-public class SearchQueryExtractionFunctionTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -37,25 +37,28 @@ public class SearchQueryExtractionFunctionTest {
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
+        MaxPostAggregator maxPostAggregator
+                = new MaxPostAggregator("CarpeDiem", "Seize the Day");
 
-        RegexSearchQuerySpec regexSearchQuerySpec = RegexSearchQuerySpec.builder()
-                .pattern("some_pattern")
-                .build();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "max");
+        jsonObject.put("name", "CarpeDiem");
+        jsonObject.put("fieldName", "Seize the Day");
 
-        SearchQueryExtractionFunction searchQueryextractionFunction = SearchQueryExtractionFunction.builder()
-                .query(regexSearchQuerySpec)
-                .build();
-
-        String actualJSON = objectMapper.writeValueAsString(searchQueryextractionFunction);
-
-        String expectedJSONString = "{ \"type\" : \"searchQuery\", \"query\" : {\n  \"type\"  : \"regex\",\n  \"pattern\" : \"some_pattern\"\n} }\n\n";
-
-        JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
+        String actualJSON = objectMapper.writeValueAsString(maxPostAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testSearchQueryField() {
-        SearchQueryExtractionFunction searchQueryextractionFunction = SearchQueryExtractionFunction.builder().build();
+    public void testMissingNameFields() {
+        MaxPostAggregator maxPostAggregator
+                = new MaxPostAggregator(null, "Seize the day");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testMissingFieldNameFields() {
+        MaxPostAggregator maxPostAggregator
+                = new MaxPostAggregator("CarpeDiem", null);
     }
 }

@@ -18,11 +18,7 @@ package in.zapr.druid.druidry.query.scan;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.dimension.DruidDimension;
-import in.zapr.druid.druidry.dimension.SimpleDimension;
-import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.filter.SelectorFilter;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -34,6 +30,10 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.filter.DruidFilter;
+import in.zapr.druid.druidry.filter.SelectorFilter;
 
 public class DruidScanQueryTest {
     private static ObjectMapper objectMapper;
@@ -49,7 +49,7 @@ public class DruidScanQueryTest {
 
 
         List<String> searchDimensions
-                = Arrays.asList("dim1","dim2");
+                = Arrays.asList("dim1", "dim2");
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
