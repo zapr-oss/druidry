@@ -19,6 +19,7 @@ package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 import com.google.common.base.Preconditions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Getter;
@@ -29,16 +30,17 @@ import lombok.NonNull;
 public class EqualBucketsPostAggregator extends DruidPostAggregator {
     private static final String EQUAL_BUCKET_POST_AGGREGATOR_TYPE = "equalBuckets";
     private String fieldName;
-    private Integer numBuckets;
+    @JsonProperty("numBuckets")
+    private Integer numberOfBuckets;
 
     public EqualBucketsPostAggregator(@NonNull String name, @NonNull String fieldName,
-                                      @NonNull Integer numBuckets) {
-        Preconditions.checkArgument(numBuckets > 1,
-                "numBuckets should be greater than 1");
+                                      @NonNull Integer numberOfBuckets) {
+        Preconditions.checkArgument(numberOfBuckets > 1,
+                "numberOfBuckets should be greater than 1");
 
         this.type = EQUAL_BUCKET_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;
-        this.numBuckets = numBuckets;
+        this.numberOfBuckets = numberOfBuckets;
     }
 }

@@ -16,6 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
+import com.google.common.base.Preconditions;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
@@ -34,6 +36,10 @@ public class QuantilePostAggregator extends DruidPostAggregator {
     @Builder
     private QuantilePostAggregator(@NonNull String name, @NonNull String fieldName,
                                    @NonNull Float probability) {
+
+        Preconditions.checkArgument(probability >= 0f && probability <= 1f,
+                "Probability should lie between 0 and 1");
+
         this.type = QUANTILE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;

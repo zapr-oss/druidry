@@ -63,4 +63,15 @@ public class QuantilePostAggregatorTest {
                 .fieldName(null).probability(0.5F).build();
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testInvalidGreaterThan1ProbabilityValueName() {
+        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantiles")
+                .fieldName("timeAgg").probability(2F).build();
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testInvalidNegativeProbabilityValueName() {
+        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantiles")
+                .fieldName("timeAgg").probability(-1F).build();
+    }
 }
