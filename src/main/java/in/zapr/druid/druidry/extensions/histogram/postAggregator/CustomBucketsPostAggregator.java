@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.dimension;
-
+package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import in.zapr.druid.druidry.dimension.enums.FilteredDimensionType;
+import java.util.Set;
+
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode(callSuper = true)
-public class RegexFilteredDimension extends FilteredDimension {
-    private String pattern;
+public class CustomBucketsPostAggregator extends DruidPostAggregator {
+
+    private static final String CUSTOMBUCKET_POST_AGGREGATOR_TYPE = "customBuckets";
+    private String fieldName;
+    private Set<Float> breaks;
 
     @Builder
-    public RegexFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull String pattern) {
-        this.pattern = pattern;
-        this.delegate = dimensionSpec;
-        this.type = FilteredDimensionType.REGEX_FILTERED;
+    private CustomBucketsPostAggregator(@NonNull String name, @NonNull String fieldName,
+                                        @NonNull Set<Float> breaks) {
+        this.type = CUSTOMBUCKET_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.breaks = breaks;
     }
-
-
 }

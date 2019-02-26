@@ -14,29 +14,28 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.dimension;
-
+package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import in.zapr.druid.druidry.dimension.enums.FilteredDimensionType;
+import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode(callSuper = true)
-public class RegexFilteredDimension extends FilteredDimension {
-    private String pattern;
+public class QuantilePostAggregator extends DruidPostAggregator {
+
+    private static final String QUANTILE_POST_AGGREGATOR_TYPE = "quantile";
+    private String fieldName;
+    private Float probability;
 
     @Builder
-    public RegexFilteredDimension(@NonNull DimensionSpec dimensionSpec, @NonNull String pattern) {
-        this.pattern = pattern;
-        this.delegate = dimensionSpec;
-        this.type = FilteredDimensionType.REGEX_FILTERED;
+    private QuantilePostAggregator(@NonNull String name, @NonNull String fieldName,
+                                   @NonNull Float probability) {
+        this.type = QUANTILE_POST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.probability = probability;
     }
-
-
 }

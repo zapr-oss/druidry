@@ -206,6 +206,7 @@ Supported Features
 * LongLast
 * ThetaSketch
 * DistinctCount
+* Histogram
 
 #### Filters
 
