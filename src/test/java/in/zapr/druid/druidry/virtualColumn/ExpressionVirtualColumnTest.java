@@ -23,23 +23,35 @@ public class ExpressionVirtualColumnTest {
     }
 
     @Test
-    public void testGeneratedJSON() throws JsonProcessingException, JSONException {
-        ExpressionVirtualColumn column = new ExpressionVirtualColumn("foo", "a + b");
+    public void testAllFields() throws JsonProcessingException, JSONException {
+        ExpressionVirtualColumn column = new ExpressionVirtualColumn("foo", "a + b", OutputType.LONG);
         JSONObject expected = new JSONObject();
         expected.put("type", "expression");
         expected.put("name", "foo");
-        expected.put("outputType", "FLOAT");
-        expected.put("expression", "a + b");
-        String output = objectMapper.writeValueAsString(column);
-        JSONAssert.assertEquals(expected.toString(), output, JSONCompareMode.NON_EXTENSIBLE);
-
-        column = new ExpressionVirtualColumn("bar", "a + b", OutputType.LONG);
-        expected = new JSONObject();
-        expected.put("type", "expression");
-        expected.put("name", "bar");
         expected.put("outputType", "LONG");
         expected.put("expression", "a + b");
-        output = objectMapper.writeValueAsString(column);
-        JSONAssert.assertEquals(expected.toString(), output, JSONCompareMode.NON_EXTENSIBLE);
+        String actualJSON = objectMapper.writeValueAsString(column);
+        JSONAssert.assertEquals(expected.toString(), actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testRequiredFields() throws JsonProcessingException, JSONException {
+        ExpressionVirtualColumn column = new ExpressionVirtualColumn("foo", "a + b", null);
+        JSONObject expected = new JSONObject();
+        expected.put("type", "expression");
+        expected.put("name", "foo");
+        expected.put("expression", "a + b");
+        String actualJSON = objectMapper.writeValueAsString(column);
+        JSONAssert.assertEquals(expected.toString(), actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testNameMissingFields() {
+        new ExpressionVirtualColumn(null, "a + b", null);
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void testExpressionMissingFields() {
+        new ExpressionVirtualColumn("foo", null, null);
     }
 }

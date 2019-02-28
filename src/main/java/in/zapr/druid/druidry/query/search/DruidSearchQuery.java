@@ -16,7 +16,6 @@
 
 package in.zapr.druid.druidry.query.search;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -30,6 +29,7 @@ import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,6 +41,7 @@ import lombok.NonNull;
 public class DruidSearchQuery extends DruidQuery {
 
     private Granularity granularity;
+    private List<DruidVirtualColumn> virtualColumns;
     private DruidFilter filter;
     private Integer limit;
     private List<Interval> intervals;
@@ -51,6 +52,7 @@ public class DruidSearchQuery extends DruidQuery {
     @Builder
     private DruidSearchQuery(@NonNull String dataSource,
                              @NonNull Granularity granularity,
+                             List<DruidVirtualColumn> virtualColumns,
                              DruidFilter filter,
                              Integer limit,
                              @NonNull List<Interval> intervals,
@@ -62,6 +64,7 @@ public class DruidSearchQuery extends DruidQuery {
         this.queryType = QueryType.SEARCH;
         this.dataSource = dataSource;
         this.granularity = granularity;
+        this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.limit = limit;
         this.intervals = intervals;

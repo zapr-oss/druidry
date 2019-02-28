@@ -32,8 +32,10 @@ import java.util.Collections;
 import java.util.List;
 
 import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
+import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
 
 public class DruidScanQueryTest {
     private static ObjectMapper objectMapper;
@@ -62,6 +64,7 @@ public class DruidScanQueryTest {
         DruidScanQuery query = DruidScanQuery.builder()
                 .dataSource("sample_datasource")
                 .columns(searchDimensions)
+                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
                 .filter(filter)
                 .resultFormat(ResultFormat.LIST)
                 .intervals(Collections.singletonList(interval))
@@ -77,6 +80,12 @@ public class DruidScanQueryTest {
                 "    \"dim1\",\n" +
                 "    \"dim2\"\n" +
                 "  ],\n" +
+                "  \"virtualColumns\": [{\n" +
+                "    \"type\": \"expression\",\n" +
+                "    \"name\": \"dim3\",\n" +
+                "    \"outputType\": \"FLOAT\",\n" +
+                "    \"expression\": \"dim1 + dim2\"\n" +
+                "  }],\n" +
                 "  \"filter\": {\n" +
                 "    \"type\": \"selector\",\n" +
                 "    \"dimension\": \"dim1\",\n" +
@@ -92,7 +101,7 @@ public class DruidScanQueryTest {
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
 
     }
 
@@ -207,4 +216,3 @@ public class DruidScanQueryTest {
 
     }
 }
-
