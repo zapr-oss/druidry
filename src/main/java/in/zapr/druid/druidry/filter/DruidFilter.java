@@ -18,8 +18,10 @@ package in.zapr.druid.druidry.filter;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @EqualsAndHashCode
 public abstract class DruidFilter {
     protected String type;
