@@ -17,6 +17,7 @@
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.Getter;
