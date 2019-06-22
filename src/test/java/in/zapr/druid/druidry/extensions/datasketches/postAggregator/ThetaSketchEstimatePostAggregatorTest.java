@@ -55,10 +55,8 @@ public class ThetaSketchEstimatePostAggregatorTest {
                 new FieldAccessPostAggregator("stars");
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                ThetaSketchEstimatePostAggregator.builder()
-                        .name("estimate_stars")
-                        .field(fieldAccessPostAggregator)
-                        .build();
+                new ThetaSketchEstimatePostAggregator("estimate_stars", fieldAccessPostAggregator);
+
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -80,11 +78,8 @@ public class ThetaSketchEstimatePostAggregatorTest {
                 new FieldAccessPostAggregator("stars");
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                ThetaSketchEstimatePostAggregator.builder()
-                        .name("estimate_stars")
-                        .field(fieldAccessPostAggregator)
-                        .errorBoundsStdDev(2)
-                        .build();
+                new ThetaSketchEstimatePostAggregator("estimate_stars", fieldAccessPostAggregator, 2);
+
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -113,11 +108,8 @@ public class ThetaSketchEstimatePostAggregatorTest {
                 .build();
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                ThetaSketchEstimatePostAggregator.builder()
-                        .name("estimate_stars")
-                        .field(thetaSketchSetOpPostAggregator)
-                        .errorBoundsStdDev(2)
-                        .build();
+                new ThetaSketchEstimatePostAggregator("estimate_stars", thetaSketchSetOpPostAggregator, 2);
+
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -144,18 +136,14 @@ public class ThetaSketchEstimatePostAggregatorTest {
     public void testNullName() {
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                ThetaSketchEstimatePostAggregator.builder()
-                        .field(new FieldAccessPostAggregator("stars"))
-                        .build();
+                new ThetaSketchEstimatePostAggregator(null, new FieldAccessPostAggregator("stars"));
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullField() {
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                ThetaSketchEstimatePostAggregator.builder()
-                        .name("estimate_stars")
-                        .build();
+                new ThetaSketchEstimatePostAggregator("estimate_stars", null);
     }
 
 }
