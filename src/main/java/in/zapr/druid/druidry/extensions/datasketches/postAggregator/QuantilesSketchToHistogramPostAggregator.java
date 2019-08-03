@@ -18,6 +18,8 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,12 +31,12 @@ public class QuantilesSketchToHistogramPostAggregator extends DruidPostAggregato
 
     private static final String QUANTILES_SKETCH_TO_HISTOGRAM_POST_AGGREGATOR_TYPE = "quantilesDoublesSketchToHistogram";
     private DruidPostAggregator field;
-    private double[] splitPoints;
+    private List<Double> splitPoints;
 
     @Builder
     private QuantilesSketchToHistogramPostAggregator(@NonNull String name,
                                                      @NonNull DruidPostAggregator field,
-                                                     @NonNull double[] splitPoints) {
+                                                     @NonNull List<Double> splitPoints) {
         this.type = QUANTILES_SKETCH_TO_HISTOGRAM_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;

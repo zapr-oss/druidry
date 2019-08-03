@@ -29,12 +29,12 @@ public class QuantilesSketchToQuantilePostAggregator extends DruidPostAggregator
 
     private static final String QUANTILES_SKETCH_TO_QUANTILE_POST_AGGREGATOR_TYPE = "quantilesDoublesSketchToQuantile";
     private DruidPostAggregator field;
-    private double fraction;
+    private Double fraction;
 
     @Builder
     private QuantilesSketchToQuantilePostAggregator(@NonNull String name,
                                                     @NonNull DruidPostAggregator field,
-                                                    @NonNull double fraction) {
+                                                    @NonNull Double fraction) {
         this.type = QUANTILES_SKETCH_TO_QUANTILE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;

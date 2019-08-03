@@ -27,7 +27,7 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TupleSketchToStringPostAggregator extends DruidPostAggregator {
 
-    private static final String TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE = "arrayOfDoublesSketchTTest";
+    private static final String TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE = "arrayOfDoublesSketchToString";
     private DruidPostAggregator field;
 
     @Builder
