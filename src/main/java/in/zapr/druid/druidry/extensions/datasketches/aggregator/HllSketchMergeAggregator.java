@@ -14,28 +14,37 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
+package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TupleSketchToStringPostAggregator extends DruidPostAggregator {
+public class HllSketchMergeAggregator extends DruidAggregator {
 
-    private static final String TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE = "arrayOfDoublesSketchTTest";
-    private DruidPostAggregator field;
+    private static final String HLL_SKETCH_MERGE_TYPE_AGGREGATOR = "HLLSketchMerge";
+
+    private String fieldName;
+    private Integer lgK;
+    @JsonProperty("tgtHllType")
+    private TargetHllType targetHllType;
 
     @Builder
-    private TupleSketchToStringPostAggregator(@NonNull String name,
-                                              @NonNull DruidPostAggregator field) {
-        this.type = TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE;
+    private HllSketchMergeAggregator(@NonNull String name,
+                                     @NonNull String fieldName,
+                                     Integer lgK,
+                                     TargetHllType targetHllType) {
+        this.type = HLL_SKETCH_MERGE_TYPE_AGGREGATOR;
         this.name = name;
-        this.field = field;
+        this.fieldName = fieldName;
+        this.lgK = lgK;
+        this.targetHllType = targetHllType;
     }
 
 }

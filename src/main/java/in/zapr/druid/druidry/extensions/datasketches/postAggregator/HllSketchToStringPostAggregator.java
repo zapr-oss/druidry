@@ -25,15 +25,15 @@ import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TupleSketchToStringPostAggregator extends DruidPostAggregator {
+public class HllSketchToStringPostAggregator extends DruidPostAggregator {
 
-    private static final String TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE = "arrayOfDoublesSketchTTest";
+    private static final String HLL_SKETCH_TO_STRING_POST_AGGREGATOR_TYPE = "HLLSketchToString";
     private DruidPostAggregator field;
 
     @Builder
-    private TupleSketchToStringPostAggregator(@NonNull String name,
-                                              @NonNull DruidPostAggregator field) {
-        this.type = TUPLE_SKETCH_TO_STRING_AGGREGATOR_TYPE;
+    private HllSketchToStringPostAggregator(@NonNull String name,
+                                            @NonNull DruidPostAggregator field) {
+        this.type = HLL_SKETCH_TO_STRING_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
     }
