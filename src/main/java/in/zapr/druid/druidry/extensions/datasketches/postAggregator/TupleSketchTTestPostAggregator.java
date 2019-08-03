@@ -22,11 +22,13 @@ import java.util.List;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class TupleSketchTTestPostAggregator extends DruidPostAggregator {
 
     private static final String TUPLE_SKETCH_TTEST_AGGREGATOR_TYPE = "arrayOfDoublesSketchTTest";

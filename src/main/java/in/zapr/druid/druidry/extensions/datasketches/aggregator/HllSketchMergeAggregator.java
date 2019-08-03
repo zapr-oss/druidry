@@ -21,11 +21,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class HllSketchMergeAggregator extends DruidAggregator {
 
     private static final String HLL_SKETCH_MERGE_TYPE_AGGREGATOR = "HLLSketchMerge";

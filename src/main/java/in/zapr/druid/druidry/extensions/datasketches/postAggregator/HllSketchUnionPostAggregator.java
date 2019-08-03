@@ -24,11 +24,13 @@ import java.util.List;
 import in.zapr.druid.druidry.extensions.datasketches.aggregator.TargetHllType;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class HllSketchUnionPostAggregator extends DruidPostAggregator {
 
     private static final String HLL_SKETCH_UNION_POST_AGGREGATOR_TYPE = "HLLSketchUnion";

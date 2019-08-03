@@ -20,11 +20,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class HllSketchEstimateWithBoundsPostAggregator extends DruidPostAggregator {
 
     private static final String HLL_SKETCH_ESTIMATE_WITH_BOUNDS_POST_AGGREGATOR_TYPE = "HLLSketchEstimateWithBounds";

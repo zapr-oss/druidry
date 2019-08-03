@@ -23,11 +23,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class ThetaSketchAggregator extends DruidAggregator {
 
     private static final String THETA_SKETCH_TYPE_AGGREGATOR = "thetaSketch";

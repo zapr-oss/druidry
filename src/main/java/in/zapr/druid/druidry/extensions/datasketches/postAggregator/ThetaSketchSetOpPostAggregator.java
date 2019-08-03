@@ -23,11 +23,13 @@ import java.util.List;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
 public class ThetaSketchSetOpPostAggregator extends DruidPostAggregator {
 
     private static final String THETA_SKETCH_SET_OP_POST_AGGREGATOR_TYPE = "thetaSketchSetOp";
