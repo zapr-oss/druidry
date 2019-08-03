@@ -204,9 +204,14 @@ Supported Features
 * LongSum
 * LongFirst
 * LongLast
-* ThetaSketch
 * DistinctCount
 * Histogram
+* [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
+    * ThetaSketch (thetaSketch)
+    * TupleSketch (arrayOfDoublesSketch)
+    * QuantilesSketch (quantilesDoublesSketch)
+    * HllSketchBuild (HLLSketchBuild)
+    * HllSketchMerge (HLLSketchMerge)
 
 #### Filters
 
@@ -227,8 +232,29 @@ Supported Features
 * FieldAccess
 * HyperUniqueCardinality
 * Javascript
-* ThetaSketchEstimate
-* ThetaSketchSetOp
+* [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
+    * [Theta Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-theta.html)
+        * ThetaSketchEstimate (thetaSketchEstimate)
+        * ThetaSketchSetOp (thetaSketchSetOp)
+    * [Tuple Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-tuple.html)
+        * TupleSketchToEstimate (arrayOfDoublesSketchToEstimate)
+        * TupleSketchToEstimateAndBounds(arrayOfDoublesSketchToEstimateAndBounds)
+        * TupleSketchToNumEntries (arrayOfDoublesSketchToNumEntries)
+        * TupleSketchToMeans (arrayOfDoublesSketchToMeans)
+        * TupleSketchToVariances (arrayOfDoublesSketchToVariances)
+        * TupleSketchToQuantilesSketch (arrayOfDoublesSketchToQuantilesSketch)
+        * TupleSketchSetOp (arrayOfDoublesSketchSetOp)
+        * TupleSketchTTest (arrayOfDoublesSketchTTest)
+        * TupleSketchToString (arrayOfDoublesSketchToString)
+    * [Quantiles Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-quantiles.html)
+        * QuantilesSketchToQuantile (quantilesDoublesSketchToQuantile)
+        * QuantilesSketchToQuantiles (quantilesDoublesSketchToQuantiles)
+        * QuantilesSketchToHistogram (quantilesDoublesSketchToHistogram)
+        * QuantilesSketchToString (quantilesDoublesSketchToString)
+    * [HLL Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-hll.html)
+        * HllSketchEstimateWithBounds (HLLSketchEstimateWithBounds)
+        * HllSketchUnion (HLLSketchUnion)
+        * HllSketchToString (HLLSketchToString)
 
 #### Granularity
 * Duration
