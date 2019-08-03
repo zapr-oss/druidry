@@ -207,11 +207,11 @@ Supported Features
 * DistinctCount
 * Histogram
 * [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
-    * ThetaSketch (thetaSketch)
-    * TupleSketch (arrayOfDoublesSketch)
-    * QuantilesSketch (quantilesDoublesSketch)
-    * HllSketchBuild (HLLSketchBuild)
-    * HllSketchMerge (HLLSketchMerge)
+    * ThetaSketch
+    * TupleSketch
+    * QuantilesSketch
+    * HllSketchBuild
+    * HllSketchMerge
 
 #### Filters
 
@@ -234,27 +234,27 @@ Supported Features
 * Javascript
 * [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
     * [Theta Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-theta.html)
-        * ThetaSketchEstimate (thetaSketchEstimate)
-        * ThetaSketchSetOp (thetaSketchSetOp)
+        * ThetaSketchEstimate
+        * ThetaSketchSetOp
     * [Tuple Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-tuple.html)
-        * TupleSketchToEstimate (arrayOfDoublesSketchToEstimate)
-        * TupleSketchToEstimateAndBounds(arrayOfDoublesSketchToEstimateAndBounds)
-        * TupleSketchToNumEntries (arrayOfDoublesSketchToNumEntries)
-        * TupleSketchToMeans (arrayOfDoublesSketchToMeans)
-        * TupleSketchToVariances (arrayOfDoublesSketchToVariances)
-        * TupleSketchToQuantilesSketch (arrayOfDoublesSketchToQuantilesSketch)
-        * TupleSketchSetOp (arrayOfDoublesSketchSetOp)
-        * TupleSketchTTest (arrayOfDoublesSketchTTest)
-        * TupleSketchToString (arrayOfDoublesSketchToString)
+        * TupleSketchToEstimate
+        * TupleSketchToEstimateAndBounds
+        * TupleSketchToNumEntries
+        * TupleSketchToMeans
+        * TupleSketchToVariances
+        * TupleSketchToQuantilesSketch
+        * TupleSketchSetOp
+        * TupleSketchTTest
+        * TupleSketchToString
     * [Quantiles Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-quantiles.html)
-        * QuantilesSketchToQuantile (quantilesDoublesSketchToQuantile)
-        * QuantilesSketchToQuantiles (quantilesDoublesSketchToQuantiles)
-        * QuantilesSketchToHistogram (quantilesDoublesSketchToHistogram)
-        * QuantilesSketchToString (quantilesDoublesSketchToString)
+        * QuantilesSketchToQuantile
+        * QuantilesSketchToQuantiles
+        * QuantilesSketchToHistogram
+        * QuantilesSketchToString
     * [HLL Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-hll.html)
-        * HllSketchEstimateWithBounds (HLLSketchEstimateWithBounds)
-        * HllSketchUnion (HLLSketchUnion)
-        * HllSketchToString (HLLSketchToString)
+        * HllSketchEstimateWithBounds
+        * HllSketchUnion
+        * HllSketchToString
 
 #### Granularity
 * Duration
