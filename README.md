@@ -167,7 +167,7 @@ DruidConfiguration config =  DruidConfiguration
                .endpoint("druid/v2/")
                .build();
 
-DruidClient client = new DruidJerseyClient(druidConfiguration);
+DruidClient client = new DruidJerseyClient(config);
 client.connect();
 List<DruidResponse> responses = client.query(query, DruidResponse.class);
 client.close();
