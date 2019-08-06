@@ -18,24 +18,13 @@ package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.granularity.Granularity;
-import in.zapr.druid.druidry.granularity.PredefinedGranularity;
-import in.zapr.druid.druidry.granularity.SimpleGranularity;
-import in.zapr.druid.druidry.query.select.DruidSelectQuery;
-import in.zapr.druid.druidry.query.select.PagingSpec;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 public class TableDataSourceTest {
     private static ObjectMapper objectMapper;

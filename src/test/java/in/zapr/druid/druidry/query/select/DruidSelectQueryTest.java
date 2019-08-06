@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query.select;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.dataSource.TableDataSource;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -32,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;

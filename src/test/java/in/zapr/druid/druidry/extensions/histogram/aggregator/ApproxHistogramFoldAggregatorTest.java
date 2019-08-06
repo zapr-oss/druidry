@@ -83,5 +83,5 @@ public class ApproxHistogramFoldAggregatorTest {
                         .lowerLimit(Float.NEGATIVE_INFINITY)
                         .upperLimit(Float.POSITIVE_INFINITY)
                         .build();
-  }
+    }
 }

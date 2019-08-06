@@ -18,13 +18,7 @@ package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.dimension.DruidDimension;
-import in.zapr.druid.druidry.dimension.SimpleDimension;
-import in.zapr.druid.druidry.granularity.Granularity;
-import in.zapr.druid.druidry.granularity.PredefinedGranularity;
-import in.zapr.druid.druidry.granularity.SimpleGranularity;
-import in.zapr.druid.druidry.query.aggregation.DruidGroupByQuery;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -37,6 +31,14 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+
+import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dimension.DruidDimension;
+import in.zapr.druid.druidry.dimension.SimpleDimension;
+import in.zapr.druid.druidry.granularity.Granularity;
+import in.zapr.druid.druidry.granularity.PredefinedGranularity;
+import in.zapr.druid.druidry.granularity.SimpleGranularity;
+import in.zapr.druid.druidry.query.aggregation.DruidGroupByQuery;
 
 public class QueryDataSourceTest {
     private static ObjectMapper objectMapper;

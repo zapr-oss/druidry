@@ -17,6 +17,7 @@
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -24,7 +25,7 @@ import lombok.NonNull;
 /**
  * Generate datasource for druid query. See documentation
  * <a href="http://druid.io/docs/latest/querying/datasource.html">
- *     http://druid.io/docs/latest/querying/datasource.html
+ * http://druid.io/docs/latest/querying/datasource.html
  * </a>
  */
 @Getter

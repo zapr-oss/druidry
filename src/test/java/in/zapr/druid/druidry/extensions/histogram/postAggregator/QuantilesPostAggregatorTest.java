@@ -50,7 +50,7 @@ public class QuantilesPostAggregatorTest {
     public void testAllFields() throws JsonProcessingException, JSONException {
 
         QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name("quantiles")
-            .fieldName("timeAgg").probabilities(probabilities).build();
+                .fieldName("timeAgg").probabilities(probabilities).build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "quantiles");
@@ -67,12 +67,12 @@ public class QuantilesPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
         QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name(null)
-            .fieldName("timeAgg").probabilities(probabilities).build();
+                .fieldName("timeAgg").probabilities(probabilities).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
         QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name("quantiles")
-            .fieldName(null).probabilities(probabilities).build();
+                .fieldName(null).probabilities(probabilities).build();
     }
 }

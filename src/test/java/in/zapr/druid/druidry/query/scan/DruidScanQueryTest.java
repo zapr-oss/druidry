@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query.scan;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.dataSource.TableDataSource;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -33,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
 
