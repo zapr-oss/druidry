@@ -41,7 +41,6 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
 
     private DefaultLimitSpec limitSpec;
     private String having;
-
     @NonNull
     private List<DruidDimension> dimensions;
 
