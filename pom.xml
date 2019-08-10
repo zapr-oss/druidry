@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>2.13</version>
+    <version>2.14</version>
 
     <name>Druidry - Druid Java Client</name>
     <description>Druidry is an open-source Java based utility library which supports creating
@@ -16,7 +16,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.databind.version>2.9.9.2</jackson.databind.version>
+        <jackson.datatype.version>2.9.9</jackson.datatype.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.16.14</lombok.version>
         <testng.version>6.11</testng.version>
@@ -38,13 +39,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <version>${jackson.databind.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
-            <version>${jackson.version}</version>
+            <version>${jackson.datatype.version}</version>
         </dependency>
 
         <dependency>

@@ -26,6 +26,7 @@ import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,6 +40,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class DruidSelectQuery extends DruidQuery {
     private List<Interval> intervals;
+    private List<DruidVirtualColumn> virtualColumns;
     private DruidFilter filter;
     private Boolean descending;
     private Granularity granularity;
@@ -49,6 +51,7 @@ public class DruidSelectQuery extends DruidQuery {
     @Builder
     public DruidSelectQuery(
             @NonNull String dataSource,
+            List<DruidVirtualColumn> virtualColumns,
             DruidFilter filter,
             Boolean descending,
             Granularity granularity,
@@ -60,6 +63,7 @@ public class DruidSelectQuery extends DruidQuery {
         this.queryType = QueryType.SELECT;
         this.context = context;
         this.dataSource = dataSource;
+        this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.descending = descending;
         this.granularity = granularity;

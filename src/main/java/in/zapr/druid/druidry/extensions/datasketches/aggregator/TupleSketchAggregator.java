@@ -21,6 +21,8 @@ import com.google.common.math.LongMath;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -30,27 +32,29 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchAggregator extends DruidAggregator {
+public class TupleSketchAggregator extends DruidAggregator {
 
-    private static final String THETA_SKETCH_TYPE_AGGREGATOR = "thetaSketch";
+    private static final String TUPLE_SKETCH_TYPE_AGGREGATOR = "arrayOfDoublesSketch";
     private String fieldName;
-    private Boolean isInputThetaSketch;
-    private Long size;
+    private Integer nominalEntries;
+    private Integer numberOfValues;
+    private List<String> metricColumns;
 
     @Builder
-    public ThetaSketchAggregator(
-            @NonNull String name,
-            @NonNull String fieldName,
-            Boolean isInputThetaSketch,
-            Long size) {
-        this.type = THETA_SKETCH_TYPE_AGGREGATOR;
+    private TupleSketchAggregator(@NonNull String name,
+                                  @NonNull String fieldName,
+                                  Integer nominalEntries,
+                                  Integer numberOfValues,
+                                  List<String> metricColumns) {
+        this.type = TUPLE_SKETCH_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
-        this.isInputThetaSketch = isInputThetaSketch;
-        this.size = size;
+        this.nominalEntries = nominalEntries;
+        this.numberOfValues = numberOfValues;
+        this.metricColumns = metricColumns;
 
-        if (size != null) {
-            Preconditions.checkArgument(LongMath.isPowerOfTwo(size), "size must be a power of 2");
+        if (nominalEntries != null) {
+            Preconditions.checkArgument(LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
         }
     }
 

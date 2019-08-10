@@ -14,16 +14,25 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.dimension.enums;
+package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum OutputType {
-    STRING, LONG, FLOAT, DOUBLE;
+public enum TargetHllType {
+
+    HLL_4("HLL_4"),
+    HLL_6("HLL_6"),
+    HLL_8("HLL_8");
+
+    private String value;
+
+    TargetHllType(String value) {
+        this.value = value;
+    }
 
     @JsonValue
-    public String getName() {
-        return this.name();
+    public String getValue() {
+        return value;
     }
 
 }
