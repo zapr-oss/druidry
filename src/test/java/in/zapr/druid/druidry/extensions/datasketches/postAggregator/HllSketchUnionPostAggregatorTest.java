@@ -120,7 +120,7 @@ public class HllSketchUnionPostAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullField() {
+    public void testNullFields() {
 
         HllSketchUnionPostAggregator hllSketchUnionPostAggregator =
                 HllSketchUnionPostAggregator.builder()
