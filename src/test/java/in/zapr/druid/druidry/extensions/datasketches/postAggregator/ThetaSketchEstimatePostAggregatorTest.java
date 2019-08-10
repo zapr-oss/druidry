@@ -108,7 +108,7 @@ public class ThetaSketchEstimatePostAggregatorTest {
                 .build();
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                new ThetaSketchEstimatePostAggregator("estimate_stars", thetaSketchSetOpPostAggregator);
+                new ThetaSketchEstimatePostAggregator("estimate_stars", thetaSketchSetOpPostAggregator, 2);
 
 
         JSONObject fieldAccess = getFieldAccessJSON();
@@ -124,6 +124,7 @@ public class ThetaSketchEstimatePostAggregatorTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "thetaSketchEstimate");
         jsonObject.put("name", "estimate_stars");
+        jsonObject.put("errorBoundsStdDev", 2);
         jsonObject.put("field", thetaSketchSetOp);
 
         String actualJSON = objectMapper.writeValueAsString(thetaSketchEstimatePostAggregator);
