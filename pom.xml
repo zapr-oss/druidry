@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>2.14</version>
+    <version>2.15-SNAPSHOT</version>
 
     <name>Druidry - Druid Java Client</name>
     <description>Druidry is an open-source Java based utility library which supports creating
