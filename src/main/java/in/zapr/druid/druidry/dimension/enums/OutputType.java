@@ -19,7 +19,7 @@ package in.zapr.druid.druidry.dimension.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OutputType {
-    STRING, LONG, FLOAT;
+    STRING, LONG, FLOAT, DOUBLE;
 
     @JsonValue
     public String getName() {

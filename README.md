@@ -230,6 +230,9 @@ Supported Features
 * ThetaSketchEstimate
 * ThetaSketchSetOp
 
+#### Virtual Columns
+* Expression
+
 #### Granularity
 * Duration
 * Period
