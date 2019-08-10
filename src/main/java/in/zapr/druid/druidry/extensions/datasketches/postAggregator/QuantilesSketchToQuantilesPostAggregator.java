@@ -18,7 +18,10 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,25 +29,20 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchEstimatePostAggregator extends DruidPostAggregator {
+public class QuantilesSketchToQuantilesPostAggregator extends DruidPostAggregator {
 
-    private static final String THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE = "thetaSketchEstimate";
-
+    private static final String QUANTILES_SKETCH_TO_QUANTILES_POST_AGGREGATOR_TYPE = "quantilesDoublesSketchToQuantiles";
     private DruidPostAggregator field;
-    private Integer errorBoundsStdDev;
+    private List<Double> fractions;
 
-    public ThetaSketchEstimatePostAggregator(@NonNull String name,
-                                             @NonNull DruidPostAggregator field) {
-        this.type = THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE;
+    @Builder
+    private QuantilesSketchToQuantilesPostAggregator(@NonNull String name,
+                                                     @NonNull DruidPostAggregator field,
+                                                     @NonNull List<Double> fractions) {
+        this.type = QUANTILES_SKETCH_TO_QUANTILES_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
-    }
-
-    public ThetaSketchEstimatePostAggregator(@NonNull String name,
-                                             @NonNull DruidPostAggregator field,
-                                             Integer errorBoundsStdDev) {
-        this(name, field);
-        this.errorBoundsStdDev = errorBoundsStdDev;
+        this.fractions = fractions;
     }
 
 }

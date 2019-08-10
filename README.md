@@ -204,9 +204,14 @@ Supported Features
 * LongSum
 * LongFirst
 * LongLast
-* ThetaSketch
 * DistinctCount
 * Histogram
+* [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
+    * ThetaSketch
+    * TupleSketch
+    * QuantilesSketch
+    * HllSketchBuild
+    * HllSketchMerge
 
 #### Filters
 
@@ -227,8 +232,29 @@ Supported Features
 * FieldAccess
 * HyperUniqueCardinality
 * Javascript
-* ThetaSketchEstimate
-* ThetaSketchSetOp
+* [Data Sketches](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-extension.html)
+    * [Theta Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-theta.html)
+        * ThetaSketchEstimate
+        * ThetaSketchSetOp
+    * [Tuple Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-tuple.html)
+        * TupleSketchToEstimate
+        * TupleSketchToEstimateAndBounds
+        * TupleSketchToNumEntries
+        * TupleSketchToMeans
+        * TupleSketchToVariances
+        * TupleSketchToQuantilesSketch
+        * TupleSketchSetOp
+        * TupleSketchTTest
+        * TupleSketchToString
+    * [Quantiles Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-quantiles.html)
+        * QuantilesSketchToQuantile
+        * QuantilesSketchToQuantiles
+        * QuantilesSketchToHistogram
+        * QuantilesSketchToString
+    * [HLL Sketch](https://druid.apache.org/docs/latest/development/extensions-core/datasketches-hll.html)
+        * HllSketchEstimateWithBounds
+        * HllSketchUnion
+        * HllSketchToString
 
 #### Virtual Columns
 * Expression
