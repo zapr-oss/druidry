@@ -19,8 +19,10 @@ package in.zapr.druid.druidry.filter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 public class NotFilter extends DruidFilter {
 

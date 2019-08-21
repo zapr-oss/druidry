@@ -16,12 +16,12 @@
 
 package in.zapr.druid.druidry.filter;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class RegexFilter extends DruidFilter {
 
     private static String REGEX_DRUID_FILTER_TYPE = "regex";

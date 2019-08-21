@@ -17,15 +17,12 @@
 package in.zapr.druid.druidry.filter;
 
 import in.zapr.druid.druidry.SortingOrder;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class BoundFilter extends DruidFilter {
 
     private static String BOUND_DRUID_FILTER_TYPE = "bound";

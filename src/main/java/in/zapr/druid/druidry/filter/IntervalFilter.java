@@ -19,12 +19,12 @@ package in.zapr.druid.druidry.filter;
 import java.util.List;
 
 import in.zapr.druid.druidry.Interval;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class IntervalFilter extends DruidFilter {
 
     private static String INTERVAL_DRUID_FILTER_TYPE = "interval";
