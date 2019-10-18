@@ -10,7 +10,8 @@ public class GreaterThanHaving extends DruidHaving {
     private static String GREATER_THAN_DRUID_HAVING_TYPE = "greaterThan";
     protected String aggregation;
     protected Object value;
-    public GreaterThanHaving(@NonNull String metric) {
+
+    private GreaterThanHaving(@NonNull String metric) {
         this.type = GREATER_THAN_DRUID_HAVING_TYPE;
         this.aggregation = metric;
     }
@@ -19,6 +20,7 @@ public class GreaterThanHaving extends DruidHaving {
         this(metric);
         this.value = value;
     }
+
     public GreaterThanHaving(@NonNull String metric, @NonNull String value) {
         this(metric);
         this.value = value;

@@ -7,12 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
-public class AndHavingTest {
+
+public class OrHavingTest {
 
     private static ObjectMapper objectMapper;
 
@@ -27,7 +27,7 @@ public class AndHavingTest {
         DruidHaving equalToHaving1 = new EqualToHaving("Hello", "World");
         DruidHaving equalToHaving2 = new EqualToHaving("Peace", 15);
 
-        AndHaving having = new AndHaving(Arrays.asList(equalToHaving1, equalToHaving2));
+        DruidHaving having = new OrHaving(Arrays.asList(equalToHaving1, equalToHaving2));
 
         JSONObject having1 = new JSONObject();
         having1.put("type", "equalTo");
@@ -42,7 +42,7 @@ public class AndHavingTest {
         JSONArray filterJsonArray = new JSONArray(Arrays.asList(having1, having2));
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "and");
+        jsonObject.put("type", "or");
         jsonObject.put("havingSpecs", filterJsonArray);
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -53,16 +53,6 @@ public class AndHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testFieldsMissing() {
-        AndHaving andHaving = new AndHaving(null);
+        OrHaving andHaving = new OrHaving(null);
     }
-
-    @Test
-    public void testEquals() {
-        DruidHaving equalToHaving1 = new EqualToHaving("Hello", "World");
-        DruidHaving equalToHaving2 = new EqualToHaving("Hello", "World");
-
-        Assert.assertEquals(equalToHaving1, equalToHaving2);
-    }
-
 }
-

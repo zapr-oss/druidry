@@ -1,7 +1,11 @@
 package in.zapr.druid.druidry.having;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class DimSelectorHaving extends DruidHaving {
     private static String DIM_SELECTOR_DRUID_HAVING_TYPE = "dimSelector";
     protected String dimension;
@@ -17,6 +21,7 @@ public class DimSelectorHaving extends DruidHaving {
         this(dimension);
         this.value = value;
     }
+
     public DimSelectorHaving(@NonNull String dimension, String value) {
         this(dimension);
         this.value = value;

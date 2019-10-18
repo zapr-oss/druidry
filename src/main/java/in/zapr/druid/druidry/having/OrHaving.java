@@ -1,9 +1,13 @@
 package in.zapr.druid.druidry.having;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.List;
 
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class OrHaving extends DruidHaving {
     private static String OR_DRUID_HAVING_TYPE = "or";
     protected List<DruidHaving> havingSpecs;

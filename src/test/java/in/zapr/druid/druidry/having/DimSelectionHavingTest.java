@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class GreaterThanHavingTest {
+public class DimSelectionHavingTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -19,11 +19,11 @@ public class GreaterThanHavingTest {
 
     @Test
     public void testAllFieldsNumeric() throws JSONException, JsonProcessingException {
-        GreaterThanHaving having = new GreaterThanHaving("count", 2);
+        DruidHaving having = new DimSelectorHaving("dimension_name", 2);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "greaterThan");
-        jsonObject.put("aggregation", "count");
+        jsonObject.put("type", "dimSelector");
+        jsonObject.put("dimension", "dimension_name");
         jsonObject.put("value", 2);
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -33,11 +33,11 @@ public class GreaterThanHavingTest {
 
     @Test
     public void testAllFieldsString() throws JSONException, JsonProcessingException {
-        GreaterThanHaving having = new GreaterThanHaving("count", "2");
+        DruidHaving having = new DimSelectorHaving("dimension_name", "2");
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "greaterThan");
-        jsonObject.put("aggregation", "count");
+        jsonObject.put("type", "dimSelector");
+        jsonObject.put("dimension", "dimension_name");
         jsonObject.put("value", "2");
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -47,6 +47,6 @@ public class GreaterThanHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSettingRequiredFieldAsNull() {
-        GreaterThanHaving having = new GreaterThanHaving(null, "World");
+        DimSelectorHaving having = new DimSelectorHaving(null, "World");
     }
 }

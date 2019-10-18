@@ -11,7 +11,7 @@ public class LessThanHaving extends DruidHaving {
     protected String aggregation;
     protected Object value;
 
-    public LessThanHaving(@NonNull String metric) {
+    private LessThanHaving(@NonNull String metric) {
         this.type = LESS_THAN_DRUID_HAVING_TYPE;
         this.aggregation = metric;
     }

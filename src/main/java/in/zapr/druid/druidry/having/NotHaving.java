@@ -1,15 +1,17 @@
 package in.zapr.druid.druidry.having;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.List;
-
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class NotHaving extends DruidHaving {
     private static String NOT_DRUID_HAVING_TYPE = "not";
-    protected List<DruidHaving> havingSpecs;
+    protected DruidHaving havingSpec;
 
-    public NotHaving(@NonNull List<DruidHaving> fields) {
+    public NotHaving(@NonNull DruidHaving field) {
         this.type = NOT_DRUID_HAVING_TYPE;
-        this.havingSpecs = fields;
+        this.havingSpec = field;
     }
 }

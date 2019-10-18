@@ -5,10 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class FilterHaving extends DruidFilter {
+public class FilterHaving extends DruidHaving {
     private static String FILTER_DRUID_HAVING_TYPE = "filter";
 
     protected DruidFilter filter;

@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class GreaterThanHavingTest {
+public class EqualToHavingTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -19,10 +19,10 @@ public class GreaterThanHavingTest {
 
     @Test
     public void testAllFieldsNumeric() throws JSONException, JsonProcessingException {
-        GreaterThanHaving having = new GreaterThanHaving("count", 2);
+        DruidHaving having = new EqualToHaving("count", 2);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "greaterThan");
+        jsonObject.put("type", "equalTo");
         jsonObject.put("aggregation", "count");
         jsonObject.put("value", 2);
 
@@ -33,10 +33,10 @@ public class GreaterThanHavingTest {
 
     @Test
     public void testAllFieldsString() throws JSONException, JsonProcessingException {
-        GreaterThanHaving having = new GreaterThanHaving("count", "2");
+        DruidHaving having = new EqualToHaving("count", "2");
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "greaterThan");
+        jsonObject.put("type", "equalTo");
         jsonObject.put("aggregation", "count");
         jsonObject.put("value", "2");
 
@@ -47,6 +47,6 @@ public class GreaterThanHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSettingRequiredFieldAsNull() {
-        GreaterThanHaving having = new GreaterThanHaving(null, "World");
+        EqualToHaving having = new EqualToHaving(null, "World");
     }
 }
