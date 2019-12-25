@@ -16,6 +16,8 @@
 
 package in.zapr.druid.druidry.filter;
 
+import java.util.Optional;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -34,18 +36,28 @@ public class SelectorFilter extends DruidFilter {
         this.dimension = dimension;
     }
 
+    @Deprecated
     public SelectorFilter(@NonNull String dimension, String value) {
         this(dimension);
         this.value = value;
     }
 
+    @Deprecated
     public SelectorFilter(@NonNull String dimension, Integer value) {
         this(dimension);
         this.value = value;
     }
 
+    @Deprecated
     public SelectorFilter(@NonNull String dimension, Long value) {
         this(dimension);
         this.value = value;
+    }
+
+    public SelectorFilter(@NonNull String dimension, Optional<Object> value) {
+        this(dimension);
+        if (value.isPresent()) {
+            this.value = value.get();
+        }
     }
 }

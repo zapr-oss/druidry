@@ -26,6 +26,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Optional;
+
 public class SelectorFilterTest {
 
     private static ObjectMapper objectMapper;
@@ -68,6 +70,58 @@ public class SelectorFilterTest {
         jsonObject.put("type", "selector");
         jsonObject.put("dimension", "Hello");
         jsonObject.put("value", 1488498926000L);
+
+        String actualJSON = objectMapper.writeValueAsString(filter);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testOptionalWithStringField() throws JSONException, JsonProcessingException {
+        SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable("World"));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "selector");
+        jsonObject.put("dimension", "Hello");
+        jsonObject.put("value", "World");
+
+        String actualJSON = objectMapper.writeValueAsString(filter);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testOptionalWithIntegerField() throws JSONException, JsonProcessingException {
+        SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(5));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "selector");
+        jsonObject.put("dimension", "Hello");
+        jsonObject.put("value", 5);
+
+        String actualJSON = objectMapper.writeValueAsString(filter);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testOptionalWithLongField() throws JSONException, JsonProcessingException {
+        SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(1488498926000L));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "selector");
+        jsonObject.put("dimension", "Hello");
+        jsonObject.put("value", 1488498926000L);
+
+        String actualJSON = objectMapper.writeValueAsString(filter);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testOptionalWithNullField() throws JSONException, JsonProcessingException {
+        SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(null));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "selector");
+        jsonObject.put("dimension", "Hello");
+        jsonObject.putOpt("value", JSONObject.NULL);
 
         String actualJSON = objectMapper.writeValueAsString(filter);
         String expectedJSON = jsonObject.toString();
