@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query;
+package in.zapr.druid.druidry.query.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-import in.zapr.druid.druidry.query.config.Context;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+public enum GroupByStrategy {
 
-@Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
-public abstract class DruidQuery {
+    STRATEGY_V1("v1"),
+    STRATEGY_V2("v2");
 
-    @NonNull
-    protected String dataSource;
+    private String value;
 
-    protected Context context;
+    GroupByStrategy(String value) {
+        this.value = value;
+    }
 
-    // Not making it public since this should be set by its children's constructor.
-    @NonNull
-    protected QueryType queryType;
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
 }

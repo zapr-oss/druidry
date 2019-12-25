@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry;
+package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

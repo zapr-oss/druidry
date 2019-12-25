@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 import java.util.Collections;
 import java.util.HashMap;
 
-import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;

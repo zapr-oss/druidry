@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.filter;
 
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

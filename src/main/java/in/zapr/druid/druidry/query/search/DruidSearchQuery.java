@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
