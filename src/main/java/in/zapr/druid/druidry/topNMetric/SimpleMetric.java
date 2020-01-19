@@ -16,18 +16,16 @@
 
 package in.zapr.druid.druidry.topNMetric;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class SimpleMetric extends TopNMetric {
 
     private String metric;
 
     public SimpleMetric(String metric) {
         this.metric = metric;
-    }
-
-    @JsonValue
-    public String getMetric() {
-        return this.metric;
     }
 }

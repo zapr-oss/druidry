@@ -18,8 +18,17 @@ package in.zapr.druid.druidry.topNMetric;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
-@EqualsAndHashCode
-public abstract class TopNMetric {
+@EqualsAndHashCode(callSuper = true)
+public class InvertedMetric extends TopNMetric {
+    private static String INVERTED_METRIC_TYPE = "inverted";
+
+    private TopNMetric metric;
+    private String type = INVERTED_METRIC_TYPE;
+
+    public InvertedMetric(@NonNull TopNMetric topNMetric) {
+        this.metric = topNMetric;
+    }
 }
