@@ -23,6 +23,7 @@ import java.util.List;
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
+import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
@@ -41,7 +42,7 @@ public class DruidTimeSeriesQuery extends DruidAggregationQuery {
     private Boolean descending;
 
     @Builder
-    private DruidTimeSeriesQuery(@NonNull String dataSource, Boolean descending,
+    private DruidTimeSeriesQuery(@NonNull DataSource dataSource, Boolean descending,
                                  @NonNull List<Interval> intervals, @NonNull Granularity granularity,
                                  List<DruidVirtualColumn> virtualColumns,
                                  DruidFilter filter, List<DruidAggregator> aggregators,

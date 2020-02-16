@@ -16,15 +16,16 @@
 
 package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.extensions.histogram.aggregator.QuantilePostAggregator;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,14 +35,14 @@ public class QuantilePostAggregatorTest {
 
     @BeforeClass
     public void init() {
-    objectMapper = new ObjectMapper();
-  }
+        objectMapper = new ObjectMapper();
+    }
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
         QuantilePostAggregator quantilePostAgg = QuantilePostAggregator.builder().name("quantile")
-            .fieldName("timeAgg").probability(0.50F).build();
+                .fieldName("timeAgg").probability(0.50F).build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "quantile");
@@ -57,12 +58,12 @@ public class QuantilePostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
         QuantilePostAggregator quantilePostAgg =
-            QuantilePostAggregator.builder().name(null).fieldName("timeAgg").probability(0.50F).build();
+                QuantilePostAggregator.builder().name(null).fieldName("timeAgg").probability(0.50F).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
         QuantilePostAggregator quantilePostAgg = QuantilePostAggregator.builder().name("quantile")
-            .fieldName(null).probability(0.50F).build();
+                .fieldName(null).probability(0.50F).build();
     }
 }

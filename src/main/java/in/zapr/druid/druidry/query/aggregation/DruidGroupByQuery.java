@@ -23,6 +23,7 @@ import java.util.List;
 import in.zapr.druid.druidry.Context;
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
+import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
@@ -47,7 +48,7 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
     private List<DruidDimension> dimensions;
 
     @Builder
-    private DruidGroupByQuery(@NonNull String dataSource,
+    private DruidGroupByQuery(@NonNull DataSource dataSource,
                               @NonNull List<DruidDimension> dimensions,
                               DefaultLimitSpec limitSpec,
                               @NonNull Granularity granularity,

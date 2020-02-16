@@ -41,6 +41,7 @@ import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.aggregator.LongSumAggregator;
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.dimension.SimpleDimension;
 import in.zapr.druid.druidry.filter.AndFilter;
@@ -71,7 +72,10 @@ public class GroupByTest {
     public void testSampleQuery() throws JsonProcessingException, JSONException {
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"groupBy\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"dimensions\": [\"country\", \"device\"],\n" +
                 "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"columns\": [\"country\", \"data_transfer\"] },\n" +
@@ -150,7 +154,7 @@ public class GroupByTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery query = DruidGroupByQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
                 .dimensions(Arrays.asList(druidDimension1, druidDimension2))
                 .limitSpec(limitSpec)
@@ -177,7 +181,7 @@ public class GroupByTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .dimensions(Arrays.asList(druidDimension1, druidDimension2))
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))
@@ -185,9 +189,13 @@ public class GroupByTest {
 
         String actualJson = objectMapper.writeValueAsString(druidGroupByQuery);
 
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("type", "table");
+        dataSource.put("name", "sample_datasource");
+
         JSONObject expectedQuery = new JSONObject();
         expectedQuery.put("queryType", "groupBy");
-        expectedQuery.put("dataSource", "sample_datasource");
+        expectedQuery.put("dataSource", dataSource);
 
         JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z"));
         expectedQuery.put("intervals", intervalArray);
@@ -217,7 +225,7 @@ public class GroupByTest {
                 .build();
 
         DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .dimensions(Arrays.asList(druidDimension1, druidDimension2))
                 .granularity(granularity)
                 .filter(filter)
@@ -250,9 +258,13 @@ public class GroupByTest {
                 "2012-01-03T00:00:00.000Z"));
         JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
 
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("type", "table");
+        dataSource.put("name", "sample_datasource");
+
         JSONObject expectedQuery = new JSONObject();
         expectedQuery.put("queryType", "groupBy");
-        expectedQuery.put("dataSource", "sample_datasource");
+        expectedQuery.put("dataSource", dataSource);
         expectedQuery.put("dimensions", dimensionArray);
         expectedQuery.put("intervals", intervalArray);
         expectedQuery.put("granularity", "all");

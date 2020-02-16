@@ -14,29 +14,26 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.extensions.histogram.aggregator;
+package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class QuantilePostAggregator extends DruidPostAggregator {
+@EqualsAndHashCode(callSuper = true)
+public class TableDataSource extends DataSource {
 
-    private static final String QUANTILE_POST_AGGREGATOR_TYPE = "quantile";
-    private String fieldName;
-    private Float probability;
+    @NonNull
+    private String name;
 
     @Builder
-    private QuantilePostAggregator(@NonNull String name, @NonNull String fieldName,
-                                   @NonNull Float probability) {
-        this.type = QUANTILE_POST_AGGREGATOR_TYPE;
+    public TableDataSource(@NonNull String name) {
+        this.type = DataSourceType.TABLE;
         this.name = name;
-        this.fieldName = fieldName;
-        this.probability = probability;
     }
 }

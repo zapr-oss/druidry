@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
@@ -59,7 +60,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource("wikipedia")
+                .dataSource(new TableDataSource("wikipedia"))
                 .descending(false)
                 .granularity(granularity)
                 .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
@@ -69,7 +70,10 @@ public class DruidSelectQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": \"wikipedia\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"wikipedia\"\n" +
+                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
                 "  ]," +
@@ -106,7 +110,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource("wikipedia")
+                .dataSource(new TableDataSource("wikipedia"))
                 .descending(false)
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))
@@ -115,7 +119,10 @@ public class DruidSelectQueryTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": \"wikipedia\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"wikipedia\"\n" +
+                "  },\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
                 "  ]," +
@@ -161,7 +168,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery.builder()
-                .dataSource("dataSource")
+                .dataSource(new TableDataSource("dataSource"))
                 .descending(false)
                 .granularity(granularity)
                 .pagingSpec(pagingSpec)
@@ -179,7 +186,7 @@ public class DruidSelectQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
         DruidSelectQuery.builder()
-                .dataSource("dataSource")
+                .dataSource(new TableDataSource("dataSource"))
                 .descending(false)
                 .granularity(granularity)
                 .intervals(Collections.singletonList(interval))
