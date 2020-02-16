@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 
 import java.util.Collections;
 
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
 import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecString;
 

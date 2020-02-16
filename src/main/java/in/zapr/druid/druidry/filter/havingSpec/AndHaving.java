@@ -14,32 +14,22 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry;
+package in.zapr.druid.druidry.filter.havingSpec;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.joda.time.DateTime;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-@EqualsAndHashCode
-public class Interval {
+@EqualsAndHashCode(callSuper = true)
+public class AndHaving extends HavingSpec {
+    private static String AND_DRUID_HAVING_TYPE = "and";
+    private List<HavingSpec> havingSpecs;
 
-    private final static String DRUID_INTERVAL_FORMAT = "%s/%s";
-
-    private DateTime startTime;
-    private DateTime endTime;
-
-    public Interval(@NonNull DateTime startTime, @NonNull DateTime endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    @JsonValue
-    private String getIntervalAsString() {
-        return String.format(DRUID_INTERVAL_FORMAT, startTime.toDateTimeISO(), endTime.toDateTimeISO());
+    public AndHaving(@NonNull List<HavingSpec> fields) {
+        this.type = AND_DRUID_HAVING_TYPE;
+        this.havingSpecs = fields;
     }
 }

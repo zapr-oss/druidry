@@ -22,9 +22,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
+import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
@@ -47,7 +48,7 @@ public class DruidTopNQuery extends DruidAggregationQuery {
     private TopNMetric metric;
 
     @Builder
-    private DruidTopNQuery(@NonNull String dataSource,
+    private DruidTopNQuery(@NonNull DataSource dataSource,
                            @NonNull List<Interval> intervals,
                            @NonNull Granularity granularity,
                            List<DruidVirtualColumn> virtualColumns,

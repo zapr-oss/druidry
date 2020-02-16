@@ -33,12 +33,13 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.aggregator.LongSumAggregator;
+import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.filter.AndFilter;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.OrFilter;
@@ -105,7 +106,7 @@ public class TimeSeriesTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         DruidTimeSeriesQuery query = DruidTimeSeriesQuery.builder()
-                .dataSource("sample_datasource")
+                .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(granularity)
                 .descending(true)
                 .filter(andFilter)
@@ -116,7 +117,10 @@ public class TimeSeriesTest {
 
         String expectedJsonAsString = "{\n" +
                 "  \"queryType\": \"timeseries\",\n" +
-                "  \"dataSource\": \"sample_datasource\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"descending\": true,\n" +
                 "  \"filter\": {\n" +
@@ -161,14 +165,18 @@ public class TimeSeriesTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         DruidTimeSeriesQuery seriesQuery = DruidTimeSeriesQuery.builder()
-                .dataSource("Matrix")
+                .dataSource(new TableDataSource("Matrix"))
                 .intervals(Collections.singletonList(interval))
                 .granularity(granularity)
                 .build();
 
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("type", "table");
+        dataSource.put("name", "Matrix");
+
         JSONObject expectedQuery = new JSONObject();
         expectedQuery.put("queryType", "timeseries");
-        expectedQuery.put("dataSource", "Matrix");
+        expectedQuery.put("dataSource", dataSource);
         expectedQuery.put("intervals", new JSONArray(Collections
                 .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
         expectedQuery.put("granularity", "day");
@@ -194,7 +202,7 @@ public class TimeSeriesTest {
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 10.47);
 
         DruidTimeSeriesQuery seriesQuery = DruidTimeSeriesQuery.builder()
-                .dataSource("Matrix")
+                .dataSource(new TableDataSource("Matrix"))
                 .descending(true)
                 .intervals(Collections.singletonList(interval))
                 .granularity(granularity)
@@ -221,9 +229,13 @@ public class TimeSeriesTest {
         JSONObject expectedContext = new JSONObject();
         expectedContext.put("useCache", true);
 
+        JSONObject dataSource = new JSONObject();
+        dataSource.put("type", "table");
+        dataSource.put("name", "Matrix");
+
         JSONObject expectedQuery = new JSONObject();
         expectedQuery.put("queryType", "timeseries");
-        expectedQuery.put("dataSource", "Matrix");
+        expectedQuery.put("dataSource", dataSource);
         expectedQuery.put("intervals", new JSONArray(Collections
                 .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
         expectedQuery.put("granularity", "day");

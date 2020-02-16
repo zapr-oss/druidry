@@ -26,7 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
 
 public class OrderByColumnSpecMapTest {
