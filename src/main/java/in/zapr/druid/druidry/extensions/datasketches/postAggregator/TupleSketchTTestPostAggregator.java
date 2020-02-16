@@ -14,30 +14,32 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query.aggregation;
+package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.aggregator.DruidAggregator;
-import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
-import in.zapr.druid.druidry.query.DruidQuery;
-import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public abstract class DruidAggregationQuery extends DruidQuery {
-    protected List<Interval> intervals;
-    protected Granularity granularity;
-    protected List<DruidVirtualColumn> virtualColumns;
-    protected DruidFilter filter;
-    protected List<DruidAggregator> aggregations;
-    protected List<DruidPostAggregator> postAggregations;
+public class TupleSketchTTestPostAggregator extends DruidPostAggregator {
+
+    private static final String TUPLE_SKETCH_TTEST_AGGREGATOR_TYPE = "arrayOfDoublesSketchTTest";
+    private List<DruidPostAggregator> fields;
+
+    @Builder
+    private TupleSketchTTestPostAggregator(@NonNull String name,
+                                           @NonNull List<DruidPostAggregator> fields) {
+        this.type = TUPLE_SKETCH_TTEST_AGGREGATOR_TYPE;
+        this.name = name;
+        this.fields = fields;
+    }
+
 }

@@ -28,6 +28,7 @@ import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,7 +38,7 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 public class DruidScanQuery extends DruidQuery {
-
+    private List<DruidVirtualColumn> virtualColumns;
     private DruidFilter filter;
     private Integer batchSize;
     private List<Interval> intervals;
@@ -47,7 +48,10 @@ public class DruidScanQuery extends DruidQuery {
     private Boolean legacy;
 
     @Builder
-    private DruidScanQuery(@NonNull DataSource dataSource, DruidFilter filter, Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat, Long limit, Boolean legacy, Context context) {
+    private DruidScanQuery(@NonNull DataSource dataSource, List<DruidVirtualColumn> virtualColumns, DruidFilter filter,
+            Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat,
+            Long limit, Boolean legacy, Context context) {
+        this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.intervals = intervals;
         this.columns = columns;

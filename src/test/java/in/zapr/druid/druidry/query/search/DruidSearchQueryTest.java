@@ -37,12 +37,14 @@ import in.zapr.druid.druidry.SortingOrder;
 import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.dimension.SimpleDimension;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
 import in.zapr.druid.druidry.filter.searchQuerySpec.InsensitiveContainsSearchQuerySpec;
 import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;
+import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
 
 public class DruidSearchQueryTest {
     private static ObjectMapper objectMapper;
@@ -69,6 +71,7 @@ public class DruidSearchQueryTest {
         DruidSearchQuery query = DruidSearchQuery.builder()
                 .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
+                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
                 .searchDimensions(searchDimensions)
                 .query(searchQuerySpec)
                 .sort(SortingOrder.LEXICOGRAPHIC)
@@ -82,6 +85,12 @@ public class DruidSearchQueryTest {
                 "    \"name\": \"sample_datasource\"\n" +
                 "  },\n" +
                 "  \"granularity\": \"day\",\n" +
+                "  \"virtualColumns\": [{\n" +
+                "    \"type\": \"expression\",\n" +
+                "    \"name\": \"dim3\",\n" +
+                "    \"outputType\": \"FLOAT\",\n" +
+                "    \"expression\": \"dim1 + dim2\"\n" +
+                "  }],\n" +
                 "  \"searchDimensions\": [\n" +
                 "    \"dim1\",\n" +
                 "    \"dim2\"\n" +
@@ -163,6 +172,7 @@ public class DruidSearchQueryTest {
         DruidSearchQuery query = DruidSearchQuery.builder()
                 .dataSource(new TableDataSource("sample_datasource"))
                 .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
+                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
                 .filter(druidFilter)
                 .limit(16)
                 .searchDimensions(searchDimensions)
@@ -179,6 +189,12 @@ public class DruidSearchQueryTest {
                 "    \"name\": \"sample_datasource\"\n" +
                 "  },\n" +
                 "  \"granularity\": \"day\",\n" +
+                "  \"virtualColumns\": [{\n" +
+                "    \"type\": \"expression\",\n" +
+                "    \"name\": \"dim3\",\n" +
+                "    \"outputType\": \"FLOAT\",\n" +
+                "    \"expression\": \"dim1 + dim2\"\n" +
+                "  }],\n" +
                 "  \"filter\": {\n" +
                 "        \"type\": \"selector\",\n" +
                 "        \"dimension\": \"Dim\",\n" +

@@ -14,16 +14,25 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.dimension.enums;
+package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum OutputType {
-    STRING, LONG, FLOAT, DOUBLE;
+public enum TupleSketchOperation {
+
+    INTERSECT("INTERSECT"),
+    UNION("UNION"),
+    NOT("NOT");
+
+    private String value;
+
+    TupleSketchOperation(String value) {
+        this.value = value;
+    }
 
     @JsonValue
-    public String getName() {
-        return this.name();
+    public String getValue() {
+        return value;
     }
 
 }

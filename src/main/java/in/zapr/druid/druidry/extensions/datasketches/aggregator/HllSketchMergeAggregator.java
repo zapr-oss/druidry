@@ -16,10 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import com.google.common.base.Preconditions;
-import com.google.common.math.LongMath;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
@@ -30,28 +28,25 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchAggregator extends DruidAggregator {
+public class HllSketchMergeAggregator extends DruidAggregator {
 
-    private static final String THETA_SKETCH_TYPE_AGGREGATOR = "thetaSketch";
+    private static final String HLL_SKETCH_MERGE_TYPE_AGGREGATOR = "HLLSketchMerge";
+
     private String fieldName;
-    private Boolean isInputThetaSketch;
-    private Long size;
+    private Integer lgK;
+    @JsonProperty("tgtHllType")
+    private TargetHllType targetHllType;
 
     @Builder
-    public ThetaSketchAggregator(
-            @NonNull String name,
-            @NonNull String fieldName,
-            Boolean isInputThetaSketch,
-            Long size) {
-        this.type = THETA_SKETCH_TYPE_AGGREGATOR;
+    private HllSketchMergeAggregator(@NonNull String name,
+                                     @NonNull String fieldName,
+                                     Integer lgK,
+                                     TargetHllType targetHllType) {
+        this.type = HLL_SKETCH_MERGE_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
-        this.isInputThetaSketch = isInputThetaSketch;
-        this.size = size;
-
-        if (size != null) {
-            Preconditions.checkArgument(LongMath.isPowerOfTwo(size), "size must be a power of 2");
-        }
+        this.lgK = lgK;
+        this.targetHllType = targetHllType;
     }
 
 }

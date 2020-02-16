@@ -19,6 +19,7 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,25 +27,20 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchEstimatePostAggregator extends DruidPostAggregator {
+public class TupleSketchToEstimateAndBoundsPostAggregator extends DruidPostAggregator {
 
-    private static final String THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE = "thetaSketchEstimate";
-
+    private static final String TUPLE_SKETCH_TO_ESTIMATE_AND_BOUNDS_POST_AGGREGATOR_TYPE = "arrayOfDoublesSketchToEstimateAndBounds";
     private DruidPostAggregator field;
-    private Integer errorBoundsStdDev;
+    private Integer numStdDevs;
 
-    public ThetaSketchEstimatePostAggregator(@NonNull String name,
-                                             @NonNull DruidPostAggregator field) {
-        this.type = THETA_SKETCH_ESTIMATE_POST_AGGREGATOR_TYPE;
+    @Builder
+    private TupleSketchToEstimateAndBoundsPostAggregator(@NonNull String name,
+                                                         @NonNull DruidPostAggregator field,
+                                                         Integer numStdDevs) {
+        this.type = TUPLE_SKETCH_TO_ESTIMATE_AND_BOUNDS_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
-    }
-
-    public ThetaSketchEstimatePostAggregator(@NonNull String name,
-                                             @NonNull DruidPostAggregator field,
-                                             Integer errorBoundsStdDev) {
-        this(name, field);
-        this.errorBoundsStdDev = errorBoundsStdDev;
+        this.numStdDevs = numStdDevs;
     }
 
 }

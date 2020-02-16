@@ -30,27 +30,23 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchAggregator extends DruidAggregator {
+public class QuantilesSketchAggregator extends DruidAggregator {
 
-    private static final String THETA_SKETCH_TYPE_AGGREGATOR = "thetaSketch";
+    private static final String QUANTILES_SKETCH_TYPE_AGGREGATOR = "quantilesDoublesSketch";
     private String fieldName;
-    private Boolean isInputThetaSketch;
-    private Long size;
+    private Integer k;
 
     @Builder
-    public ThetaSketchAggregator(
-            @NonNull String name,
-            @NonNull String fieldName,
-            Boolean isInputThetaSketch,
-            Long size) {
-        this.type = THETA_SKETCH_TYPE_AGGREGATOR;
+    private QuantilesSketchAggregator(@NonNull String name,
+                                      @NonNull String fieldName,
+                                      Integer k) {
+        this.type = QUANTILES_SKETCH_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
-        this.isInputThetaSketch = isInputThetaSketch;
-        this.size = size;
+        this.k = k;
 
-        if (size != null) {
-            Preconditions.checkArgument(LongMath.isPowerOfTwo(size), "size must be a power of 2");
+        if (k != null) {
+            Preconditions.checkArgument(LongMath.isPowerOfTwo(k), "k must be a power of 2");
         }
     }
 

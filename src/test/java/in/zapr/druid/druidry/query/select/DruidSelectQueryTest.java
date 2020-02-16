@@ -32,9 +32,11 @@ import java.util.HashMap;
 
 import in.zapr.druid.druidry.Interval;
 import in.zapr.druid.druidry.dataSource.TableDataSource;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;
+import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
 
 public class DruidSelectQueryTest {
     private static ObjectMapper objectMapper;
@@ -61,6 +63,7 @@ public class DruidSelectQueryTest {
                 .dataSource(new TableDataSource("wikipedia"))
                 .descending(false)
                 .granularity(granularity)
+                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
                 .intervals(Collections.singletonList(interval))
                 .pagingSpec(pagingSpec)
                 .build();
@@ -76,6 +79,12 @@ public class DruidSelectQueryTest {
                 "  ]," +
                 "  \"descending\": false,\n" +
                 "  \"granularity\": \"all\",\n" +
+                "  \"virtualColumns\": [{\n" +
+                "    \"type\": \"expression\",\n" +
+                "    \"name\": \"dim3\",\n" +
+                "    \"outputType\": \"FLOAT\",\n" +
+                "    \"expression\": \"dim1 + dim2\"\n" +
+                "  }],\n" +
                 "  \"pagingSpec\": {\n" +
                 "    \"threshold\": 5,\n" +
                 "    \"pagingIdentifiers\": {}\n" +
@@ -184,4 +193,3 @@ public class DruidSelectQueryTest {
                 .build();
     }
 }
-

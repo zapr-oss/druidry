@@ -16,8 +16,10 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
+import com.google.common.base.Preconditions;
+import com.google.common.math.LongMath;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -30,25 +32,30 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
-public class ThetaSketchSetOpPostAggregator extends DruidPostAggregator {
+public class TupleSketchSetOpPostAggregator extends DruidPostAggregator {
 
-    private static final String THETA_SKETCH_SET_OP_POST_AGGREGATOR_TYPE = "thetaSketchSetOp";
-
-    @JsonProperty("func")
-    private ThetaSketchFunction function;
+    private static final String TUPLE_SKETCH_SET_OP_POST_AGGREGATOR_TYPE = "arrayOfDoublesSketchSetOp";
+    private TupleSketchOperation operation;
     private List<DruidPostAggregator> fields;
-    private Long size;
+    private Integer nominalEntries;
+    private Integer numberOfValues;
 
     @Builder
-    private ThetaSketchSetOpPostAggregator(@NonNull String name,
-                                           @NonNull ThetaSketchFunction function,
+    private TupleSketchSetOpPostAggregator(@NonNull String name,
+                                           @NonNull TupleSketchOperation operation,
                                            @NonNull List<DruidPostAggregator> fields,
-                                           Long size) {
-        this.type = THETA_SKETCH_SET_OP_POST_AGGREGATOR_TYPE;
+                                           Integer nominalEntries,
+                                           Integer numberOfValues) {
+        this.type = TUPLE_SKETCH_SET_OP_POST_AGGREGATOR_TYPE;
         this.name = name;
-        this.function = function;
+        this.operation = operation;
         this.fields = fields;
-        this.size = size;
+        this.nominalEntries = nominalEntries;
+        this.numberOfValues = numberOfValues;
+
+        if (nominalEntries != null) {
+            Preconditions.checkArgument(LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
+        }
     }
 
 }
