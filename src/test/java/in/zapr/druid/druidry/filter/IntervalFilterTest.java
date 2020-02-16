@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.query.config.Interval;
 
 public class IntervalFilterTest {
 

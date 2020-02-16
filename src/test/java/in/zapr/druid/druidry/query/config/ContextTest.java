@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry;
+package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,33 +50,75 @@ public class ContextTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
         Context context = Context.builder()
-                .timeoutInMilliSeconds(3141)
-                .priority(1)
-                .queryId("How are you?")
+                .timeoutInMilliSeconds(1000L)
+                .priority(0)
+                .queryId("p0-query")
                 .useCache(true)
                 .populateCache(true)
+                .useResultLevelCache(false)
+                .populateResultLevelCache(false)
                 .bySegment(true)
                 .finalize(true)
                 .chunkPeriod("P1M")
-                .minTopNThreshold(1407)
-                .maxResults(1611)
-                .maxIntermediateRows(1103)
-                .groupByIsSingleThreaded(true)
+                .maxScatterGatherBytes(1024L)
+                .maxQueuedBytes(1024L)
+                .serializeDateTimeAsLong(true)
+                .serializeDateTimeAsLongInner(true)
+                .minTopNThreshold(10)
+                .skipEmptyBuckets(true)
+                .maxMergingDictionarySize(65536L)
+                .maxOnDiskStorage(262144L)
+                .groupByStrategy(GroupByStrategy.STRATEGY_V2)
+                .groupByIsSingleThreaded(false)
+                .bufferGrouperInitialBuckets(1024)
+                .bufferGrouperMaxLoadFactor(1.024F)
+                .forceHashAggregation(true)
+                .intermediateCombineDegree(8)
+                .numParallelCombineThreads(4)
+                .sortByDimsFirst(false)
+                .forceLimitPushDown(false)
+                .applyLimitPushDown(true)
+                .maxIntermediateRows(2048)
+                .maxResults(256)
+                .useOffheap(false)
+                .vectorize(Vectorize.FORCE)
+                .vectorSize(1024)
                 .build();
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("timeout", 3141);
-        jsonObject.put("priority", 1);
-        jsonObject.put("queryId", "How are you?");
+        jsonObject.put("timeout", 1000L);
+        jsonObject.put("priority", 0);
+        jsonObject.put("queryId", "p0-query");
         jsonObject.put("useCache", true);
         jsonObject.put("populateCache", true);
+        jsonObject.put("useResultLevelCache", false);
+        jsonObject.put("populateResultLevelCache", false);
         jsonObject.put("bySegment", true);
         jsonObject.put("finalize", true);
         jsonObject.put("chunkPeriod", "P1M");
-        jsonObject.put("minTopNThreshold", 1407);
-        jsonObject.put("maxResults", 1611);
-        jsonObject.put("maxIntermediateRows", 1103);
-        jsonObject.put("groupByIsSingleThreaded", true);
+        jsonObject.put("maxScatterGatherBytes", 1024L);
+        jsonObject.put("maxQueuedBytes", 1024L);
+        jsonObject.put("serializeDateTimeAsLong", true);
+        jsonObject.put("serializeDateTimeAsLongInner", true);
+        jsonObject.put("minTopNThreshold", 10);
+        jsonObject.put("skipEmptyBuckets", true);
+        jsonObject.put("maxMergingDictionarySize", 65536L);
+        jsonObject.put("maxOnDiskStorage", 262144L);
+        jsonObject.put("groupByStrategy", "v2");
+        jsonObject.put("groupByIsSingleThreaded", false);
+        jsonObject.put("bufferGrouperInitialBuckets", 1024);
+        jsonObject.put("bufferGrouperMaxLoadFactor", 1.024);
+        jsonObject.put("forceHashAggregation", true);
+        jsonObject.put("intermediateCombineDegree", 8);
+        jsonObject.put("numParallelCombineThreads", 4);
+        jsonObject.put("sortByDimsFirst", false);
+        jsonObject.put("forceLimitPushDown", false);
+        jsonObject.put("applyLimitPushDown", true);
+        jsonObject.put("maxIntermediateRows", 2048);
+        jsonObject.put("maxResults", 256);
+        jsonObject.put("useOffheap", false);
+        jsonObject.put("vectorize", "force");
+        jsonObject.put("vectorSize", 1024);
 
         String actualJSON = objectMapper.writeValueAsString(context);
         String expectedJSON = jsonObject.toString();
@@ -86,7 +128,7 @@ public class ContextTest {
     @Test
     public void testContextEquals() {
         Context context1 = Context.builder()
-                .timeoutInMilliSeconds(3141)
+                .timeoutInMilliSeconds(3141L)
                 .priority(1)
                 .queryId("How are you?")
                 .useCache(true)
@@ -101,7 +143,7 @@ public class ContextTest {
                 .build();
 
         Context context2 = Context.builder()
-                .timeoutInMilliSeconds(3141)
+                .timeoutInMilliSeconds(3141L)
                 .priority(1)
                 .queryId("How are you?")
                 .useCache(true)
@@ -121,7 +163,7 @@ public class ContextTest {
     @Test
     public void testContextUnequals() {
         Context context1 = Context.builder()
-                .timeoutInMilliSeconds(3141)
+                .timeoutInMilliSeconds(3141L)
                 .priority(1)
                 .queryId("How are you?")
                 .useCache(true)
@@ -136,7 +178,7 @@ public class ContextTest {
                 .build();
 
         Context context2 = Context.builder()
-                .timeoutInMilliSeconds(3141)
+                .timeoutInMilliSeconds(3141L)
                 .priority(1)
                 .queryId("How are you?")
                 .useCache(true)
@@ -152,5 +194,12 @@ public class ContextTest {
                 .build();
 
         Assert.assertNotEquals(context1, context2);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void preconditionCheck() {
+        Context context = Context.builder()
+                .timeoutInMilliSeconds(-1000L)
+                .build();
     }
 }

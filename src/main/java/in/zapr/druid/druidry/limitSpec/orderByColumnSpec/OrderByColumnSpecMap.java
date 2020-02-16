@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.limitSpec.orderByColumnSpec;
 
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

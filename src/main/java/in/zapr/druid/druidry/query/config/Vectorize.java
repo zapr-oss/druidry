@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry;
+package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum SortingOrder {
-    LEXICOGRAPHIC("lexicographic"),
-    ALPHANUMERIC("alphanumeric"),
-    NUMERIC("numeric"),
-    STRLEN("strlen");
+public enum Vectorize {
+
+    FALSE("false"),
+    TRUE("true"),
+    FORCE("force");
 
     private String value;
 
-    SortingOrder(String value) {
+    Vectorize(String value) {
         this.value = value;
     }
 
     @JsonValue
-    public String getSortingOrder() {
+    public String getValue() {
         return value;
     }
 }

@@ -31,9 +31,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import in.zapr.druid.druidry.Context;
-import in.zapr.druid.druidry.Interval;
-import in.zapr.druid.druidry.SortingOrder;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.dimension.SimpleDimension;

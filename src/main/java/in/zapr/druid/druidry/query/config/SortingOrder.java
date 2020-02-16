@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query;
+package in.zapr.druid.druidry.query.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.dataSource.DataSource;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+public enum SortingOrder {
+    LEXICOGRAPHIC("lexicographic"),
+    ALPHANUMERIC("alphanumeric"),
+    NUMERIC("numeric"),
+    STRLEN("strlen");
 
-@Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
-public abstract class DruidQuery {
+    private String value;
 
-    @NonNull
-    protected DataSource dataSource;
+    SortingOrder(String value) {
+        this.value = value;
+    }
 
-    protected Context context;
-
-    // Not making it public since this should be set by its children's constructor.
-    @NonNull
-    protected QueryType queryType;
+    @JsonValue
+    public String getSortingOrder() {
+        return value;
+    }
 }

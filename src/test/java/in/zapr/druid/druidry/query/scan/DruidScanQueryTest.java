@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import in.zapr.druid.druidry.Interval;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.filter.DruidFilter;

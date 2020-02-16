@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry;
+package in.zapr.druid.druidry.query.config;
 
 import org.joda.time.DateTime;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import in.zapr.druid.druidry.query.config.Interval;
 
 public class IntervalTest {
 
