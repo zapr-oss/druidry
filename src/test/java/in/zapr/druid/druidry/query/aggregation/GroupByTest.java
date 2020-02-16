@@ -19,7 +19,7 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.filter.havingSpec.DruidHaving;
+import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
 import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -94,7 +94,7 @@ public class GroupByTest {
                 "\"having\": {\n" +
                 "    \"type\": \"greaterThan\",\n" +
                 "    \"aggregation\": \"total_usage\",\n" +
-                "    \"value\": \"2\"\n" +
+                "    \"value\": 2\n" +
                 "  }," +
                 "  \"postAggregations\": [\n" +
                 "    { \"type\": \"arithmetic\",\n" +
@@ -132,7 +132,7 @@ public class GroupByTest {
         DruidAggregator transferAggregator = new DoubleSumAggregator("data_transfer", "data_transfer");
 
         // Having
-        DruidHaving countHaving = new GreaterThanHaving("total_usage", "2");
+        HavingSpec countHaving = new GreaterThanHaving("total_usage", 2);
 
         // Post Aggregations
         DruidPostAggregator transferPostAggregator = new FieldAccessPostAggregator("total_usage");
