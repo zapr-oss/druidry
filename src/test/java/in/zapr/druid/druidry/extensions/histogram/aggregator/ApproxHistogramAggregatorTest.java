@@ -16,15 +16,16 @@
 
 package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.extensions.histogram.aggregator.ApproxHistogramAggregator;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,8 +35,8 @@ public class ApproxHistogramAggregatorTest {
 
     @BeforeClass
     public void init() {
-    objectMapper = new ObjectMapper();
-  }
+        objectMapper = new ObjectMapper();
+    }
 
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
@@ -66,15 +67,15 @@ public class ApproxHistogramAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
         ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder().name(null)
-            .fieldName("_loadtime").resolution(100).lowerLimit(Float.NEGATIVE_INFINITY)
-            .upperLimit(Float.POSITIVE_INFINITY).numberOfBuckets(10).build();
+                .fieldName("_loadtime").resolution(100).lowerLimit(Float.NEGATIVE_INFINITY)
+                .upperLimit(Float.POSITIVE_INFINITY).numberOfBuckets(10).build();
 
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
         ApproxHistogramAggregator approxHistogramAgg =
-            ApproxHistogramAggregator.builder().name("druidry").fieldName(null).resolution(100)
-                .lowerLimit(Float.NEGATIVE_INFINITY).upperLimit(Float.POSITIVE_INFINITY).build();
+                ApproxHistogramAggregator.builder().name("druidry").fieldName(null).resolution(100)
+                        .lowerLimit(Float.NEGATIVE_INFINITY).upperLimit(Float.POSITIVE_INFINITY).build();
     }
 }

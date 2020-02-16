@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query;
+package in.zapr.druid.druidry.filter.havingSpec;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.List;
 
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.dataSource.DataSource;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
-public abstract class DruidQuery {
+@EqualsAndHashCode(callSuper = true)
+public class OrHaving extends HavingSpec {
+    private static String OR_DRUID_HAVING_TYPE = "or";
+    protected List<HavingSpec> havingSpecs;
 
-    @NonNull
-    protected DataSource dataSource;
-
-    protected Context context;
-
-    // Not making it public since this should be set by its children's constructor.
-    @NonNull
-    protected QueryType queryType;
+    public OrHaving(@NonNull List<HavingSpec> fields) {
+        this.type = OR_DRUID_HAVING_TYPE;
+        this.havingSpecs = fields;
+    }
 }

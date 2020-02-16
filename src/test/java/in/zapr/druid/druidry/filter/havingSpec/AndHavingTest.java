@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.extensions.histogram.aggregator;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
-@Slf4j
-public class QuantilePostAggregatorTest {
+public class AndHavingTest {
 
     private static ObjectMapper objectMapper;
 
@@ -39,31 +40,47 @@ public class QuantilePostAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JSONException, JsonProcessingException {
 
-        QuantilePostAggregator quantilePostAgg = QuantilePostAggregator.builder().name("quantile")
-                .fieldName("timeAgg").probability(0.50F).build();
+        HavingSpec equalToHaving1 = new EqualToHaving("Hello", 14);
+        HavingSpec equalToHaving2 = new EqualToHaving("Peace", 15);
+
+        AndHaving having = new AndHaving(Arrays.asList(equalToHaving1, equalToHaving2));
+
+        JSONObject having1 = new JSONObject();
+        having1.put("type", "equalTo");
+        having1.put("aggregation", "Hello");
+        having1.put("value", 14);
+
+        JSONObject having2 = new JSONObject();
+        having2.put("type", "equalTo");
+        having2.put("aggregation", "Peace");
+        having2.put("value", 15);
+
+        JSONArray filterJsonArray = new JSONArray(Arrays.asList(having1, having2));
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "quantile");
-        jsonObject.put("name", "quantile");
-        jsonObject.put("fieldName", "timeAgg");
-        jsonObject.put("probability", 0.50F);
+        jsonObject.put("type", "and");
+        jsonObject.put("havingSpecs", filterJsonArray);
 
-        String actualJSON = objectMapper.writeValueAsString(quantilePostAgg);
+        String actualJSON = objectMapper.writeValueAsString(having);
         String expectedJSON = jsonObject.toString();
+
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
-        QuantilePostAggregator quantilePostAgg =
-                QuantilePostAggregator.builder().name(null).fieldName("timeAgg").probability(0.50F).build();
+    public void testFieldsMissing() {
+        AndHaving andHaving = new AndHaving(null);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
-        QuantilePostAggregator quantilePostAgg = QuantilePostAggregator.builder().name("quantile")
-                .fieldName(null).probability(0.50F).build();
+    @Test
+    public void testEquals() {
+        HavingSpec equalToHaving1 = new EqualToHaving("Hello", 15);
+        HavingSpec equalToHaving2 = new EqualToHaving("Hello", 15);
+
+        Assert.assertEquals(equalToHaving1, equalToHaving2);
     }
+
 }
+

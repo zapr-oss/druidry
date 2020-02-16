@@ -21,6 +21,7 @@ import java.util.List;
 
 import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
@@ -50,7 +51,7 @@ public class DruidSelectQuery extends DruidQuery {
 
     @Builder
     public DruidSelectQuery(
-            @NonNull String dataSource,
+            @NonNull DataSource dataSource,
             List<DruidVirtualColumn> virtualColumns,
             DruidFilter filter,
             Boolean descending,

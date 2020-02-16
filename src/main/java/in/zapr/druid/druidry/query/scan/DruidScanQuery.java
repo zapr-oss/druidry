@@ -24,6 +24,7 @@ import java.util.List;
 
 import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
@@ -47,7 +48,7 @@ public class DruidScanQuery extends DruidQuery {
     private Boolean legacy;
 
     @Builder
-    private DruidScanQuery(@NonNull String dataSource, List<DruidVirtualColumn> virtualColumns, DruidFilter filter,
+    private DruidScanQuery(@NonNull DataSource dataSource, List<DruidVirtualColumn> virtualColumns, DruidFilter filter,
             Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat,
             Long limit, Boolean legacy, Context context) {
         this.virtualColumns = virtualColumns;
