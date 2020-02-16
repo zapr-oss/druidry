@@ -16,20 +16,12 @@
 
 package in.zapr.druid.druidry.filter.havingSpec;
 
-import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Getter
-@EqualsAndHashCode(callSuper = true)
-public class AndHaving extends HavingSpec {
-    private static String AND_DRUID_HAVING_TYPE = "and";
-    private List<HavingSpec> havingSpecs;
+@EqualsAndHashCode
+public abstract class HavingSpec {
+    protected String type;
 
-    public AndHaving(@NonNull List<HavingSpec> fields) {
-        this.type = AND_DRUID_HAVING_TYPE;
-        this.havingSpecs = fields;
-    }
 }
