@@ -36,19 +36,16 @@ public class SelectorFilter extends DruidFilter {
         this.dimension = dimension;
     }
 
-    @Deprecated
     public SelectorFilter(@NonNull String dimension, String value) {
         this(dimension);
         this.value = value;
     }
 
-    @Deprecated
     public SelectorFilter(@NonNull String dimension, Integer value) {
         this(dimension);
         this.value = value;
     }
 
-    @Deprecated
     public SelectorFilter(@NonNull String dimension, Long value) {
         this(dimension);
         this.value = value;
