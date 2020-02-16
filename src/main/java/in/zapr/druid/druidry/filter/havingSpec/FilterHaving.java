@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.having;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import in.zapr.druid.druidry.filter.DruidFilter;
 import lombok.EqualsAndHashCode;

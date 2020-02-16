@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.having;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class DimSelectionHavingTest {
+public class LessThanHavingTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -19,11 +19,11 @@ public class DimSelectionHavingTest {
 
     @Test
     public void testAllFieldsNumeric() throws JSONException, JsonProcessingException {
-        DruidHaving having = new DimSelectorHaving("dimension_name", 2);
+        DruidHaving having = new LessThanHaving("count", 2);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "dimSelector");
-        jsonObject.put("dimension", "dimension_name");
+        jsonObject.put("type", "lessThan");
+        jsonObject.put("aggregation", "count");
         jsonObject.put("value", 2);
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -33,11 +33,11 @@ public class DimSelectionHavingTest {
 
     @Test
     public void testAllFieldsString() throws JSONException, JsonProcessingException {
-        DruidHaving having = new DimSelectorHaving("dimension_name", "2");
+        DruidHaving having = new LessThanHaving("count", "2");
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "dimSelector");
-        jsonObject.put("dimension", "dimension_name");
+        jsonObject.put("type", "lessThan");
+        jsonObject.put("aggregation", "count");
         jsonObject.put("value", "2");
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -47,6 +47,6 @@ public class DimSelectionHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSettingRequiredFieldAsNull() {
-        DimSelectorHaving having = new DimSelectorHaving(null, "World");
+        LessThanHaving having = new LessThanHaving(null, "World");
     }
 }

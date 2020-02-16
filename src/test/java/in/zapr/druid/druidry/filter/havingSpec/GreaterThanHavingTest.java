@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.having;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class EqualToHavingTest {
+public class GreaterThanHavingTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -19,10 +19,10 @@ public class EqualToHavingTest {
 
     @Test
     public void testAllFieldsNumeric() throws JSONException, JsonProcessingException {
-        DruidHaving having = new EqualToHaving("count", 2);
+        GreaterThanHaving having = new GreaterThanHaving("count", 2);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "equalTo");
+        jsonObject.put("type", "greaterThan");
         jsonObject.put("aggregation", "count");
         jsonObject.put("value", 2);
 
@@ -33,10 +33,10 @@ public class EqualToHavingTest {
 
     @Test
     public void testAllFieldsString() throws JSONException, JsonProcessingException {
-        DruidHaving having = new EqualToHaving("count", "2");
+        GreaterThanHaving having = new GreaterThanHaving("count", "2");
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "equalTo");
+        jsonObject.put("type", "greaterThan");
         jsonObject.put("aggregation", "count");
         jsonObject.put("value", "2");
 
@@ -47,6 +47,6 @@ public class EqualToHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSettingRequiredFieldAsNull() {
-        EqualToHaving having = new EqualToHaving(null, "World");
+        GreaterThanHaving having = new GreaterThanHaving(null, "World");
     }
 }

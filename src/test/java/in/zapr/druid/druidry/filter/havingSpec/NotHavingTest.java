@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.having;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
