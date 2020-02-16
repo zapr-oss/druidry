@@ -19,6 +19,8 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.having.DruidHaving;
+import in.zapr.druid.druidry.having.GreaterThanHaving;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -89,6 +91,11 @@ public class GroupByTest {
                 "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\" },\n" +
                 "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\" }\n" +
                 "  ],\n" +
+                "\"having\": {\n" +
+                "    \"type\": \"greaterThan\",\n" +
+                "    \"aggregation\": \"total_usage\",\n" +
+                "    \"value\": \"2\"\n" +
+                "  }," +
                 "  \"postAggregations\": [\n" +
                 "    { \"type\": \"arithmetic\",\n" +
                 "      \"name\": \"avg_usage\",\n" +
@@ -124,6 +131,9 @@ public class GroupByTest {
         DruidAggregator usageAggregator = new LongSumAggregator("total_usage", "user_count");
         DruidAggregator transferAggregator = new DoubleSumAggregator("data_transfer", "data_transfer");
 
+        // Having
+        DruidHaving countHaving = new GreaterThanHaving("total_usage", "2");
+
         // Post Aggregations
         DruidPostAggregator transferPostAggregator = new FieldAccessPostAggregator("total_usage");
         DruidPostAggregator usagePostAggregator = new FieldAccessPostAggregator("data_transfer");
@@ -145,6 +155,7 @@ public class GroupByTest {
                 .dimensions(Arrays.asList(druidDimension1, druidDimension2))
                 .limitSpec(limitSpec)
                 .filter(filter)
+                .having(countHaving)
                 .aggregators(Arrays.asList(usageAggregator, transferAggregator))
                 .postAggregators(Collections.singletonList(postAggregator))
                 .intervals(Collections.singletonList(interval))
