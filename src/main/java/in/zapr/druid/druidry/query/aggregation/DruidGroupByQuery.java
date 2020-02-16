@@ -26,6 +26,7 @@ import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
+import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
 import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
@@ -41,7 +42,7 @@ import lombok.NonNull;
 public class DruidGroupByQuery extends DruidAggregationQuery {
 
     private DefaultLimitSpec limitSpec;
-    private String having;
+    private HavingSpec having;
     @NonNull
     private List<DruidDimension> dimensions;
 
@@ -54,6 +55,7 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
                               DruidFilter filter,
                               List<DruidAggregator> aggregators,
                               List<DruidPostAggregator> postAggregators,
+                              HavingSpec having,
                               @NonNull List<Interval> intervals,
                               Context context) {
 
@@ -66,6 +68,7 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
         this.filter = filter;
         this.aggregations = aggregators;
         this.postAggregations = postAggregators;
+        this.having = having;
         this.intervals = intervals;
         this.context = context;
     }
