@@ -19,8 +19,8 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import in.zapr.druid.druidry.having.DruidHaving;
-import in.zapr.druid.druidry.having.GreaterThanHaving;
+import in.zapr.druid.druidry.filter.havingSpec.DruidHaving;
+import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;

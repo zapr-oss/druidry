@@ -1,4 +1,4 @@
-package in.zapr.druid.druidry.having;
+package in.zapr.druid.druidry.filter.havingSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,12 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
-
-public class OrHavingTest {
+public class AndHavingTest {
 
     private static ObjectMapper objectMapper;
 
@@ -27,7 +27,7 @@ public class OrHavingTest {
         DruidHaving equalToHaving1 = new EqualToHaving("Hello", "World");
         DruidHaving equalToHaving2 = new EqualToHaving("Peace", 15);
 
-        DruidHaving having = new OrHaving(Arrays.asList(equalToHaving1, equalToHaving2));
+        AndHaving having = new AndHaving(Arrays.asList(equalToHaving1, equalToHaving2));
 
         JSONObject having1 = new JSONObject();
         having1.put("type", "equalTo");
@@ -42,7 +42,7 @@ public class OrHavingTest {
         JSONArray filterJsonArray = new JSONArray(Arrays.asList(having1, having2));
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "or");
+        jsonObject.put("type", "and");
         jsonObject.put("havingSpecs", filterJsonArray);
 
         String actualJSON = objectMapper.writeValueAsString(having);
@@ -53,6 +53,16 @@ public class OrHavingTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testFieldsMissing() {
-        OrHaving andHaving = new OrHaving(null);
+        AndHaving andHaving = new AndHaving(null);
     }
+
+    @Test
+    public void testEquals() {
+        DruidHaving equalToHaving1 = new EqualToHaving("Hello", "World");
+        DruidHaving equalToHaving2 = new EqualToHaving("Hello", "World");
+
+        Assert.assertEquals(equalToHaving1, equalToHaving2);
+    }
+
 }
+

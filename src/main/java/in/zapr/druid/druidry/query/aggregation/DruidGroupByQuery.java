@@ -26,7 +26,7 @@ import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
-import in.zapr.druid.druidry.having.DruidHaving;
+import in.zapr.druid.druidry.filter.havingSpec.DruidHaving;
 import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
