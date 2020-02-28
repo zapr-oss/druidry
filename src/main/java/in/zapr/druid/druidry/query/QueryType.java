@@ -28,6 +28,7 @@ public enum QueryType {
     DATASOURCE_METADATA("dataSourceMetadata"),
     SEARCH("search"),
     SCAN("scan"),
+    @Deprecated
     SELECT("select");
 
     private String value;
