@@ -18,7 +18,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.databind.version>2.9.10.1</jackson.databind.version>
         <jackson.datatype.version>2.9.9</jackson.datatype.version>
-        <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.18.10</lombok.version>
         <testng.version>6.11</testng.version>
         <logback.version>1.2.1</logback.version>
@@ -31,21 +30,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodatime.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.databind.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-joda</artifactId>
-            <version>${jackson.datatype.version}</version>
         </dependency>
 
         <dependency>

@@ -17,29 +17,31 @@
 package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.joda.time.DateTime;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 @Getter
 @EqualsAndHashCode
 public class Interval {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
     private final static String DRUID_INTERVAL_FORMAT = "%s/%s";
 
-    private DateTime startTime;
-    private DateTime endTime;
+    private TemporalAccessor startTime;
+    private TemporalAccessor endTime;
 
-    public Interval(@NonNull DateTime startTime, @NonNull DateTime endTime) {
+    public Interval(@NonNull TemporalAccessor startTime, @NonNull TemporalAccessor endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     @JsonValue
     private String getIntervalAsString() {
-        return String.format(DRUID_INTERVAL_FORMAT, startTime.toDateTimeISO(), endTime.toDateTimeISO());
+        return String.format(DRUID_INTERVAL_FORMAT, FORMATTER.format(startTime), FORMATTER.format(endTime));
     }
 }

@@ -18,9 +18,7 @@ package in.zapr.druid.druidry.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import in.zapr.druid.druidry.query.config.Interval;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,10 +27,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import in.zapr.druid.druidry.query.config.Interval;
 
 public class IntervalFilterTest {
 
@@ -67,15 +66,15 @@ public class IntervalFilterTest {
         jsonObject.put("dimension", "__time");
         jsonObject.put("intervals", intervalJsonArray);
 
-        DateTime startTimeInterval1 = new DateTime(2013, 8, 31,
-                0, 0, 0, DateTimeZone.UTC);
-        DateTime endTimeInterval1 = new DateTime(2013, 9, 3,
-                0, 0, 0, DateTimeZone.UTC);
+        Temporal startTimeInterval1 = ZonedDateTime.of(2013, 8, 31,
+                                              0, 0, 0, 0, ZoneOffset.UTC);
+        Temporal endTimeInterval1 = ZonedDateTime.of(2013, 9, 3,
+                                            0, 0, 0, 0, ZoneOffset.UTC);
 
-        DateTime startTimeInterval2 = new DateTime(2018, 8, 31,
-                0, 0, 0, DateTimeZone.UTC);
-        DateTime endTimeInterval2 = new DateTime(2018, 9, 3,
-                0, 0, 0, DateTimeZone.UTC);
+        Temporal startTimeInterval2 = ZonedDateTime.of(2018, 8, 31,
+                                              0, 0, 0, 0, ZoneOffset.UTC);
+        Temporal endTimeInterval2 = ZonedDateTime.of(2018, 9, 3,
+                                            0, 0, 0, 0, ZoneOffset.UTC);
 
         Interval interval1 = new Interval(startTimeInterval1, endTimeInterval1);
         Interval interval2 = new Interval(startTimeInterval2, endTimeInterval2);

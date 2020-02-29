@@ -16,10 +16,12 @@
 
 package in.zapr.druid.druidry.granularity;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.Temporal;
 
 public class SimpleGranularityTest {
 
@@ -43,7 +45,7 @@ public class SimpleGranularityTest {
     public void testEqualsWithAnotherSubClass() {
         SimpleGranularity granularity1 = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        DateTime originDate = new DateTime(DateTimeZone.UTC);
+        Temporal originDate = ZonedDateTime.now(ZoneOffset.UTC);
         DurationGranularity granularity2 = new DurationGranularity(3141, originDate);
 
         Assert.assertNotEquals(granularity1, granularity2);

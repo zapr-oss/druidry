@@ -16,20 +16,21 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import in.zapr.druid.druidry.granularity.DurationGranularity;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.Temporal;
 import java.util.Locale;
-
-import in.zapr.druid.druidry.granularity.DurationGranularity;
 
 public class TimeFormatExtractionFunctionTest {
 
@@ -48,7 +49,7 @@ public class TimeFormatExtractionFunctionTest {
 
         String timeZone = "America/Montreal";
 
-        DateTime originDate = new DateTime(DateTimeZone.UTC);
+        Temporal originDate = ZonedDateTime.now(ZoneOffset.UTC);
 
         DurationGranularity spec = new DurationGranularity(7200000, originDate);
 
@@ -63,8 +64,8 @@ public class TimeFormatExtractionFunctionTest {
         String actualJSON = objectMapper.writeValueAsString(timeFormatExtractonFunction);
 
         String expectedJSONString = "{\n\"type\" : \"timeFormat\",\n \"format\" : \"dd-MM-yyyy\",\n    \"timeZone\" : \"America/Montreal\",\n    \"locale\" : \"fr\",\n    \"granularity\": {\"type\": \"duration\", \"duration\": 7200000, \"origin\": \"" +
-                originDate.toDateTimeISO() +
-                "\"},\n    \"asMillis\": true\n\n  }";
+                                    ISO_DATE_TIME.format(originDate) +
+                                    "\"},\n    \"asMillis\": true\n\n  }";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
