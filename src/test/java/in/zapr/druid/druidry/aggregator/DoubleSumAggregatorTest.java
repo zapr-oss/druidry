@@ -45,10 +45,13 @@ public class DoubleSumAggregatorTest {
         DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem",
                 "Hey");
 
+        doubleSumAggregator.setExpression("(\"foo\" / \"bar\")");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleSum");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(doubleSumAggregator);
         String expectedJSON = jsonObject.toString();
@@ -72,7 +75,16 @@ public class DoubleSumAggregatorTest {
         DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
         DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name", "field");
 
+        DoubleSumAggregator aggregator3 = new DoubleSumAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        DoubleSumAggregator aggregator4 = new DoubleSumAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"bar\")");
+
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
@@ -80,7 +92,16 @@ public class DoubleSumAggregatorTest {
         DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
         DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name1", "field1");
 
+        DoubleSumAggregator aggregator3 = new DoubleSumAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        DoubleSumAggregator aggregator4 = new DoubleSumAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"baz\")");
+
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test

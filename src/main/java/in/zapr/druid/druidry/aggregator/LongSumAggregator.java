@@ -19,17 +19,28 @@ package in.zapr.druid.druidry.aggregator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class LongSumAggregator extends DruidAggregator {
 
     private static final String LONGSUM_TYPE_AGGREGATOR = "longSum";
+
     private String fieldName;
+
+    @Setter
+    private String expression;
+
+    public LongSumAggregator(@NonNull String name) {
+        this.type = LONGSUM_TYPE_AGGREGATOR;
+        this.name = name;
+    }
 
     public LongSumAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = LONGSUM_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
     }
+
 }

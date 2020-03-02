@@ -136,8 +136,8 @@ public class TimeSeriesTest {
                 "    ]\n" +
                 "  },\n" +
                 "  \"aggregations\": [\n" +
-                "    { \"type\": \"longSum\", \"name\": \"sample_name1\", \"fieldName\": \"sample_fieldName1\" },\n" +
-                "    { \"type\": \"doubleSum\", \"name\": \"sample_name2\", \"fieldName\": \"sample_fieldName2\" }\n" +
+                "    { \"type\": \"longSum\", \"name\": \"sample_name1\", \"fieldName\": \"sample_fieldName1\", \"expression\": null },\n" +
+                "    { \"type\": \"doubleSum\", \"name\": \"sample_name2\", \"fieldName\": \"sample_fieldName2\", \"expression\": null }\n" +
                 "  ],\n" +
                 "  \"postAggregations\": [\n" +
                 "    { \"type\": \"arithmetic\",\n" +

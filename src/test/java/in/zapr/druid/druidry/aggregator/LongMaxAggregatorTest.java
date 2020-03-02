@@ -45,10 +45,13 @@ public class LongMaxAggregatorTest {
         LongMaxAggregator countAggregator = new LongMaxAggregator("CarpeDiem",
                 "Hey");
 
+        countAggregator.setExpression("(\"foo\" / \"bar\")");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMax");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(countAggregator);
         String expectedJSON = jsonObject.toString();
@@ -72,7 +75,16 @@ public class LongMaxAggregatorTest {
         LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
         LongMaxAggregator aggregator2 = new LongMaxAggregator("name", "field");
 
+        LongMaxAggregator aggregator3 = new LongMaxAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongMaxAggregator aggregator4 = new LongMaxAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"bar\")");
+
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
@@ -80,7 +92,16 @@ public class LongMaxAggregatorTest {
         LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
         LongMaxAggregator aggregator2 = new LongMaxAggregator("name1", "field1");
 
+        LongMaxAggregator aggregator3 = new LongMaxAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongMaxAggregator aggregator4 = new LongMaxAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"baz\")");
+
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test

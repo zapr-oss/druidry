@@ -45,10 +45,13 @@ public class LongSumAggregatorTest {
         LongSumAggregator longSumAggregator = new LongSumAggregator("CarpeDiem",
                 "Hey");
 
+        longSumAggregator.setExpression("(\"foo\" / \"bar\")");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longSum");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(longSumAggregator);
         String expectedJSON = jsonObject.toString();
@@ -72,7 +75,16 @@ public class LongSumAggregatorTest {
         LongSumAggregator aggregator1 = new LongSumAggregator("name", "field");
         LongSumAggregator aggregator2 = new LongSumAggregator("name", "field");
 
+        LongSumAggregator aggregator3 = new LongSumAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongSumAggregator aggregator4 = new LongSumAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"bar\")");
+
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
@@ -80,7 +92,16 @@ public class LongSumAggregatorTest {
         LongSumAggregator aggregator1 = new LongSumAggregator("name", "field");
         LongSumAggregator aggregator2 = new LongSumAggregator("name1", "field1");
 
+        LongSumAggregator aggregator3 = new LongSumAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongSumAggregator aggregator4 = new LongSumAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"baz\")");
+
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test

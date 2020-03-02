@@ -45,10 +45,13 @@ public class LongMinAggregatorTest {
         LongMinAggregator longMinAggregator = new LongMinAggregator("CarpeDiem",
                 "Hey");
 
+        longMinAggregator.setExpression("(\"foo\" / \"bar\")");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMin");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(longMinAggregator);
         String expectedJSON = jsonObject.toString();
@@ -72,7 +75,16 @@ public class LongMinAggregatorTest {
         LongMinAggregator aggregator1 = new LongMinAggregator("name", "field");
         LongMinAggregator aggregator2 = new LongMinAggregator("name", "field");
 
+        LongMinAggregator aggregator3 = new LongMinAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongMinAggregator aggregator4 = new LongMinAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"bar\")");
+
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
@@ -80,7 +92,16 @@ public class LongMinAggregatorTest {
         LongMinAggregator aggregator1 = new LongMinAggregator("name", "field");
         LongMinAggregator aggregator2 = new LongMinAggregator("name1", "field1");
 
+        LongMinAggregator aggregator3 = new LongMinAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        LongMinAggregator aggregator4 = new LongMinAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"baz\")");
+
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test

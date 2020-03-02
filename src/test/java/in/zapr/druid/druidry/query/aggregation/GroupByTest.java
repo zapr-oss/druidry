@@ -92,8 +92,8 @@ public class GroupByTest {
                 "    ]\n" +
                 "  },\n" +
                 "  \"aggregations\": [\n" +
-                "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\" },\n" +
-                "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\" }\n" +
+                "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\", \"expression\": null },\n" +
+                "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\", \"expression\": null }\n" +
                 "  ],\n" +
                 "\"having\": {\n" +
                 "    \"type\": \"greaterThan\",\n" +

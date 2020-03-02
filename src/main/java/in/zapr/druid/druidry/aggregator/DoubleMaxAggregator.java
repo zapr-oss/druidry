@@ -19,17 +19,28 @@ package in.zapr.druid.druidry.aggregator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class DoubleMaxAggregator extends DruidAggregator {
 
     private static final String DOUBLE_MAX_TYPE_AGGREGATOR = "doubleMax";
+
     private String fieldName;
+
+    @Setter
+    private String expression;
+
+    public DoubleMaxAggregator(@NonNull String name) {
+        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
+        this.name = name;
+    }
 
     public DoubleMaxAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
     }
+
 }

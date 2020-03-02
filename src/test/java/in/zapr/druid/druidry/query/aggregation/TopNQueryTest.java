@@ -137,12 +137,14 @@ public class TopNQueryTest {
                 "    {\n" +
                 "      \"type\": \"longSum\",\n" +
                 "      \"name\": \"count\",\n" +
-                "      \"fieldName\": \"count\"\n" +
+                "      \"fieldName\": \"count\",\n" +
+                "      \"expression\": null\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"type\": \"doubleSum\",\n" +
                 "      \"name\": \"some_metric\",\n" +
-                "      \"fieldName\": \"some_metric\"\n" +
+                "      \"fieldName\": \"some_metric\",\n" +
+                "      \"expression\": null\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"postAggregations\": [\n" +
@@ -170,7 +172,7 @@ public class TopNQueryTest {
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test

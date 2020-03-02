@@ -45,10 +45,13 @@ public class DoubleMinAggregatorTest {
         DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator("CarpeDiem",
                 "Hey");
 
+        doubleMinAggregator.setExpression("(\"foo\" / \"bar\")");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleMin");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(doubleMinAggregator);
         String expectedJSON = jsonObject.toString();
@@ -72,7 +75,16 @@ public class DoubleMinAggregatorTest {
         DoubleMinAggregator aggregator1 = new DoubleMinAggregator("name", "field");
         DoubleMinAggregator aggregator2 = new DoubleMinAggregator("name", "field");
 
+        DoubleMinAggregator aggregator3 = new DoubleMinAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        DoubleMinAggregator aggregator4 = new DoubleMinAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"bar\")");
+
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
@@ -80,7 +92,16 @@ public class DoubleMinAggregatorTest {
         DoubleMinAggregator aggregator1 = new DoubleMinAggregator("name", "field");
         DoubleMinAggregator aggregator2 = new DoubleMinAggregator("name1", "field1");
 
+        DoubleMinAggregator aggregator3 = new DoubleMinAggregator("name", "field");
+
+        aggregator3.setExpression("(\"foo\" / \"bar\")");
+
+        DoubleMinAggregator aggregator4 = new DoubleMinAggregator("name", "field");
+
+        aggregator4.setExpression("(\"foo\" / \"baz\")");
+
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test
