@@ -78,4 +78,18 @@ public class StringLastAggregatorTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToCreateWithoutName() {
+        StringLastAggregator.builder()
+                .fieldName("fieldName")
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToCreateWithoutFieldName() {
+        StringLastAggregator.builder()
+                .name("name")
+                .build();
+    }
+
 }

@@ -78,4 +78,18 @@ public class StringFirstAggregatorTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToCreateWithoutName() {
+        StringFirstAggregator.builder()
+                .fieldName("fieldName")
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToCreateWithoutFieldName() {
+        StringFirstAggregator.builder()
+                .name("name")
+                .build();
+    }
+
 }
