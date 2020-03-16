@@ -117,6 +117,101 @@ public class MovingAverageTest {
         JSONAssert.assertEquals(actualJson, expectedJson, JSONCompareMode.NON_EXTENSIBLE);
     }
 
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToBuildWithoutDataSource() {
+        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+        DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
+        DruidAverager averager = DoubleMeanAverager.builder()
+                .name("name")
+                .fieldName("fieldName")
+                .buckets(60)
+                .cycleSize(5)
+                .build();
+
+        DruidMovingAverageQuery.builder()
+                .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
+                .intervals(singletonList(interval))
+                .aggregations(singletonList(aggregator))
+                .averagers(singletonList(averager))
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToBuildWithoutGranularity() {
+        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+        DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
+        DruidAverager averager = DoubleMeanAverager.builder()
+                .name("name")
+                .fieldName("fieldName")
+                .buckets(60)
+                .cycleSize(5)
+                .build();
+
+        DruidMovingAverageQuery.builder()
+                .dataSource(new TableDataSource("dataSource"))
+                .intervals(singletonList(interval))
+                .aggregations(singletonList(aggregator))
+                .averagers(singletonList(averager))
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToBuildWithoutAggregations() {
+        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+        DruidAverager averager = DoubleMeanAverager.builder()
+                .name("name")
+                .fieldName("fieldName")
+                .buckets(60)
+                .cycleSize(5)
+                .build();
+
+        DruidMovingAverageQuery.builder()
+                .dataSource(new TableDataSource("dataSource"))
+                .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
+                .intervals(singletonList(interval))
+                .averagers(singletonList(averager))
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToBuildWithoutIntervals() {
+        DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
+        DruidAverager averager = DoubleMeanAverager.builder()
+                .name("name")
+                .fieldName("fieldName")
+                .buckets(60)
+                .cycleSize(5)
+                .build();
+
+        DruidMovingAverageQuery.builder()
+                .dataSource(new TableDataSource("dataSource"))
+                .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
+                .aggregations(singletonList(aggregator))
+                .averagers(singletonList(averager))
+                .build();
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void tryToBuildWithoutAveragers() {
+        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        Interval interval = new Interval(startTime, endTime);
+        DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
+
+        DruidMovingAverageQuery.builder()
+                .dataSource(new TableDataSource("dataSource"))
+                .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
+                .intervals(singletonList(interval))
+                .aggregations(singletonList(aggregator))
+                .build();
+    }
+
     @Test(dataProvider = "averagerTypesProvider")
     public void testAllAveragerTypes(String averagerName,
                                      MovingAverageCreators.Creator averagerCreator)
