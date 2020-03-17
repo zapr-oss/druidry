@@ -42,5 +42,17 @@ public class DoubleMaxAggregator extends DruidAggregator {
         this.name = name;
         this.fieldName = fieldName;
     }
+    @Builder
+    private DoubleMaxAggregator(@NonNull String name, String fieldName, String expression) {
 
+        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.expression = expression;
+
+        Preconditions.checkArgument(
+                fieldName == null ^ expression == null,
+                "Must have a valid, non-null fieldName or expression"
+        );
+    }
 }
