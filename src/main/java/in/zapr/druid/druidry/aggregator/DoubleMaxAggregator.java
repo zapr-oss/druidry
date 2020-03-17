@@ -23,6 +23,7 @@ import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DoubleMaxAggregator extends DruidAggregator {
 
     private static final String DOUBLE_MAX_TYPE_AGGREGATOR = "doubleMax";
