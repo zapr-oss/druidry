@@ -40,17 +40,36 @@ public class DoubleSumAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFieldsButExpression() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem",
-                "Hey");
-
-        doubleSumAggregator.setExpression("(\"foo\" / \"bar\")");
+        DoubleSumAggregator doubleSumAggregator =
+            DoubleSumAggregator.builder()
+                .name("CarpeDiem")
+                .fieldName("Hey")
+                .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleSum");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+
+        String actualJSON = objectMapper.writeValueAsString(doubleSumAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testAllFieldsButFieldName() throws JsonProcessingException, JSONException {
+
+        DoubleSumAggregator doubleSumAggregator =
+            DoubleSumAggregator.builder()
+                .name("CarpeDiem")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "doubleSum");
+        jsonObject.put("name", "CarpeDiem");
         jsonObject.put("expression", "(\"foo\" / \"bar\")");
 
         String actualJSON = objectMapper.writeValueAsString(doubleSumAggregator);
@@ -61,27 +80,37 @@ public class DoubleSumAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator(null, "Haha");
-    }
-
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
-
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("Name", null);
+        DoubleSumAggregator doubleSumAggregator =
+            DoubleSumAggregator.builder()
+                .fieldName("Haha")
+                .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
-        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
 
-        DoubleSumAggregator aggregator3 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator2 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
 
-        aggregator3.setExpression("(\"foo\" / \"bar\")");
+        DoubleSumAggregator aggregator3 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
-        DoubleSumAggregator aggregator4 = new DoubleSumAggregator("name", "field");
-
-        aggregator4.setExpression("(\"foo\" / \"bar\")");
+        DoubleSumAggregator aggregator4 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
         Assert.assertEquals(aggregator1, aggregator2);
         Assert.assertEquals(aggregator3, aggregator4);
@@ -89,16 +118,29 @@ public class DoubleSumAggregatorTest {
 
     @Test
     public void testEqualsNegative() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
-        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name1", "field1");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
 
-        DoubleSumAggregator aggregator3 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator2 =
+            DoubleSumAggregator.builder()
+                .name("name1")
+                .fieldName("field1")
+                .build();
 
-        aggregator3.setExpression("(\"foo\" / \"bar\")");
+        DoubleSumAggregator aggregator3 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
-        DoubleSumAggregator aggregator4 = new DoubleSumAggregator("name", "field");
-
-        aggregator4.setExpression("(\"foo\" / \"baz\")");
+        DoubleSumAggregator aggregator4 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"baz\")")
+                .build();
 
         Assert.assertNotEquals(aggregator1, aggregator2);
         Assert.assertNotEquals(aggregator3, aggregator4);
@@ -106,9 +148,15 @@ public class DoubleSumAggregatorTest {
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assert.assertNotEquals(aggregator1, aggregator2);
     }
+
 }

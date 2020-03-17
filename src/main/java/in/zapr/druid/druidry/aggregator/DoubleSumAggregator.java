@@ -16,31 +16,43 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import com.google.common.base.Preconditions;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DoubleSumAggregator extends DruidAggregator {
 
     private static final String DOUBLE_SUM_TYPE_AGGREGATOR = "doubleSum";
 
     private String fieldName;
-
-    @Setter
     private String expression;
 
-    public DoubleSumAggregator(@NonNull String name) {
-        this.type = DOUBLE_SUM_TYPE_AGGREGATOR;
-        this.name = name;
-    }
-
+    @Deprecated
     public DoubleSumAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = DOUBLE_SUM_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
+    }
+
+    @Builder
+    private DoubleSumAggregator(@NonNull String name, String fieldName, String expression) {
+        this.type = DOUBLE_SUM_TYPE_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.expression = expression;
+
+        Preconditions.checkArgument(
+            fieldName == null ^ expression == null,
+            "Must have a valid, non-null fieldName or expression"
+        );
     }
 
 }

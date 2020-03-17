@@ -16,31 +16,43 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import com.google.common.base.Preconditions;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LongMaxAggregator extends DruidAggregator {
 
     private static final String LONG_MAX_TYPE_AGGREGATOR = "longMax";
 
     private String fieldName;
-
-    @Setter
     private String expression;
 
-    public LongMaxAggregator(@NonNull String name) {
-        this.type = LONG_MAX_TYPE_AGGREGATOR;
-        this.name = name;
-    }
-
+    @Deprecated
     public LongMaxAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = LONG_MAX_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
+    }
+
+    @Builder
+    private LongMaxAggregator(@NonNull String name, String fieldName, String expression) {
+        this.type = LONG_MAX_TYPE_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.expression = expression;
+
+        Preconditions.checkArgument(
+            fieldName == null ^ expression == null,
+            "Must have a valid, non-null fieldName or expression"
+        );
     }
 
 }

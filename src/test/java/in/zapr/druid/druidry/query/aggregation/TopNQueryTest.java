@@ -33,8 +33,6 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -53,6 +51,8 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.topNMetric.SimpleMetric;
 import in.zapr.druid.druidry.topNMetric.TopNMetric;
 
@@ -72,20 +72,29 @@ public class TopNQueryTest {
 
         AndFilter filter = new AndFilter(Arrays.asList(selectorFilter1, selectorFilter2));
 
-        DruidAggregator aggregator1 = new LongSumAggregator("count", "count");
-        DruidAggregator aggregator2 = new DoubleSumAggregator("some_metric", "some_metric");
+        DruidAggregator aggregator1 =
+            LongSumAggregator.builder()
+                .name("count")
+                .fieldName("count")
+                .build();
+
+        DruidAggregator aggregator2 =
+            DoubleSumAggregator.builder()
+                .name("some_metric")
+                .fieldName("some_metric")
+                .build();
 
         FieldAccessPostAggregator fieldAccessPostAggregator1
-                = new FieldAccessPostAggregator("some_metric", "some_metric");
+            = new FieldAccessPostAggregator("some_metric", "some_metric");
 
         FieldAccessPostAggregator fieldAccessPostAggregator2
-                = new FieldAccessPostAggregator("count", "count");
+            = new FieldAccessPostAggregator("count", "count");
 
         DruidPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("sample_divide")
-                .function(ArithmeticFunction.DIVIDE)
-                .fields(Arrays.asList(fieldAccessPostAggregator1, fieldAccessPostAggregator2))
-                .build();
+            .name("sample_divide")
+            .function(ArithmeticFunction.DIVIDE)
+            .fields(Arrays.asList(fieldAccessPostAggregator1, fieldAccessPostAggregator2))
+            .build();
 
         DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
@@ -97,79 +106,77 @@ public class TopNQueryTest {
         TopNMetric metric = new SimpleMetric("count");
 
         DruidTopNQuery query = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .dimension(dimension)
-                .threshold(5)
-                .topNMetric(metric)
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Arrays.asList(aggregator1, aggregator2))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .intervals(Collections.singletonList(interval))
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .dimension(dimension)
+            .threshold(5)
+            .topNMetric(metric)
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Arrays.asList(aggregator1, aggregator2))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .intervals(Collections.singletonList(interval))
+            .build();
 
         String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"topN\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_data\"\n" +
-                "  },\n" +
-                "  \"dimension\": \"sample_dim\",\n" +
-                "  \"threshold\": 5,\n" +
-                "  \"metric\": \"count\",\n" +
-                "  \"granularity\": \"all\",\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"and\",\n" +
-                "    \"fields\": [\n" +
-                "      {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"dim1\",\n" +
-                "        \"value\": \"some_value\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"dim2\",\n" +
-                "        \"value\": \"some_other_val\"\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  \"aggregations\": [\n" +
-                "    {\n" +
-                "      \"type\": \"longSum\",\n" +
-                "      \"name\": \"count\",\n" +
-                "      \"fieldName\": \"count\",\n" +
-                "      \"expression\": null\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"type\": \"doubleSum\",\n" +
-                "      \"name\": \"some_metric\",\n" +
-                "      \"fieldName\": \"some_metric\",\n" +
-                "      \"expression\": null\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"postAggregations\": [\n" +
-                "    {\n" +
-                "      \"type\": \"arithmetic\",\n" +
-                "      \"name\": \"sample_divide\",\n" +
-                "      \"fn\": \"/\",\n" +
-                "      \"fields\": [\n" +
-                "        {\n" +
-                "          \"type\": \"fieldAccess\",\n" +
-                "          \"name\": \"some_metric\",\n" +
-                "          \"fieldName\": \"some_metric\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"type\": \"fieldAccess\",\n" +
-                "          \"name\": \"count\",\n" +
-                "          \"fieldName\": \"count\"\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"intervals\": [\n" +
-                "    \"2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z\"\n" +
-                "  ]\n" +
-                "}";
+            "  \"queryType\": \"topN\",\n" +
+            "  \"dataSource\": {\n" +
+            "    \"type\": \"table\",\n" +
+            "    \"name\": \"sample_data\"\n" +
+            "  },\n" +
+            "  \"dimension\": \"sample_dim\",\n" +
+            "  \"threshold\": 5,\n" +
+            "  \"metric\": \"count\",\n" +
+            "  \"granularity\": \"all\",\n" +
+            "  \"filter\": {\n" +
+            "    \"type\": \"and\",\n" +
+            "    \"fields\": [\n" +
+            "      {\n" +
+            "        \"type\": \"selector\",\n" +
+            "        \"dimension\": \"dim1\",\n" +
+            "        \"value\": \"some_value\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"type\": \"selector\",\n" +
+            "        \"dimension\": \"dim2\",\n" +
+            "        \"value\": \"some_other_val\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  \"aggregations\": [\n" +
+            "    {\n" +
+            "      \"type\": \"longSum\",\n" +
+            "      \"name\": \"count\",\n" +
+            "      \"fieldName\": \"count\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"type\": \"doubleSum\",\n" +
+            "      \"name\": \"some_metric\",\n" +
+            "      \"fieldName\": \"some_metric\"\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"postAggregations\": [\n" +
+            "    {\n" +
+            "      \"type\": \"arithmetic\",\n" +
+            "      \"name\": \"sample_divide\",\n" +
+            "      \"fn\": \"/\",\n" +
+            "      \"fields\": [\n" +
+            "        {\n" +
+            "          \"type\": \"fieldAccess\",\n" +
+            "          \"name\": \"some_metric\",\n" +
+            "          \"fieldName\": \"some_metric\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"type\": \"fieldAccess\",\n" +
+            "          \"name\": \"count\",\n" +
+            "          \"fieldName\": \"count\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"intervals\": [\n" +
+            "    \"2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z\"\n" +
+            "  ]\n" +
+            "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
@@ -188,13 +195,13 @@ public class TopNQueryTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         DruidTopNQuery query = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .dimension(dimension)
-                .threshold(7)
-                .topNMetric(metric)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .dimension(dimension)
+            .threshold(7)
+            .topNMetric(metric)
+            .build();
 
         String actualJson = objectMapper.writeValueAsString(query);
 
@@ -231,21 +238,21 @@ public class TopNQueryTest {
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
         Context context = Context.builder()
-                .populateCache(true)
-                .build();
+            .populateCache(true)
+            .build();
 
         DruidTopNQuery query = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(7)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(7)
+            .topNMetric(metric)
+            .context(context)
+            .build();
 
         String actualJson = objectMapper.writeValueAsString(query);
 
@@ -303,34 +310,34 @@ public class TopNQueryTest {
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
         Context context = Context.builder()
-                .populateCache(true)
-                .build();
+            .populateCache(true)
+            .build();
 
         DruidTopNQuery query1 = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(7)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(7)
+            .topNMetric(metric)
+            .context(context)
+            .build();
 
         DruidTopNQuery query2 = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(7)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(7)
+            .topNMetric(metric)
+            .context(context)
+            .build();
 
         Assert.assertEquals(query1, query2);
     }
@@ -350,34 +357,34 @@ public class TopNQueryTest {
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
         Context context = Context.builder()
-                .populateCache(true)
-                .build();
+            .populateCache(true)
+            .build();
 
         DruidTopNQuery query1 = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(7)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(7)
+            .topNMetric(metric)
+            .context(context)
+            .build();
 
         DruidTopNQuery query2 = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(314)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(314)
+            .topNMetric(metric)
+            .context(context)
+            .build();
 
         Assert.assertNotEquals(query1, query2);
     }
@@ -397,20 +404,20 @@ public class TopNQueryTest {
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
         Context context = Context.builder()
-                .populateCache(true)
-                .build();
+            .populateCache(true)
+            .build();
 
         DruidTopNQuery query1 = DruidTopNQuery.builder()
-                .dataSource(new TableDataSource("sample_data"))
-                .intervals(Collections.singletonList(interval))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .dimension(dimension)
-                .threshold(-5)
-                .topNMetric(metric)
-                .context(context)
-                .build();
+            .dataSource(new TableDataSource("sample_data"))
+            .intervals(Collections.singletonList(interval))
+            .granularity(granularity)
+            .filter(filter)
+            .aggregators(Collections.singletonList(aggregator))
+            .postAggregators(Collections.singletonList(postAggregator))
+            .dimension(dimension)
+            .threshold(-5)
+            .topNMetric(metric)
+            .context(context)
+            .build();
     }
 }
