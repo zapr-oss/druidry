@@ -38,6 +38,7 @@ public class DoubleMaxAggregator extends DruidAggregator {
         this.name = name;
     }
 
+    @Deprecated
     public DoubleMaxAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
         this.name = name;
