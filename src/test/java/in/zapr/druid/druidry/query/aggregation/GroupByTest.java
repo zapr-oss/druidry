@@ -19,6 +19,8 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
+import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -33,6 +35,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -44,8 +48,6 @@ import in.zapr.druid.druidry.filter.AndFilter;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.OrFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
-import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
-import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;
@@ -57,8 +59,6 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 
 public class GroupByTest {
     private static ObjectMapper objectMapper;
@@ -71,47 +71,47 @@ public class GroupByTest {
     @Test
     public void testSampleQuery() throws JsonProcessingException, JSONException {
         String expectedJsonAsString = "{\n" +
-            "  \"queryType\": \"groupBy\",\n" +
-            "  \"dataSource\": {\n" +
-            "    \"type\": \"table\",\n" +
-            "    \"name\": \"sample_datasource\"\n" +
-            "  },\n" +
-            "  \"granularity\": \"day\",\n" +
-            "  \"dimensions\": [\"country\", \"device\"],\n" +
-            "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"columns\": [\"country\", \"data_transfer\"] },\n" +
-            "  \"filter\": {\n" +
-            "    \"type\": \"and\",\n" +
-            "    \"fields\": [\n" +
-            "      { \"type\": \"selector\", \"dimension\": \"carrier\", \"value\": \"AT&T\" },\n" +
-            "      { \"type\": \"or\", \n" +
-            "        \"fields\": [\n" +
-            "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Apple\" },\n" +
-            "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Samsung\" }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"aggregations\": [\n" +
-            "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\" },\n" +
-            "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\" }\n" +
-            "  ],\n" +
-            "\"having\": {\n" +
-            "    \"type\": \"greaterThan\",\n" +
-            "    \"aggregation\": \"total_usage\",\n" +
-            "    \"value\": 2\n" +
-            "  }," +
-            "  \"postAggregations\": [\n" +
-            "    { \"type\": \"arithmetic\",\n" +
-            "      \"name\": \"avg_usage\",\n" +
-            "      \"fn\": \"/\",\n" +
-            "      \"fields\": [\n" +
-            "        { \"type\": \"fieldAccess\", \"fieldName\": \"data_transfer\" },\n" +
-            "        { \"type\": \"fieldAccess\", \"fieldName\": \"total_usage\" }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
-            "}\n";
+                "  \"queryType\": \"groupBy\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
+                "  \"granularity\": \"day\",\n" +
+                "  \"dimensions\": [\"country\", \"device\"],\n" +
+                "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"columns\": [\"country\", \"data_transfer\"] },\n" +
+                "  \"filter\": {\n" +
+                "    \"type\": \"and\",\n" +
+                "    \"fields\": [\n" +
+                "      { \"type\": \"selector\", \"dimension\": \"carrier\", \"value\": \"AT&T\" },\n" +
+                "      { \"type\": \"or\", \n" +
+                "        \"fields\": [\n" +
+                "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Apple\" },\n" +
+                "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Samsung\" }\n" +
+                "        ]\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  \"aggregations\": [\n" +
+                "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\" },\n" +
+                "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\" }\n" +
+                "  ],\n" +
+                "\"having\": {\n" +
+                "    \"type\": \"greaterThan\",\n" +
+                "    \"aggregation\": \"total_usage\",\n" +
+                "    \"value\": 2\n" +
+                "  }," +
+                "  \"postAggregations\": [\n" +
+                "    { \"type\": \"arithmetic\",\n" +
+                "      \"name\": \"avg_usage\",\n" +
+                "      \"fn\": \"/\",\n" +
+                "      \"fields\": [\n" +
+                "        { \"type\": \"fieldAccess\", \"fieldName\": \"data_transfer\" },\n" +
+                "        { \"type\": \"fieldAccess\", \"fieldName\": \"total_usage\" }\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
+                "}\n";
 
         // Druid dimensions
         DruidDimension druidDimension1 = new SimpleDimension("country");
@@ -119,8 +119,8 @@ public class GroupByTest {
 
         // Limit Spec
         List<OrderByColumnSpec> orderByColumnSpecs
-            = Arrays.asList(new OrderByColumnSpecString("country"),
-            new OrderByColumnSpecString("data_transfer"));
+                = Arrays.asList(new OrderByColumnSpecString("country"),
+                new OrderByColumnSpecString("data_transfer"));
         DefaultLimitSpec limitSpec = new DefaultLimitSpec(5000, orderByColumnSpecs);
 
         // Filters
@@ -132,17 +132,8 @@ public class GroupByTest {
         DruidFilter filter = new AndFilter(Arrays.asList(carrierFilter, makeFilter));
 
         // Aggregations
-        DruidAggregator usageAggregator =
-            LongSumAggregator.builder()
-                .name("total_usage")
-                .fieldName("user_count")
-                .build();
-
-        DruidAggregator transferAggregator =
-            DoubleSumAggregator.builder()
-                .name("data_transfer")
-                .fieldName("data_transfer")
-                .build();
+        DruidAggregator usageAggregator = new LongSumAggregator("total_usage", "user_count");
+        DruidAggregator transferAggregator = new DoubleSumAggregator("data_transfer", "data_transfer");
 
         // Having
         HavingSpec countHaving = new GreaterThanHaving("total_usage", 2);
@@ -152,10 +143,10 @@ public class GroupByTest {
         DruidPostAggregator usagePostAggregator = new FieldAccessPostAggregator("data_transfer");
 
         DruidPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-            .name("avg_usage")
-            .function(ArithmeticFunction.DIVIDE)
-            .fields(Arrays.asList(transferPostAggregator, usagePostAggregator))
-            .build();
+                .name("avg_usage")
+                .function(ArithmeticFunction.DIVIDE)
+                .fields(Arrays.asList(transferPostAggregator, usagePostAggregator))
+                .build();
 
         // Interval
         DateTime startTime = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeZone.UTC);
@@ -163,16 +154,16 @@ public class GroupByTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery query = DruidGroupByQuery.builder()
-            .dataSource(new TableDataSource("sample_datasource"))
-            .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
-            .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-            .limitSpec(limitSpec)
-            .filter(filter)
-            .having(countHaving)
-            .aggregators(Arrays.asList(usageAggregator, transferAggregator))
-            .postAggregators(Collections.singletonList(postAggregator))
-            .intervals(Collections.singletonList(interval))
-            .build();
+                .dataSource(new TableDataSource("sample_datasource"))
+                .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
+                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                .limitSpec(limitSpec)
+                .filter(filter)
+                .having(countHaving)
+                .aggregators(Arrays.asList(usageAggregator, transferAggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .intervals(Collections.singletonList(interval))
+                .build();
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
@@ -190,11 +181,11 @@ public class GroupByTest {
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-            .dataSource(new TableDataSource("sample_datasource"))
-            .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-            .granularity(granularity)
-            .intervals(Collections.singletonList(interval))
-            .build();
+                .dataSource(new TableDataSource("sample_datasource"))
+                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                .granularity(granularity)
+                .intervals(Collections.singletonList(interval))
+                .build();
 
         String actualJson = objectMapper.writeValueAsString(druidGroupByQuery);
 
@@ -230,19 +221,19 @@ public class GroupByTest {
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
         Context context = Context.builder()
-            .populateCache(true)
-            .build();
+                .populateCache(true)
+                .build();
 
         DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-            .dataSource(new TableDataSource("sample_datasource"))
-            .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-            .granularity(granularity)
-            .filter(filter)
-            .aggregators(Collections.singletonList(aggregator))
-            .postAggregators(Collections.singletonList(postAggregator))
-            .intervals(Collections.singletonList(interval))
-            .context(context)
-            .build();
+                .dataSource(new TableDataSource("sample_datasource"))
+                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .intervals(Collections.singletonList(interval))
+                .context(context)
+                .build();
 
         String actualJson = objectMapper.writeValueAsString(druidGroupByQuery);
 
@@ -264,7 +255,7 @@ public class GroupByTest {
         expectedContext.put("populateCache", true);
 
         JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/" +
-            "2012-01-03T00:00:00.000Z"));
+                "2012-01-03T00:00:00.000Z"));
         JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
 
         JSONObject dataSource = new JSONObject();

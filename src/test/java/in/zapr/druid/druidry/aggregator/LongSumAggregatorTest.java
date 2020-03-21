@@ -40,13 +40,10 @@ public class LongSumAggregatorTest {
     }
 
     @Test
-    public void testAllFieldsButExpression() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        LongSumAggregator longSumAggregator =
-            LongSumAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        LongSumAggregator longSumAggregator = new LongSumAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longSum");

@@ -40,13 +40,10 @@ public class LongMinAggregatorTest {
     }
 
     @Test
-    public void testAllFieldsButExpression() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        LongMinAggregator longMinAggregator =
-            LongMinAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        LongMinAggregator longMinAggregator = new LongMinAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMin");

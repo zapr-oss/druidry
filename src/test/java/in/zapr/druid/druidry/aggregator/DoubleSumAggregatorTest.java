@@ -40,13 +40,10 @@ public class DoubleSumAggregatorTest {
     }
 
     @Test
-    public void testAllFieldsButExpression() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator =
-            DoubleSumAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleSum");

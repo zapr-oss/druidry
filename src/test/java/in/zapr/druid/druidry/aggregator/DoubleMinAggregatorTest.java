@@ -40,13 +40,10 @@ public class DoubleMinAggregatorTest {
     }
 
     @Test
-    public void testAllFieldsButExpression() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        DoubleMinAggregator doubleMinAggregator =
-            DoubleMinAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleMin");

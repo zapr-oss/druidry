@@ -33,6 +33,8 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -50,8 +52,6 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 
 public class TimeSeriesTest {
     private static ObjectMapper objectMapper;
@@ -61,49 +61,42 @@ public class TimeSeriesTest {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JodaModule());
         objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.
-            WRITE_DATES_AS_TIMESTAMPS, false);
+                WRITE_DATES_AS_TIMESTAMPS, false);
     }
 
     @Test
     public void testSampleQuery() throws JsonProcessingException, JSONException {
 
         SelectorFilter selectorFilter2 = new SelectorFilter("sample_dimension2",
-            "sample_value2");
+                "sample_value2");
         SelectorFilter selectorFilter3 = new SelectorFilter("sample_dimension3",
-            "sample_value3");
+                "sample_value3");
 
         OrFilter orfilter = new OrFilter(Arrays.asList(selectorFilter2, selectorFilter3));
 
         SelectorFilter selectorFilter1 = new SelectorFilter("sample_dimension1",
-            "sample_value1");
+                "sample_value1");
 
         AndFilter andFilter = new AndFilter(Arrays.asList(selectorFilter1, orfilter));
 
-        DruidAggregator aggregator1 =
-            LongSumAggregator.builder()
-                .name("sample_name1")
-                .fieldName("sample_fieldName1")
-                .build();
-
-        DruidAggregator aggregator2 =
-            DoubleSumAggregator.builder()
-                .name("sample_name2")
-                .fieldName("sample_fieldName2")
-                .build();
+        DruidAggregator aggregator1 = new LongSumAggregator("sample_name1",
+                "sample_fieldName1");
+        DruidAggregator aggregator2 = new DoubleSumAggregator("sample_name2",
+                "sample_fieldName2");
 
         FieldAccessPostAggregator fieldAccessPostAggregator1
-            = new FieldAccessPostAggregator("postAgg__sample_name1",
-            "sample_name1");
+                = new FieldAccessPostAggregator("postAgg__sample_name1",
+                "sample_name1");
 
         FieldAccessPostAggregator fieldAccessPostAggregator2
-            = new FieldAccessPostAggregator("postAgg__sample_name2",
-            "sample_name2");
+                = new FieldAccessPostAggregator("postAgg__sample_name2",
+                "sample_name2");
 
         DruidPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-            .name("sample_divide")
-            .function(ArithmeticFunction.DIVIDE)
-            .fields(Arrays.asList(fieldAccessPostAggregator1, fieldAccessPostAggregator2))
-            .build();
+                .name("sample_divide")
+                .function(ArithmeticFunction.DIVIDE)
+                .fields(Arrays.asList(fieldAccessPostAggregator1, fieldAccessPostAggregator2))
+                .build();
 
         //2013-08-31T00:00:00.000/2013-09-03T00:00:00.000"
         DateTime startTime = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeZone.UTC);
@@ -113,51 +106,51 @@ public class TimeSeriesTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         DruidTimeSeriesQuery query = DruidTimeSeriesQuery.builder()
-            .dataSource(new TableDataSource("sample_datasource"))
-            .granularity(granularity)
-            .descending(true)
-            .filter(andFilter)
-            .aggregators(Arrays.asList(aggregator1, aggregator2))
-            .postAggregators(Collections.singletonList(postAggregator))
-            .intervals(Collections.singletonList(interval))
-            .build();
+                .dataSource(new TableDataSource("sample_datasource"))
+                .granularity(granularity)
+                .descending(true)
+                .filter(andFilter)
+                .aggregators(Arrays.asList(aggregator1, aggregator2))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .intervals(Collections.singletonList(interval))
+                .build();
 
         String expectedJsonAsString = "{\n" +
-            "  \"queryType\": \"timeseries\",\n" +
-            "  \"dataSource\": {\n" +
-            "    \"type\": \"table\",\n" +
-            "    \"name\": \"sample_datasource\"\n" +
-            "  },\n" +
-            "  \"granularity\": \"day\",\n" +
-            "  \"descending\": true,\n" +
-            "  \"filter\": {\n" +
-            "    \"type\": \"and\",\n" +
-            "    \"fields\": [\n" +
-            "      { \"type\": \"selector\", \"dimension\": \"sample_dimension1\", \"value\": \"sample_value1\" },\n" +
-            "      { \"type\": \"or\",\n" +
-            "        \"fields\": [\n" +
-            "          { \"type\": \"selector\", \"dimension\": \"sample_dimension2\", \"value\": \"sample_value2\" },\n" +
-            "          { \"type\": \"selector\", \"dimension\": \"sample_dimension3\", \"value\": \"sample_value3\" }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"aggregations\": [\n" +
-            "    { \"type\": \"longSum\", \"name\": \"sample_name1\", \"fieldName\": \"sample_fieldName1\" },\n" +
-            "    { \"type\": \"doubleSum\", \"name\": \"sample_name2\", \"fieldName\": \"sample_fieldName2\" }\n" +
-            "  ],\n" +
-            "  \"postAggregations\": [\n" +
-            "    { \"type\": \"arithmetic\",\n" +
-            "      \"name\": \"sample_divide\",\n" +
-            "      \"fn\": \"/\",\n" +
-            "      \"fields\": [\n" +
-            "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name1\", \"fieldName\": \"sample_name1\" },\n" +
-            "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name2\", \"fieldName\": \"sample_name2\" }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
-            "}";
+                "  \"queryType\": \"timeseries\",\n" +
+                "  \"dataSource\": {\n" +
+                "    \"type\": \"table\",\n" +
+                "    \"name\": \"sample_datasource\"\n" +
+                "  },\n" +
+                "  \"granularity\": \"day\",\n" +
+                "  \"descending\": true,\n" +
+                "  \"filter\": {\n" +
+                "    \"type\": \"and\",\n" +
+                "    \"fields\": [\n" +
+                "      { \"type\": \"selector\", \"dimension\": \"sample_dimension1\", \"value\": \"sample_value1\" },\n" +
+                "      { \"type\": \"or\",\n" +
+                "        \"fields\": [\n" +
+                "          { \"type\": \"selector\", \"dimension\": \"sample_dimension2\", \"value\": \"sample_value2\" },\n" +
+                "          { \"type\": \"selector\", \"dimension\": \"sample_dimension3\", \"value\": \"sample_value3\" }\n" +
+                "        ]\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  \"aggregations\": [\n" +
+                "    { \"type\": \"longSum\", \"name\": \"sample_name1\", \"fieldName\": \"sample_fieldName1\" },\n" +
+                "    { \"type\": \"doubleSum\", \"name\": \"sample_name2\", \"fieldName\": \"sample_fieldName2\" }\n" +
+                "  ],\n" +
+                "  \"postAggregations\": [\n" +
+                "    { \"type\": \"arithmetic\",\n" +
+                "      \"name\": \"sample_divide\",\n" +
+                "      \"fn\": \"/\",\n" +
+                "      \"fields\": [\n" +
+                "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name1\", \"fieldName\": \"sample_name1\" },\n" +
+                "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name2\", \"fieldName\": \"sample_name2\" }\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
+                "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
@@ -172,10 +165,10 @@ public class TimeSeriesTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         DruidTimeSeriesQuery seriesQuery = DruidTimeSeriesQuery.builder()
-            .dataSource(new TableDataSource("Matrix"))
-            .intervals(Collections.singletonList(interval))
-            .granularity(granularity)
-            .build();
+                .dataSource(new TableDataSource("Matrix"))
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .build();
 
         JSONObject dataSource = new JSONObject();
         dataSource.put("type", "table");
@@ -185,7 +178,7 @@ public class TimeSeriesTest {
         expectedQuery.put("queryType", "timeseries");
         expectedQuery.put("dataSource", dataSource);
         expectedQuery.put("intervals", new JSONArray(Collections
-            .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
+                .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
         expectedQuery.put("granularity", "day");
 
         String actualJson = objectMapper.writeValueAsString(seriesQuery);
@@ -201,23 +194,23 @@ public class TimeSeriesTest {
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
 
         Context context = Context.builder()
-            .useCache(true)
-            .build();
+                .useCache(true)
+                .build();
 
         DruidFilter filter = new SelectorFilter("Spread", "Peace");
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 10.47);
 
         DruidTimeSeriesQuery seriesQuery = DruidTimeSeriesQuery.builder()
-            .dataSource(new TableDataSource("Matrix"))
-            .descending(true)
-            .intervals(Collections.singletonList(interval))
-            .granularity(granularity)
-            .filter(filter)
-            .aggregators(Collections.singletonList(aggregator))
-            .postAggregators(Collections.singletonList(postAggregator))
-            .context(context)
-            .build();
+                .dataSource(new TableDataSource("Matrix"))
+                .descending(true)
+                .intervals(Collections.singletonList(interval))
+                .granularity(granularity)
+                .filter(filter)
+                .aggregators(Collections.singletonList(aggregator))
+                .postAggregators(Collections.singletonList(postAggregator))
+                .context(context)
+                .build();
 
         JSONObject expectedFilter = new JSONObject();
         expectedFilter.put("type", "selector");
@@ -244,7 +237,7 @@ public class TimeSeriesTest {
         expectedQuery.put("queryType", "timeseries");
         expectedQuery.put("dataSource", dataSource);
         expectedQuery.put("intervals", new JSONArray(Collections
-            .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
+                .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
         expectedQuery.put("granularity", "day");
         expectedQuery.put("aggregations", new JSONArray(Collections.singletonList(expectedAggregator)));
         expectedQuery.put("postAggregations", new JSONArray(Collections.singletonList(expectedPostAggregator)));

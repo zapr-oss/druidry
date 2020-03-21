@@ -40,13 +40,10 @@ public class LongMaxAggregatorTest {
     }
 
     @Test
-    public void testAllFieldsButExpression() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        LongMaxAggregator countAggregator =
-            LongMaxAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        LongMaxAggregator countAggregator = new LongMaxAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMax");

@@ -40,13 +40,10 @@ public class DoubleMaxAggregatorTest {
     }
 
     @Test
-    public void testAllButExpression() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JsonProcessingException, JSONException {
 
-        DoubleMaxAggregator doubleMaxAggregator =
-            DoubleMaxAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        DoubleMaxAggregator doubleMaxAggregator = new DoubleMaxAggregator("CarpeDiem",
+                "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleMax");
