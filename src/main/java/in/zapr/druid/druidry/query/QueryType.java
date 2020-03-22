@@ -29,7 +29,8 @@ public enum QueryType {
     SEARCH("search"),
     SCAN("scan"),
     @Deprecated
-    SELECT("select");
+    SELECT("select"),
+    MOVING_AVERAGE("movingAverage");
 
     private String value;
 

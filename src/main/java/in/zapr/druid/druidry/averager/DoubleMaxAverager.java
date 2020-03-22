@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.topNMetric;
+package in.zapr.druid.druidry.averager;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
+@Getter
 @EqualsAndHashCode(callSuper = true)
-public class SimpleMetric extends TopNMetric {
+public class DoubleMaxAverager extends DruidAverager {
 
-    private String metric;
+    private static final String DOUBLE_MAX_AVERAGER = "doubleMax";
 
-    public SimpleMetric(String metric) {
-        this.metric = metric;
+    @Builder
+    private DoubleMaxAverager(@NonNull String name, @NonNull String fieldName,
+                              @NonNull Integer buckets, Integer cycleSize) {
+        super(DOUBLE_MAX_AVERAGER, name, fieldName, buckets, cycleSize);
     }
 
-    @JsonValue
-    public String getMetric() {
-        return this.metric;
-    }
 }

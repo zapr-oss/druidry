@@ -16,20 +16,19 @@
 
 package in.zapr.druid.druidry.topNMetric;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
+@Getter
 @EqualsAndHashCode(callSuper = true)
-public class SimpleMetric extends TopNMetric {
+public class InvertedMetric extends TopNMetric {
+    private static String INVERTED_METRIC_TYPE = "inverted";
 
-    private String metric;
+    private TopNMetric metric;
+    private String type = INVERTED_METRIC_TYPE;
 
-    public SimpleMetric(String metric) {
-        this.metric = metric;
-    }
-
-    @JsonValue
-    public String getMetric() {
-        return this.metric;
+    public InvertedMetric(@NonNull TopNMetric topNMetric) {
+        this.metric = topNMetric;
     }
 }

@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.topNMetric;
+package in.zapr.druid.druidry.averager;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
+@Getter
 @EqualsAndHashCode(callSuper = true)
-public class SimpleMetric extends TopNMetric {
+public class DoubleMeanNoNullsAverager extends DruidAverager {
 
-    private String metric;
+    private static final String DOUBLE_MEAN_NO_NULLS_AVERAGER = "doubleMeanNoNulls";
 
-    public SimpleMetric(String metric) {
-        this.metric = metric;
+    @Builder
+    private DoubleMeanNoNullsAverager(@NonNull String name, @NonNull String fieldName,
+                                      @NonNull Integer buckets, Integer cycleSize) {
+        super(DOUBLE_MEAN_NO_NULLS_AVERAGER, name, fieldName, buckets, cycleSize);
     }
 
-    @JsonValue
-    public String getMetric() {
-        return this.metric;
-    }
 }
