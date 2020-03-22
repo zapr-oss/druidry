@@ -55,39 +55,105 @@ public class LongMaxAggregatorTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    @Test
+    public void testAllFieldsButFieldName() throws JsonProcessingException, JSONException {
 
-        LongMaxAggregator longMaxAggregator = new LongMaxAggregator(null, "Haha");
+        LongMaxAggregator countAggregator =
+            LongMaxAggregator.builder()
+                .name("CarpeDiem")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "longMax");
+        jsonObject.put("name", "CarpeDiem");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
+
+        String actualJSON = objectMapper.writeValueAsString(countAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
+    public void testNullName() throws JsonProcessingException, JSONException {
 
-        LongMaxAggregator longMaxAggregator = new LongMaxAggregator("Name", null);
+        LongMaxAggregator longMaxAggregator =
+            LongMaxAggregator.builder()
+                .fieldName("Haha")
+                .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
-        LongMaxAggregator aggregator2 = new LongMaxAggregator("name", "field");
+        LongMaxAggregator aggregator1 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        LongMaxAggregator aggregator2 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        LongMaxAggregator aggregator3 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        LongMaxAggregator aggregator4 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsNegative() {
-        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
-        LongMaxAggregator aggregator2 = new LongMaxAggregator("name1", "field1");
+        LongMaxAggregator aggregator1 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        LongMaxAggregator aggregator2 =
+            LongMaxAggregator.builder()
+                .name("name1")
+                .fieldName("field1")
+                .build();
+
+        LongMaxAggregator aggregator3 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        LongMaxAggregator aggregator4 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"baz\")")
+                .build();
 
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        LongMaxAggregator aggregator1 = new LongMaxAggregator("name", "field");
+        LongMaxAggregator aggregator1 =
+            LongMaxAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assert.assertNotEquals(aggregator1, aggregator2);
     }
+
 }

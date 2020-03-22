@@ -55,39 +55,105 @@ public class DoubleMinAggregatorTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    @Test
+    public void testAllFieldsButFieldName() throws JSONException, JsonProcessingException {
 
-        DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator(null, "Haha");
+        DoubleMinAggregator doubleMinAggregator =
+            DoubleMinAggregator.builder()
+                .name("CarpeDiem")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "doubleMin");
+        jsonObject.put("name", "CarpeDiem");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
+
+        String actualJSON = objectMapper.writeValueAsString(doubleMinAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
+    public void testNullName() throws JsonProcessingException, JSONException {
 
-        DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator("Name", null);
+        DoubleMinAggregator doubleMinAggregator =
+            DoubleMinAggregator.builder()
+                .fieldName("Haha")
+                .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        DoubleMinAggregator aggregator1 = new DoubleMinAggregator("name", "field");
-        DoubleMinAggregator aggregator2 = new DoubleMinAggregator("name", "field");
+        DoubleMinAggregator aggregator1 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleMinAggregator aggregator2 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleMinAggregator aggregator3 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        DoubleMinAggregator aggregator4 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsNegative() {
-        DoubleMinAggregator aggregator1 = new DoubleMinAggregator("name", "field");
-        DoubleMinAggregator aggregator2 = new DoubleMinAggregator("name1", "field1");
+        DoubleMinAggregator aggregator1 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleMinAggregator aggregator2 =
+            DoubleMinAggregator.builder()
+                .name("name1")
+                .fieldName("field1")
+                .build();
+
+        DoubleMinAggregator aggregator3 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        DoubleMinAggregator aggregator4 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"baz\")")
+                .build();
 
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        DoubleMinAggregator aggregator1 = new DoubleMinAggregator("name", "field");
+        DoubleMinAggregator aggregator1 =
+            DoubleMinAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assert.assertNotEquals(aggregator1, aggregator2);
     }
+
 }
