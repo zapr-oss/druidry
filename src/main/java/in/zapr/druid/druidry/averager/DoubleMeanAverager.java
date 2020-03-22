@@ -14,31 +14,23 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.query;
+package in.zapr.druid.druidry.averager;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
-public enum QueryType {
+@Getter
+@EqualsAndHashCode(callSuper = true)
+public class DoubleMeanAverager extends DruidAverager {
 
-    TIMESERIES("timeseries"),
-    TOPN("topN"),
-    GROUP_BY("groupBy"),
-    TIME_BOUNDARY("timeBoundary"),
-    SEGMENT_METADATA("segmentMetadata"),
-    DATASOURCE_METADATA("dataSourceMetadata"),
-    SEARCH("search"),
-    SCAN("scan"),
-    SELECT("select"),
-    MOVING_AVERAGE("movingAverage");
+    private static final String DOUBLE_MEAN_AVERAGER = "doubleMean";
 
-    private String value;
-
-    QueryType(String value) {
-        this.value = value;
+    @Builder
+    private DoubleMeanAverager(@NonNull String name, @NonNull String fieldName,
+                               @NonNull Integer buckets, Integer cycleSize) {
+        super(DOUBLE_MEAN_AVERAGER, name, fieldName, buckets, cycleSize);
     }
 
-    @JsonValue
-    public String getQueryType() {
-        return value;
-    }
 }
