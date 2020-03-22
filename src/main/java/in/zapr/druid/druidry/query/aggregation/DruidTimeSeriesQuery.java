@@ -40,13 +40,14 @@ import lombok.NonNull;
 public class DruidTimeSeriesQuery extends DruidAggregationQuery {
     // TODO: String or Boolean??
     private Boolean descending;
+    private Integer limit;
 
     @Builder
     private DruidTimeSeriesQuery(@NonNull DataSource dataSource, Boolean descending,
                                  @NonNull List<Interval> intervals, @NonNull Granularity granularity,
                                  List<DruidVirtualColumn> virtualColumns,
                                  DruidFilter filter, List<DruidAggregator> aggregators,
-                                 List<DruidPostAggregator> postAggregators, Context context) {
+                                 List<DruidPostAggregator> postAggregators, Integer limit, Context context) {
 
         this.queryType = QueryType.TIMESERIES;
         this.dataSource = dataSource;
@@ -57,6 +58,7 @@ public class DruidTimeSeriesQuery extends DruidAggregationQuery {
         this.filter = filter;
         this.aggregations = aggregators;
         this.postAggregations = postAggregators;
+        this.limit = limit;
         this.context = context;
     }
 }
