@@ -22,7 +22,7 @@ import in.zapr.druid.druidry.client.exception.ConnectionException;
 import in.zapr.druid.druidry.client.exception.QueryException;
 import in.zapr.druid.druidry.query.DruidQuery;
 
-public interface DruidClient {
+public interface DruidClient extends AutoCloseable {
 
     /**
      * Connects with Druid
