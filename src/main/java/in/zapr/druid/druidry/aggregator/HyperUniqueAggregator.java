@@ -16,20 +16,37 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class HyperUniqueAggregator extends DruidAggregator {
 
     private static final String HYPER_UNIQUE_TYPE_AGGREGATOR = "hyperUnique";
     private String fieldName;
+    private Boolean isInputHyperUnique;
+    private Boolean round;
 
+    @Deprecated
     public HyperUniqueAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = HYPER_UNIQUE_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
+    }
+
+    @Builder
+    private HyperUniqueAggregator(@NonNull String name, @NonNull String fieldName,
+                                  Boolean isInputHyperUnique, Boolean round) {
+        this.type = HYPER_UNIQUE_TYPE_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.isInputHyperUnique = isInputHyperUnique;
+        this.round = round;
     }
 }
