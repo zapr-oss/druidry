@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
@@ -19,21 +20,35 @@ public class InvertedMetricTest {
         objectMapper = new ObjectMapper();
     }
 
+    private JSONObject getInvertedMetricJSON() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "inverted");
+        jsonObject.put("metric", "count");
+        return jsonObject;
+    }
+
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
+
         InvertedMetric invertedMetric = new InvertedMetric(new SimpleMetric("count"));
+
+        JSONObject jsonObject = getInvertedMetricJSON();
+
         String actualJSON = objectMapper.writeValueAsString(invertedMetric);
-        String expectedJson = "{\"metric\":\"count\",\"type\":\"inverted\"}";
-        JSONAssert.assertEquals(expectedJson, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);;
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMetricMissingFields() {
-        new InvertedMetric(null);
+
+        InvertedMetric invertedMetric = new InvertedMetric(null);
     }
 
     @Test
     public void testEqualsPositive() {
+
         InvertedMetric invertedMetric1 = new InvertedMetric(new SimpleMetric("count"));
         InvertedMetric invertedMetric2 = new InvertedMetric(new SimpleMetric("count"));
 
@@ -42,6 +57,7 @@ public class InvertedMetricTest {
 
     @Test
     public void testEqualsNegative() {
+
         InvertedMetric invertedMetric1 = new InvertedMetric(new SimpleMetric("sum"));
         InvertedMetric invertedMetric2 = new InvertedMetric(new SimpleMetric("count"));
 
