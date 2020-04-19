@@ -30,7 +30,6 @@ public class HyperUniqueAggregator extends DruidAggregator {
 
     private static final String HYPER_UNIQUE_TYPE_AGGREGATOR = "hyperUnique";
     private String fieldName;
-    private Boolean isInputHyperUnique;
     private Boolean round;
 
     @Deprecated
@@ -41,12 +40,10 @@ public class HyperUniqueAggregator extends DruidAggregator {
     }
 
     @Builder
-    private HyperUniqueAggregator(@NonNull String name, @NonNull String fieldName,
-                                  Boolean isInputHyperUnique, Boolean round) {
+    private HyperUniqueAggregator(@NonNull String name, @NonNull String fieldName, Boolean round) {
         this.type = HYPER_UNIQUE_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
-        this.isInputHyperUnique = isInputHyperUnique;
         this.round = round;
     }
 }

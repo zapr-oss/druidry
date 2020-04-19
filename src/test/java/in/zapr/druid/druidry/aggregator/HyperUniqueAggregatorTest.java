@@ -54,12 +54,10 @@ public class HyperUniqueAggregatorTest {
         HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
                 .name("CarpeDiem")
                 .fieldName("Hey")
-                .isInputHyperUnique(true)
                 .round(true)
                 .build();
 
         JSONObject jsonObject = getHyperUniqueAggregatorJSON();
-        jsonObject.put("isInputHyperUnique" , true);
         jsonObject.put("round", true);
 
         String actualJSON = objectMapper.writeValueAsString(hyperUniqueAggregator);
