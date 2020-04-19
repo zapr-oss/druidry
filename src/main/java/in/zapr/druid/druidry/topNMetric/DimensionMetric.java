@@ -16,21 +16,29 @@
 
 package in.zapr.druid.druidry.topNMetric;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import in.zapr.druid.druidry.query.config.SortingOrder;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class InvertedMetric extends TopNMetric {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class DimensionMetric extends TopNMetric {
 
-    private static final String INVERTED_METRIC_TYPE = "inverted";
+    private static final String DIMENSION_METRIC_TYPE = "dimension";
 
     private String type;
-    private TopNMetric metric;
+    private SortingOrder ordering;
+    private String previousStop;
 
-    public InvertedMetric(@NonNull TopNMetric topNMetric) {
-        this.type = INVERTED_METRIC_TYPE;
-        this.metric = topNMetric;
+    @Builder
+    private DimensionMetric(SortingOrder ordering, String previousStop) {
+        this.type = DIMENSION_METRIC_TYPE;
+        this.ordering = ordering;
+        this.previousStop = previousStop;
     }
+
 }

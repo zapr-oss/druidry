@@ -22,15 +22,16 @@ import lombok.NonNull;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class InvertedMetric extends TopNMetric {
+public class NumericMetric extends TopNMetric {
 
-    private static final String INVERTED_METRIC_TYPE = "inverted";
+    private static final String NUMERIC_METRIC_TYPE = "numeric";
 
     private String type;
-    private TopNMetric metric;
+    private String metric;
 
-    public InvertedMetric(@NonNull TopNMetric topNMetric) {
-        this.type = INVERTED_METRIC_TYPE;
-        this.metric = topNMetric;
+    public NumericMetric(@NonNull String metric) {
+        this.type = NUMERIC_METRIC_TYPE;
+        this.metric = metric;
     }
+
 }
