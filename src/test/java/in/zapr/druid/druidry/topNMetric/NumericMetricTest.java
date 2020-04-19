@@ -57,7 +57,7 @@ public class NumericMetricTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullField1() {
+    public void testNullField() {
 
         NumericMetric numericMetric = new NumericMetric(null);
     }
