@@ -27,11 +27,11 @@ public class NumericMetric extends TopNMetric {
     private static final String NUMERIC_METRIC_TYPE = "numeric";
 
     private String type;
-    private TopNMetric metric;
+    private String metric;
 
-    public NumericMetric(@NonNull TopNMetric topNMetric) {
+    public NumericMetric(@NonNull String metric) {
         this.type = NUMERIC_METRIC_TYPE;
-        this.metric = topNMetric;
+        this.metric = metric;
     }
 
 }

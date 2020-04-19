@@ -47,7 +47,7 @@ public class NumericMetricTest {
     @Test
     public void testAllFields() throws JsonProcessingException, JSONException {
 
-        NumericMetric numericMetric = new NumericMetric(new SimpleMetric("events"));
+        NumericMetric numericMetric = new NumericMetric("events");
 
         JSONObject jsonObject = getNumericMetricJSON();
 
@@ -65,8 +65,8 @@ public class NumericMetricTest {
     @Test
     public void testEqualsPositive() {
 
-        NumericMetric numericMetric1 =  new NumericMetric(new SimpleMetric("events"));
-        NumericMetric numericMetric2 =  new NumericMetric(new SimpleMetric("events"));
+        NumericMetric numericMetric1 = new NumericMetric("events");
+        NumericMetric numericMetric2 = new NumericMetric("events");
 
         Assert.assertEquals(numericMetric1, numericMetric2);
     }
@@ -74,8 +74,8 @@ public class NumericMetricTest {
     @Test
     public void testEqualsNegative() {
 
-        NumericMetric numericMetric1 =  new NumericMetric(new SimpleMetric("events1"));
-        NumericMetric numericMetric2 =  new NumericMetric(new SimpleMetric("events2"));
+        NumericMetric numericMetric1 = new NumericMetric("events1");
+        NumericMetric numericMetric2 = new NumericMetric("events2");
 
         Assert.assertNotEquals(numericMetric1, numericMetric2);
     }
