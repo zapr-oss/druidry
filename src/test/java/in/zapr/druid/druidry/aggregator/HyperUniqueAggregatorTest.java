@@ -39,53 +39,101 @@ public class HyperUniqueAggregatorTest {
         objectMapper = new ObjectMapper();
     }
 
-    @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
-
-        HyperUniqueAggregator hyperUniqueAggregator = new HyperUniqueAggregator("CarpeDiem",
-                "Hey");
-
+    private JSONObject getHyperUniqueAggregatorJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "hyperUnique");
         jsonObject.put("name", "CarpeDiem");
         jsonObject.put("fieldName", "Hey");
+
+        return jsonObject;
+    }
+
+    @Test
+    public void testAllFields() throws JsonProcessingException, JSONException {
+
+        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
+                .name("CarpeDiem")
+                .fieldName("Hey")
+                .round(true)
+                .build();
+
+        JSONObject jsonObject = getHyperUniqueAggregatorJSON();
+        jsonObject.put("round", true);
 
         String actualJSON = objectMapper.writeValueAsString(hyperUniqueAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
+    @Test
+    public void testRequiredFields() throws JsonProcessingException, JSONException {
+
+        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
+                .name("CarpeDiem")
+                .fieldName("Hey")
+                .build();
+
+        JSONObject jsonObject = getHyperUniqueAggregatorJSON();
+
+        String actualJSON = objectMapper.writeValueAsString(hyperUniqueAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
+
+    }
+
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JsonProcessingException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = new HyperUniqueAggregator(null, "Haha");
+        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
+                .fieldName("Haha")
+                .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JsonProcessingException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = new HyperUniqueAggregator("Name", null);
+        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
+                .name("Name")
+                .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
-        HyperUniqueAggregator aggregator2 = new HyperUniqueAggregator("name", "field");
+
+        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+        HyperUniqueAggregator aggregator2 = HyperUniqueAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
 
         Assert.assertEquals(aggregator1, aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
-        HyperUniqueAggregator aggregator2 = new HyperUniqueAggregator("name1", "field1");
+
+        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
+                .name("name1")
+                .fieldName("field1")
+                .build();
+        HyperUniqueAggregator aggregator2 = HyperUniqueAggregator.builder()
+                .name("name2")
+                .fieldName("field2")
+                .build();
 
         Assert.assertNotEquals(aggregator1, aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        HyperUniqueAggregator aggregator1 = new HyperUniqueAggregator("name", "field");
+
+        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assert.assertNotEquals(aggregator1, aggregator2);
