@@ -17,7 +17,9 @@
 package in.zapr.druid.druidry.topNMetric;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 public class SimpleMetric extends TopNMetric {
 
     private String metric;

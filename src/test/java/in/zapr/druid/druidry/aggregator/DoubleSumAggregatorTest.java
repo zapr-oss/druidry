@@ -55,39 +55,105 @@ public class DoubleSumAggregatorTest {
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    @Test
+    public void testAllFieldsButFieldName() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator(null, "Haha");
+        DoubleSumAggregator doubleSumAggregator =
+            DoubleSumAggregator.builder()
+                .name("CarpeDiem")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "doubleSum");
+        jsonObject.put("name", "CarpeDiem");
+        jsonObject.put("expression", "(\"foo\" / \"bar\")");
+
+        String actualJSON = objectMapper.writeValueAsString(doubleSumAggregator);
+        String expectedJSON = jsonObject.toString();
+        JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullFieldName() throws JsonProcessingException, JSONException {
+    public void testNullName() throws JsonProcessingException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("Name", null);
+        DoubleSumAggregator doubleSumAggregator =
+            DoubleSumAggregator.builder()
+                .fieldName("Haha")
+                .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
-        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleSumAggregator aggregator2 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleSumAggregator aggregator3 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        DoubleSumAggregator aggregator4 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
 
         Assert.assertEquals(aggregator1, aggregator2);
+        Assert.assertEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsNegative() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
-        DoubleSumAggregator aggregator2 = new DoubleSumAggregator("name1", "field1");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
+        DoubleSumAggregator aggregator2 =
+            DoubleSumAggregator.builder()
+                .name("name1")
+                .fieldName("field1")
+                .build();
+
+        DoubleSumAggregator aggregator3 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"bar\")")
+                .build();
+
+        DoubleSumAggregator aggregator4 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .expression("(\"foo\" / \"baz\")")
+                .build();
 
         Assert.assertNotEquals(aggregator1, aggregator2);
+        Assert.assertNotEquals(aggregator3, aggregator4);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        DoubleSumAggregator aggregator1 = new DoubleSumAggregator("name", "field");
+        DoubleSumAggregator aggregator1 =
+            DoubleSumAggregator.builder()
+                .name("name")
+                .fieldName("field")
+                .build();
+
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assert.assertNotEquals(aggregator1, aggregator2);
     }
+
 }

@@ -39,6 +39,7 @@ import lombok.NonNull;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class DruidSelectQuery extends DruidQuery {
     private List<Interval> intervals;
     private List<DruidVirtualColumn> virtualColumns;
