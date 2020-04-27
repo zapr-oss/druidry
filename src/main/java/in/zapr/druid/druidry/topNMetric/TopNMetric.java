@@ -16,5 +16,10 @@
 
 package in.zapr.druid.druidry.topNMetric;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@Getter
+@EqualsAndHashCode
 public abstract class TopNMetric {
 }

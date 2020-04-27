@@ -16,20 +16,43 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import com.google.common.base.Preconditions;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LongMinAggregator extends DruidAggregator {
 
     private static final String LONG_MIN_TYPE_AGGREGATOR = "longMin";
-    private String fieldName;
 
+    private String fieldName;
+    private String expression;
+
+    @Deprecated
     public LongMinAggregator(@NonNull String name, @NonNull String fieldName) {
         this.type = LONG_MIN_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
     }
+
+    @Builder
+    private LongMinAggregator(@NonNull String name, String fieldName, String expression) {
+        this.type = LONG_MIN_TYPE_AGGREGATOR;
+        this.name = name;
+        this.fieldName = fieldName;
+        this.expression = expression;
+
+        Preconditions.checkArgument(
+            fieldName == null ^ expression == null,
+            "Must have a valid, non-null fieldName or expression"
+        );
+    }
+
 }

@@ -28,7 +28,9 @@ public enum QueryType {
     DATASOURCE_METADATA("dataSourceMetadata"),
     SEARCH("search"),
     SCAN("scan"),
-    SELECT("select");
+    @Deprecated
+    SELECT("select"),
+    MOVING_AVERAGE("movingAverage");
 
     private String value;
 

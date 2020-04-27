@@ -1,0 +1,26 @@
+{
+  "queryType": "movingAverage",
+  "dataSource": {
+    "type": "table",
+    "name": "simpleDataSource"
+  },
+  "granularity": "day",
+  "intervals": [
+    "2020-01-01T00:00:00.000Z/2020-02-29T23:59:59.000Z"
+  ],
+  "aggregations": [
+    {
+      "name": "averagedName",
+      "fieldName": "aggregatedFieldName",
+      "type": "doubleSum"
+    }
+  ],
+  "averagers": [
+    {
+      "name": "averagingResult",
+      "fieldName": "averagedName",
+      "type": "longSum",
+      "buckets": 31
+    }
+  ]
+}

@@ -171,7 +171,7 @@ public class TopNQueryTest {
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test

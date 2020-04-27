@@ -212,6 +212,7 @@ public class TimeSeriesTest {
                 .filter(filter)
                 .aggregators(Collections.singletonList(aggregator))
                 .postAggregators(Collections.singletonList(postAggregator))
+                .limit(5)
                 .context(context)
                 .build();
 
@@ -242,6 +243,7 @@ public class TimeSeriesTest {
         expectedQuery.put("intervals", new JSONArray(Collections
                 .singletonList("2013-07-14T00:00:00.000Z/2013-11-16T00:00:00.000Z")));
         expectedQuery.put("granularity", "day");
+        expectedQuery.put("limit", 5);
         expectedQuery.put("aggregations", new JSONArray(Collections.singletonList(expectedAggregator)));
         expectedQuery.put("postAggregations", new JSONArray(Collections.singletonList(expectedPostAggregator)));
         expectedQuery.put("filter", expectedFilter);

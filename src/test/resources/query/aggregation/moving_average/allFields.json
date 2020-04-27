@@ -1,0 +1,64 @@
+{
+  "queryType": "movingAverage",
+  "dataSource": {
+    "type": "table",
+    "name": "allFieldsDataSource"
+  },
+  "dimensions": [
+    "dimension_1",
+    "dimension_2"
+  ],
+  "limitSpec": {
+    "type": "default",
+    "limit": 5000,
+    "columns": [
+      "column_1",
+      "column_2"
+    ]
+  },
+  "having": {
+    "type": "equalTo",
+    "aggregation": "havingField",
+    "value": 5
+  },
+  "granularity": "fifteen_minute",
+  "filter": {
+    "type": "selector",
+    "dimension": "selectorField",
+    "value": "selectorValue"
+  },
+  "aggregations": [
+    {
+      "type": "doubleSum",
+      "name": "averagedName",
+      "fieldName": "aggregatedFieldName"
+    }
+  ],
+  "postAggregations": [
+    {
+      "type": "fieldAccess",
+      "fieldName": "postAggregatedFieldName"
+    }
+  ],
+  "intervals": [
+    "2020-02-01T00:00:00.000Z/2020-03-31T23:59:59.000Z"
+  ],
+  "context": {
+    "useCache": true
+  },
+  "averagers": [
+    {
+      "type": "doubleMean",
+      "name": "averagingResult",
+      "fieldName": "averagedName",
+      "buckets": 60,
+      "cycleSize": 5
+    }
+  ],
+  "postAveragers": [
+    {
+      "type": "fieldAccess",
+      "fieldName": "postAveragedFieldName"
+    }
+  ]
+}
