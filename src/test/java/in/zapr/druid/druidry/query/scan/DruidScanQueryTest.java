@@ -19,26 +19,27 @@ package in.zapr.druid.druidry.query.scan;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.dataSource.TableDataSource;
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
 
 public class DruidScanQueryTest {
+
     private static ObjectMapper objectMapper;
 
     @BeforeClass
@@ -54,10 +55,10 @@ public class DruidScanQueryTest {
         List<String> searchDimensions
                 = Arrays.asList("dim1", "dim2");
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidFilter filter = new SelectorFilter("dim1", "value1");
@@ -112,11 +113,11 @@ public class DruidScanQueryTest {
     @Test
     public void testRequiredFields() throws JsonProcessingException, JSONException {
 
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
@@ -136,16 +137,16 @@ public class DruidScanQueryTest {
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionLimitCheck() {
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 1, 1, 0,
+                0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 1, 3, 0,
+                0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
@@ -159,10 +160,10 @@ public class DruidScanQueryTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionBatchSizeCheck() {
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidScanQuery query = DruidScanQuery.builder()
@@ -177,13 +178,12 @@ public class DruidScanQueryTest {
     public void testSampleQueryWithEmptyLines() throws JsonProcessingException, JSONException {
 
 
-        List<String> searchDimensions
-                = Arrays.asList();
+        List<String> searchDimensions = Collections.emptyList();
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidFilter filter = new SelectorFilter("dim1", "value1");
@@ -222,7 +222,7 @@ public class DruidScanQueryTest {
                 "}";
 
         String actualJson = objectMapper.writeValueAsString(query);
-        JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
 
     }
 }

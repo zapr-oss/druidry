@@ -16,11 +16,10 @@
 
 package in.zapr.druid.druidry.granularity;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,6 +27,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class PeriodGranularityTest {
     private final static String PERIOD = "PT1H";
@@ -42,17 +44,17 @@ public class PeriodGranularityTest {
     @Test
     public void testAllFields() throws JSONException, JsonProcessingException {
 
-        DateTime originDate = new DateTime(DateTimeZone.forID(TIMEZONE));
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneId.of(TIMEZONE));
         PeriodGranularity periodGranularity = PeriodGranularity.builder()
                 .origin(originDate)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "period");
         jsonObject.put("period", PERIOD);
         jsonObject.put("timeZone", TIMEZONE);
-        jsonObject.put("origin", originDate);
+        jsonObject.put("origin", ISO_DATE_TIME.format(originDate));
 
         String actualJSON = objectMapper.writeValueAsString(periodGranularity);
         String expectedJSON = jsonObject.toString();
@@ -61,18 +63,18 @@ public class PeriodGranularityTest {
 
     @Test
     public void testEqualsPositive() {
-        DateTime originDate = new DateTime(DateTimeZone.forID(TIMEZONE));
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneId.of(TIMEZONE));
         PeriodGranularity granularity1 = PeriodGranularity.builder()
                 .origin(originDate)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
 
-        DateTime originDate2 = new DateTime(originDate);
+        ZonedDateTime originDate2 = ZonedDateTime.from(originDate);
         PeriodGranularity granularity2 = PeriodGranularity.builder()
                 .origin(originDate2)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
 
         Assert.assertEquals(granularity1, granularity2);
@@ -80,19 +82,19 @@ public class PeriodGranularityTest {
 
     @Test
     public void testEqualsNegative() {
-        DateTime originDate = new DateTime(DateTimeZone.forID(TIMEZONE));
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneId.of(TIMEZONE));
         PeriodGranularity granularity1 = PeriodGranularity.builder()
                 .origin(originDate)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
 
-        DateTime originDate2 = new DateTime(DateTimeZone.forID(TIMEZONE));
+        ZonedDateTime originDate2 = ZonedDateTime.from(originDate);
         originDate2 = originDate2.plusDays(1);
         PeriodGranularity granularity2 = PeriodGranularity.builder()
                 .origin(originDate2)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
 
         Assert.assertNotEquals(granularity1, granularity2);
@@ -102,11 +104,11 @@ public class PeriodGranularityTest {
     public void testEqualsWithAnotherSubClass() {
         SimpleGranularity granularity1 = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        DateTime originDate = new DateTime(DateTimeZone.forID(TIMEZONE));
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneId.of(TIMEZONE));
         PeriodGranularity granularity2 = PeriodGranularity.builder()
                 .origin(originDate)
                 .period(PERIOD)
-                .timeZone(DateTimeZone.forID(TIMEZONE))
+                .timeZone(ZoneId.of(TIMEZONE))
                 .build();
 
         Assert.assertNotEquals(granularity1, granularity2);

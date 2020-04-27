@@ -16,31 +16,29 @@
 
 package in.zapr.druid.druidry.query.config;
 
-import org.joda.time.DateTime;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import in.zapr.druid.druidry.query.config.Interval;
+import java.time.ZonedDateTime;
 
 public class IntervalTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingStartField() {
-
-        DateTime startTime = new DateTime();
-        Interval interval = new Interval(startTime, null);
+        ZonedDateTime startTime = ZonedDateTime.now();
+        new Interval(startTime, null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingEndField() {
-        DateTime endTime = new DateTime();
-        Interval interval = new Interval(null, endTime);
+        ZonedDateTime endTime = ZonedDateTime.now();
+        new Interval(null, endTime);
     }
 
     @Test
     public void intervalEqualityTest() {
-        DateTime startTime = new DateTime();
-        DateTime endTime = startTime.plusDays(1);
+        ZonedDateTime startTime = ZonedDateTime.now();
+        ZonedDateTime endTime = startTime.plusDays(1);
 
         Interval interval1 = new Interval(startTime, endTime);
         Interval interval2 = new Interval(startTime, endTime);
@@ -50,8 +48,8 @@ public class IntervalTest {
 
         Assert.assertNotEquals(interval1, interval3);
 
-        DateTime otherStartTime = new DateTime(startTime);
-        DateTime otherEndTime = new DateTime(endTime);
+        ZonedDateTime otherStartTime = ZonedDateTime.from(startTime);
+        ZonedDateTime otherEndTime = ZonedDateTime.from(endTime);
 
         Interval interval4 = new Interval(otherStartTime, otherEndTime);
         Assert.assertEquals(interval1, interval4);

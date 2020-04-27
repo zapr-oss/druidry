@@ -19,8 +19,6 @@ package in.zapr.druid.druidry.query.aggregation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +28,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -53,6 +51,8 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.topNMetric.SimpleMetric;
 import in.zapr.druid.druidry.topNMetric.TopNMetric;
 
@@ -87,8 +87,10 @@ public class TopNQueryTest {
                 .fields(Arrays.asList(fieldAccessPostAggregator1, fieldAccessPostAggregator2))
                 .build();
 
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
@@ -176,8 +178,10 @@ public class TopNQueryTest {
     @Test
     public void testRequiredFields() throws JsonProcessingException, JSONException {
 
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidDimension dimension = new SimpleDimension("Demo");
@@ -216,8 +220,10 @@ public class TopNQueryTest {
 
     @Test
     public void testAllFields() throws JSONException, JsonProcessingException {
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidDimension dimension = new SimpleDimension("Demo");
@@ -288,8 +294,10 @@ public class TopNQueryTest {
 
     @Test
     public void testEquals() {
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidDimension dimension = new SimpleDimension("Demo");
@@ -335,8 +343,10 @@ public class TopNQueryTest {
 
     @Test
     public void testUnequals() {
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidDimension dimension = new SimpleDimension("Demo");
@@ -382,8 +392,10 @@ public class TopNQueryTest {
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
-        DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 8, 31,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 9, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidDimension dimension = new SimpleDimension("Demo");

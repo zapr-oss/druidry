@@ -18,10 +18,7 @@ package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +27,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -52,6 +49,8 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 
 public class TimeSeriesTest {
     private static ObjectMapper objectMapper;
@@ -59,7 +58,6 @@ public class TimeSeriesTest {
     @BeforeClass
     public void init() {
         objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JodaModule());
         objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.
                 WRITE_DATES_AS_TIMESTAMPS, false);
     }
@@ -99,8 +97,10 @@ public class TimeSeriesTest {
                 .build();
 
         //2013-08-31T00:00:00.000/2013-09-03T00:00:00.000"
-        DateTime startTime = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2012, 1, 1,
+                                              0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2012, 1, 3,
+                                            0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
@@ -158,8 +158,10 @@ public class TimeSeriesTest {
 
     @Test
     public void testRequiredFields() throws JsonProcessingException, JSONException {
-        DateTime startTime = new DateTime(2013, 7, 14, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 11, 16, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 7, 14,
+                                              0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 11, 16,
+                                            0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
@@ -187,8 +189,10 @@ public class TimeSeriesTest {
 
     @Test
     public void testAllFields() throws JSONException, JsonProcessingException {
-        DateTime startTime = new DateTime(2013, 7, 14, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 11, 16, 0, 0, 0, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2013, 7, 14,
+                                              0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2013, 11, 16,
+                                            0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.DAY);
