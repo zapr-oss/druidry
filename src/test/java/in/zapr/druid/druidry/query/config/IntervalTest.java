@@ -19,28 +19,26 @@ package in.zapr.druid.druidry.query.config;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
+import java.time.ZonedDateTime;
 
 public class IntervalTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingStartField() {
-
-        Temporal startTime = LocalDateTime.now();
+        ZonedDateTime startTime = ZonedDateTime.now();
         new Interval(startTime, null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingEndField() {
-        Temporal endTime = LocalDateTime.now();
+        ZonedDateTime endTime = ZonedDateTime.now();
         new Interval(null, endTime);
     }
 
     @Test
     public void intervalEqualityTest() {
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = startTime.plusDays(1);
+        ZonedDateTime startTime = ZonedDateTime.now();
+        ZonedDateTime endTime = startTime.plusDays(1);
 
         Interval interval1 = new Interval(startTime, endTime);
         Interval interval2 = new Interval(startTime, endTime);
@@ -50,8 +48,8 @@ public class IntervalTest {
 
         Assert.assertNotEquals(interval1, interval3);
 
-        Temporal otherStartTime = LocalDateTime.from(startTime);
-        Temporal otherEndTime = LocalDateTime.from(endTime);
+        ZonedDateTime otherStartTime = ZonedDateTime.from(startTime);
+        ZonedDateTime otherEndTime = ZonedDateTime.from(endTime);
 
         Interval interval4 = new Interval(otherStartTime, otherEndTime);
         Assert.assertEquals(interval1, interval4);

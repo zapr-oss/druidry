@@ -16,15 +16,16 @@
 
 package in.zapr.druid.druidry.granularity;
 
-import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 
 @Builder
 @Getter

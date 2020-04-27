@@ -45,7 +45,7 @@ public class SimpleGranularityTest {
     public void testEqualsWithAnotherSubClass() {
         SimpleGranularity granularity1 = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        Temporal originDate = ZonedDateTime.now(ZoneOffset.UTC);
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneOffset.UTC);
         DurationGranularity granularity2 = new DurationGranularity(3141, originDate);
 
         Assert.assertNotEquals(granularity1, granularity2);

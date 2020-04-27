@@ -17,12 +17,13 @@
 package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
 @Getter
 @EqualsAndHashCode
@@ -32,10 +33,10 @@ public class Interval {
 
     private final static String DRUID_INTERVAL_FORMAT = "%s/%s";
 
-    private TemporalAccessor startTime;
-    private TemporalAccessor endTime;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
 
-    public Interval(@NonNull TemporalAccessor startTime, @NonNull TemporalAccessor endTime) {
+    public Interval(@NonNull ZonedDateTime startTime, @NonNull ZonedDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }

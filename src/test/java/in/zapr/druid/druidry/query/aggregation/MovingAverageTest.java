@@ -20,8 +20,6 @@ import com.google.common.io.Resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
@@ -33,6 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -83,8 +83,8 @@ public class MovingAverageTest {
         DefaultLimitSpec limitSpec =
                 new DefaultLimitSpec(5000, of(new OrderByColumnSpecString("column_1"),
                         new OrderByColumnSpecString("column_2")));
-        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 3, 31, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         String averagedName = "averagedName";
         DruidAggregator aggregator = new DoubleSumAggregator(averagedName, "aggregatedFieldName");
@@ -119,8 +119,8 @@ public class MovingAverageTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToBuildWithoutDataSource() {
-        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 3, 31, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
         DruidAverager averager = DoubleMeanAverager.builder()
@@ -140,8 +140,8 @@ public class MovingAverageTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToBuildWithoutGranularity() {
-        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 3, 31, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
         DruidAverager averager = DoubleMeanAverager.builder()
@@ -161,8 +161,8 @@ public class MovingAverageTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToBuildWithoutAggregations() {
-        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 3, 31, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAverager averager = DoubleMeanAverager.builder()
                 .name("name")
@@ -199,8 +199,8 @@ public class MovingAverageTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToBuildWithoutAveragers() {
-        DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 3, 31, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
 
@@ -255,8 +255,8 @@ public class MovingAverageTest {
 
     private static DruidMovingAverageQuery simpleQuery(
             MovingAverageCreators.Creator averagerCreator) {
-        DateTime startTime = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2020, 2, 29, 23, 59, 59, DateTimeZone.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2020, 2, 29, 23, 59, 59, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
         String averagedName = "averagedName";
         DruidAggregator aggregator = new DoubleSumAggregator(averagedName, "aggregatedFieldName");

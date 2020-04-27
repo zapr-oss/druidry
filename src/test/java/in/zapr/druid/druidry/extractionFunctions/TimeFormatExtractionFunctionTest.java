@@ -49,7 +49,7 @@ public class TimeFormatExtractionFunctionTest {
 
         String timeZone = "America/Montreal";
 
-        Temporal originDate = ZonedDateTime.now(ZoneOffset.UTC);
+        ZonedDateTime originDate = ZonedDateTime.now(ZoneOffset.UTC);
 
         DurationGranularity spec = new DurationGranularity(7200000, originDate);
 

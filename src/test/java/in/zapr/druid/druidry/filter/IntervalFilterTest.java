@@ -18,7 +18,7 @@ package in.zapr.druid.druidry.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.query.config.Interval;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,9 +29,10 @@ import org.testng.annotations.Test;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import in.zapr.druid.druidry.query.config.Interval;
 
 public class IntervalFilterTest {
 
@@ -66,14 +67,14 @@ public class IntervalFilterTest {
         jsonObject.put("dimension", "__time");
         jsonObject.put("intervals", intervalJsonArray);
 
-        Temporal startTimeInterval1 = ZonedDateTime.of(2013, 8, 31,
+        ZonedDateTime startTimeInterval1 = ZonedDateTime.of(2013, 8, 31,
                                               0, 0, 0, 0, ZoneOffset.UTC);
-        Temporal endTimeInterval1 = ZonedDateTime.of(2013, 9, 3,
+        ZonedDateTime endTimeInterval1 = ZonedDateTime.of(2013, 9, 3,
                                             0, 0, 0, 0, ZoneOffset.UTC);
 
-        Temporal startTimeInterval2 = ZonedDateTime.of(2018, 8, 31,
+        ZonedDateTime startTimeInterval2 = ZonedDateTime.of(2018, 8, 31,
                                               0, 0, 0, 0, ZoneOffset.UTC);
-        Temporal endTimeInterval2 = ZonedDateTime.of(2018, 9, 3,
+        ZonedDateTime endTimeInterval2 = ZonedDateTime.of(2018, 9, 3,
                                             0, 0, 0, 0, ZoneOffset.UTC);
 
         Interval interval1 = new Interval(startTimeInterval1, endTimeInterval1);

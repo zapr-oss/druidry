@@ -18,6 +18,21 @@ package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -44,20 +59,6 @@ import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.query.config.Interval;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.temporal.Temporal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class GroupByTest {
     private static ObjectMapper objectMapper;
@@ -148,10 +149,10 @@ public class GroupByTest {
                 .build();
 
         // Interval
-        Temporal startTime = ZonedDateTime.of(2012, 1, 1,
-                                              0, 0, 0, 0, ZoneOffset.UTC);
-        Temporal endTime = ZonedDateTime.of(2012, 1, 3,
-                                            0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2012, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2012, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery query = DruidGroupByQuery.builder()
@@ -177,10 +178,10 @@ public class GroupByTest {
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
         // Interval
-        Temporal startTime = ZonedDateTime.of(2012, 1, 1,
-                                              0, 0, 0, 0, ZoneOffset.UTC);
-        Temporal endTime = ZonedDateTime.of(2012, 1, 3,
-                                            0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2012, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2012, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
@@ -216,10 +217,10 @@ public class GroupByTest {
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
         // Interval
-        Temporal startTime = ZonedDateTime.of(2012, 1, 1,
-                                              0, 0, 0, 0, ZoneOffset.UTC);
-        Temporal endTime = ZonedDateTime.of(2012, 1, 3,
-                                            0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime startTime = ZonedDateTime.of(2012, 1, 1,
+                0, 0, 0, 0, ZoneOffset.UTC);
+        ZonedDateTime endTime = ZonedDateTime.of(2012, 1, 3,
+                0, 0, 0, 0, ZoneOffset.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidFilter filter = new SelectorFilter("Spread", "Peace");
