@@ -47,7 +47,7 @@ public class DruidJerseyClient implements DruidClient {
     private final DruidConfiguration druidConfiguration;
 
     private ClientConfig jerseyConfig;
-    private Client client;
+    private ThreadLocal<Client> clientThreadLocal = new ThreadLocal<>();
     private WebTarget queryWebTarget;
 
     public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration) {
@@ -76,9 +76,9 @@ public class DruidJerseyClient implements DruidClient {
                 this.jerseyConfig.connectorProvider(new ApacheConnectorProvider());
             }
 
-            this.client = ClientBuilder.newClient(this.jerseyConfig);
-            this.queryWebTarget = this.client.target(this.druidUrl);
-
+            Client client = ClientBuilder.newClient(this.jerseyConfig);
+            this.queryWebTarget = client.target(this.druidUrl);
+            clientThreadLocal.set(client);
         } catch (Exception e) {
             throw new ConnectionException(e);
         }
@@ -86,12 +86,13 @@ public class DruidJerseyClient implements DruidClient {
 
     @Override
     public void close() throws ConnectionException {
+        Client client = clientThreadLocal.get();
         try {
-            if (this.client == null) {
+            if (client == null) {
                 return;
             }
 
-            this.client.close();
+            client.close();
         } catch (Exception e) {
             throw new ConnectionException(e);
         }
