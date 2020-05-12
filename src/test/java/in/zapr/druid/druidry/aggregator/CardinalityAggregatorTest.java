@@ -50,6 +50,7 @@ public class CardinalityAggregatorTest {
                 .name("Hello")
                 .fields(fields)
                 .byRow(true)
+                .round(true)
                 .build();
 
         JSONArray fieldJsonArray = new JSONArray(fields);
@@ -59,6 +60,7 @@ public class CardinalityAggregatorTest {
         jsonObject.put("name", "Hello");
         jsonObject.put("fields", fieldJsonArray);
         jsonObject.put("byRow", true);
+        jsonObject.put("round", true);
 
         String actualJSON = objectMapper.writeValueAsString(cardinalityAggregator);
         String expectedJSON = jsonObject.toString();
@@ -147,6 +149,7 @@ public class CardinalityAggregatorTest {
                 .name("Agg1")
                 .fields(Collections.singletonList("Haha"))
                 .byRow(true)
+                .round(true)
                 .build();
         CountAggregator aggregator2 = new CountAggregator("count");
 
