@@ -33,12 +33,14 @@ public class CardinalityAggregator extends DruidAggregator {
     private static final String CARDINALITY_AGGREGATOR_TYPE = "cardinality";
     private List<String> fields;
     private Boolean byRow;
+    private Boolean round;
 
     @Builder
-    private CardinalityAggregator(@NonNull String name, @NonNull List<String> fields, Boolean byRow) {
+    private CardinalityAggregator(@NonNull String name, @NonNull List<String> fields, Boolean byRow, Boolean round) {
         this.type = CARDINALITY_AGGREGATOR_TYPE;
         this.name = name;
         this.fields = fields;
         this.byRow = byRow;
+        this.round = round;
     }
 }
