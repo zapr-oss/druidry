@@ -35,14 +35,6 @@ public class CardinalityAggregator extends DruidAggregator {
     private Boolean byRow;
     private Boolean round;
 
-    @Deprecated
-    private CardinalityAggregator(@NonNull String name, @NonNull List<String> fields, Boolean byRow) {
-        this.type = CARDINALITY_AGGREGATOR_TYPE;
-        this.name = name;
-        this.fields = fields;
-        this.byRow = byRow;
-    }
-
     @Builder
     private CardinalityAggregator(@NonNull String name, @NonNull List<String> fields, Boolean byRow, Boolean round) {
         this.type = CARDINALITY_AGGREGATOR_TYPE;
