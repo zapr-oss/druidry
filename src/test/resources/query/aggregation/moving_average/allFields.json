@@ -11,6 +11,7 @@
   "limitSpec": {
     "type": "default",
     "limit": 5000,
+    "offset": 0,
     "columns": [
       "column_1",
       "column_2"

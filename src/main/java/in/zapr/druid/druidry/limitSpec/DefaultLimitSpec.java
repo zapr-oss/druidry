@@ -30,11 +30,17 @@ public class DefaultLimitSpec {
 
     private String type;
     private int limit;
+    private int offset;
     private List<OrderByColumnSpec> columns;
 
     public DefaultLimitSpec(int limit, @NonNull List<OrderByColumnSpec> columns) {
+        this(limit, 0, columns);
+    }
+
+    public DefaultLimitSpec(int limit, int offset, @NonNull List<OrderByColumnSpec> columns) {
         this.type = DEFAULT_LIMIT_SPEC_TYPE;
         this.limit = limit;
+        this.offset = offset;
         this.columns = columns;
     }
 }

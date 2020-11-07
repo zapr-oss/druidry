@@ -48,11 +48,27 @@ public class DefaultLimitSpecTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "default");
         jsonObject.put("limit", 7);
+        jsonObject.put("offset", 0);
         JSONArray columns = new JSONArray(Collections.singleton("Tagore"));
         jsonObject.put("columns", columns);
 
-        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(7,
-                Collections.singletonList(new OrderByColumnSpecString("Tagore")));
+        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(7, Collections.singletonList(new OrderByColumnSpecString("Tagore")));
+
+        String actualJson = objectMapper.writeValueAsString(defaultLimitSpec);
+        JSONAssert.assertEquals(actualJson, jsonObject, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    @Test
+    public void testDefaultLimitSpecWithOffset() throws JSONException, JsonProcessingException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "default");
+        jsonObject.put("limit", 7);
+        jsonObject.put("offset", 10);
+        JSONArray columns = new JSONArray(Collections.singleton("Tagore"));
+        jsonObject.put("columns", columns);
+
+        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(7, 10, Collections.singletonList(new OrderByColumnSpecString("Tagore")));
 
         String actualJson = objectMapper.writeValueAsString(defaultLimitSpec);
         JSONAssert.assertEquals(actualJson, jsonObject, JSONCompareMode.NON_EXTENSIBLE);
@@ -73,12 +89,13 @@ public class DefaultLimitSpecTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "default");
         jsonObject.put("limit", 13);
+        jsonObject.put("offset", 0);
 
         JSONArray orderByColumnSpecArray
                 = new JSONArray(Collections.singletonList(orderByColumnSpecJson));
         jsonObject.put("columns", orderByColumnSpecArray);
 
-        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(13,
+        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(13, 0,
                 Collections.singletonList(orderByColumnSpecMap));
 
         String actualJson = objectMapper.writeValueAsString(defaultLimitSpec);
