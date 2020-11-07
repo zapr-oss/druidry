@@ -78,7 +78,7 @@ public class GroupByTest {
                 "  },\n" +
                 "  \"granularity\": \"day\",\n" +
                 "  \"dimensions\": [\"country\", \"device\"],\n" +
-                "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"columns\": [\"country\", \"data_transfer\"] },\n" +
+                "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"offset\": 0, \"columns\": [\"country\", \"data_transfer\"] },\n" +
                 "  \"filter\": {\n" +
                 "    \"type\": \"and\",\n" +
                 "    \"fields\": [\n" +
