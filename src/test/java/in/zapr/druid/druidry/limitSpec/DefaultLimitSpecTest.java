@@ -18,9 +18,7 @@ package in.zapr.druid.druidry.limitSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
-import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecString;
-import in.zapr.druid.druidry.query.config.SortingOrder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +28,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
+
+import in.zapr.druid.druidry.query.config.SortingOrder;
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecString;
 
 public class DefaultLimitSpecTest {
 
