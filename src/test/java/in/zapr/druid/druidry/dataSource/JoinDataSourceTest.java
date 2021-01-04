@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -96,16 +97,16 @@ public class JoinDataSourceTest {
 
     @Test
     public void testNullablePrefix() throws JsonProcessingException{
-        JoinDataSource joinDataSource = new JoinDataSource(new TableDataSource("sample_datasource"), getQueryDataSource(), "=", null, null);
+        JoinDataSource joinDataSource = new JoinDataSource(new TableDataSource("sample_datasource"), getQueryDataSource(), "=", "y.", null);
         String actualJson = objectMapper.writeValueAsString(joinDataSource);
-        actualJson.contains("rightPrefix=x");
+        assertTrue(actualJson.contains("\"rightPrefix\":\"y.\""));
     }
 
     @Test
     public void testNullableJoinType() throws JsonProcessingException {
         JoinDataSource joinDataSource = new JoinDataSource(new TableDataSource("sample_datasource"), getQueryDataSource(), "=", "r", JoinType.LEFT);
         String actualJson = objectMapper.writeValueAsString(joinDataSource);
-        actualJson.contains("joinType=LEFT");
+        assertTrue(actualJson.contains("\"joinType\":\"LEFT\""));
     }
 
     private QueryDataSource getQueryDataSource() {
