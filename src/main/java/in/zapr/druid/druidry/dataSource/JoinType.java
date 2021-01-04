@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum DataSourceType {
-
-    TABLE("table"),
-    UNION("union"),
-    QUERY("query"),
-    JOIN("join");
+public enum JoinType {
+    INNER("INNER"),
+    LEFT("LEFT");
 
     private String value;
 
-    DataSourceType(String value) {
+    JoinType(String value) {
         this.value = value;
     }
 
     @JsonValue
-    public String getQueryType() {
+    public String getJoinType() {
         return value;
     }
 }
