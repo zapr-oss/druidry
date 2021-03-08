@@ -23,6 +23,8 @@ public class DruidConfigurationTest {
 
     @Test
     public void testDruidConfiguration() {
+        HttpBasicAuth httpBasicAuth = new HttpBasicAuth("someuser", "secret");
+
         DruidConfiguration config = DruidConfiguration
                 .builder()
                 .protocol(DruidQueryProtocol.HTTPS)
@@ -30,6 +32,7 @@ public class DruidConfigurationTest {
                 .port(443)
                 .endpoint("druid/v2/")
                 .concurrentConnectionsRequired(8)
+                .httpBasicAuth(httpBasicAuth)
                 .build();
 
         Assert.assertEquals(config.getProtocol(), DruidQueryProtocol.HTTPS);
@@ -37,6 +40,7 @@ public class DruidConfigurationTest {
         Assert.assertEquals(config.getPort().intValue(), 443);
         Assert.assertEquals(config.getEndpoint(), "druid/v2/");
         Assert.assertEquals(config.getConcurrentConnectionsRequired().intValue(), 8);
+        Assert.assertEquals(config.getHttpBasicAuth(), httpBasicAuth);
         Assert.assertEquals(config.getUrl(), "https://druid.zapr.in:443/druid/v2/");
     }
 
@@ -52,6 +56,7 @@ public class DruidConfigurationTest {
         Assert.assertEquals(config.getProtocol(), DruidQueryProtocol.HTTP);
         Assert.assertEquals(config.getPort().intValue(), 8082);
         Assert.assertEquals(config.getUrl(), "http://druid.zapr.in:8082/druid/v2/");
+        Assert.assertNull(config.getHttpBasicAuth());
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

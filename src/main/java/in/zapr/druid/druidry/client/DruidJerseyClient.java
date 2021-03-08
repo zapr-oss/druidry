@@ -22,7 +22,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
 import java.util.List;
 
@@ -51,15 +50,6 @@ public class DruidJerseyClient implements DruidClient {
     private Client client;
     private WebTarget queryWebTarget;
 
-    private String username;
-    private String password;
-
-
-    public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration, String username, String password) {
-        this(druidConfiguration);
-        this.username = username;
-        this.password = password;
-    }
 
     public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration) {
         this(druidConfiguration, null);
@@ -88,13 +78,9 @@ public class DruidJerseyClient implements DruidClient {
 
             this.client = ClientBuilder.newClient(this.jerseyConfig);
 
-            if (this.username != null && this.password != null) {
-                HttpAuthenticationFeature authFeature = HttpAuthenticationFeature
-                        .basicBuilder()
-                        .credentials(this.username, this.password)
-                        .build();
-
-                this.client.register(authFeature);
+            HttpBasicAuth basicAuth = this.druidConfiguration.getHttpBasicAuth();
+            if (basicAuth != null) {
+                this.client.register(basicAuth.getAuthFeature());
             }
 
             this.queryWebTarget = this.client.target(this.druidUrl);
