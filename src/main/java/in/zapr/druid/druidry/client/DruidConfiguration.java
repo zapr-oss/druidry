@@ -56,12 +56,18 @@ public class DruidConfiguration {
      */
     private Integer concurrentConnectionsRequired;
 
+    /**
+     * (optional) Credentials for HTTP basic authorization if needed
+     */
+    private HttpBasicAuth httpBasicAuth;
+
     @Builder
     private DruidConfiguration(DruidQueryProtocol protocol,
                                String host,
                                Integer port,
                                String endpoint,
-                               Integer concurrentConnectionsRequired) {
+                               Integer concurrentConnectionsRequired,
+                               HttpBasicAuth httpBasicAuth) {
 
         if (StringUtils.isEmpty(host)) {
             throw new IllegalArgumentException("Host cannot be null or empty");
@@ -88,6 +94,7 @@ public class DruidConfiguration {
         this.port = port;
         this.endpoint = endpoint;
         this.concurrentConnectionsRequired = concurrentConnectionsRequired;
+        this.httpBasicAuth = httpBasicAuth;
     }
 
     protected String getUrl() {

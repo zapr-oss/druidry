@@ -50,13 +50,13 @@ public class DruidJerseyClient implements DruidClient {
     private Client client;
     private WebTarget queryWebTarget;
 
+
     public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration) {
         this(druidConfiguration, null);
     }
 
     public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration,
                              ClientConfig jerseyConfig) {
-
         this.druidUrl = druidConfiguration.getUrl();
         this.jerseyConfig = jerseyConfig;
 
@@ -77,6 +77,12 @@ public class DruidJerseyClient implements DruidClient {
             }
 
             this.client = ClientBuilder.newClient(this.jerseyConfig);
+
+            HttpBasicAuth basicAuth = this.druidConfiguration.getHttpBasicAuth();
+            if (basicAuth != null) {
+                this.client.register(basicAuth.getAuthFeature());
+            }
+
             this.queryWebTarget = this.client.target(this.druidUrl);
 
         } catch (Exception e) {
