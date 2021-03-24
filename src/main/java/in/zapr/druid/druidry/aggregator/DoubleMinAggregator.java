@@ -32,7 +32,7 @@ public class DoubleMinAggregator extends DruidAggregator {
 
     private static final String DOUBLE_MIN_TYPE_AGGREGATOR = "doubleMin";
 
-    private String fieldName;
+    private final String fieldName;
     private String expression;
 
     @Deprecated

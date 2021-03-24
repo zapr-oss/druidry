@@ -14,45 +14,33 @@
  * limitations under the License.
  */
 
-package in.zapr.druid.druidry.aggregator;
-
-import com.google.common.base.Preconditions;
+package in.zapr.druid.druidry.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-@Getter
-@EqualsAndHashCode(callSuper = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class DoubleMaxAggregator extends DruidAggregator {
 
-    private static final String DOUBLE_MAX_TYPE_AGGREGATOR = "doubleMax";
+
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode(callSuper = true)
+public class RoundPostAggregator extends DruidPostAggregator {
+
+    private static final String ROUND_POST_AGGREGATOR_TYPE = "expression";
 
     private final String fieldName;
-    private String expression;
+    private final String expression;
 
-    @Deprecated
-    public DoubleMaxAggregator(@NonNull String name, @NonNull String fieldName) {
-        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
+    RoundPostAggregator(@NonNull String name,
+                        @NonNull String fieldName,
+                        int decimalPrecision) {
+        this.type = ROUND_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;
-    }
-
-    @Builder
-    private DoubleMaxAggregator(@NonNull String name, String fieldName, String expression) {
-        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
-        this.name = name;
-        this.fieldName = fieldName;
-        this.expression = expression;
-
-        Preconditions.checkArgument(
-            fieldName == null ^ expression == null,
-            "Must have a valid, non-null fieldName or expression"
-        );
+        this.expression = "round(" + fieldName + ", " + decimalPrecision + ")";
     }
 
 }

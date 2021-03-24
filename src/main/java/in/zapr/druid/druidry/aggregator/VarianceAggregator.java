@@ -16,43 +16,43 @@
 
 package in.zapr.druid.druidry.aggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Builder;
+
+
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DoubleMaxAggregator extends DruidAggregator {
-
-    private static final String DOUBLE_MAX_TYPE_AGGREGATOR = "doubleMax";
+public class VarianceAggregator extends DruidAggregator {
+    private static final String VARIANCE_TYPE_AGGREGATOR = "variance";
 
     private final String fieldName;
-    private String expression;
+    private final String expression;
 
-    @Deprecated
-    public DoubleMaxAggregator(@NonNull String name, @NonNull String fieldName) {
-        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
-        this.name = name;
-        this.fieldName = fieldName;
-    }
+    // One of "float", "double", "long", "variance"; defaults to "float".
+    private final String inputType;
+
+    // Use "population" to get variance_pop rather than variance_sample, which is default.
+    private final String estimator;
 
     @Builder
-    private DoubleMaxAggregator(@NonNull String name, String fieldName, String expression) {
-        this.type = DOUBLE_MAX_TYPE_AGGREGATOR;
+    private VarianceAggregator(@NonNull String name, String fieldName, String expression, String inputType, String estimator) {
+        this.type = VARIANCE_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
         this.expression = expression;
+        this.inputType = inputType;
+        this.estimator = estimator;
 
         Preconditions.checkArgument(
-            fieldName == null ^ expression == null,
-            "Must have a valid, non-null fieldName or expression"
+                fieldName == null ^ expression == null,
+                "Must have a valid, non-null fieldName or expression"
         );
     }
-
 }
