@@ -75,7 +75,7 @@ public class Context {
     private Vectorize vectorize;
     private Integer vectorSize;
 
-    private Context(Long timeoutInMilliSeconds,
+    public Context(Long timeoutInMilliSeconds,
                     Integer priority,
                     String queryId,
                     Boolean useCache,
