@@ -50,6 +50,7 @@ public class Context {
 
     // topN query contexts
     private Integer minTopNThreshold;
+    private Boolean doAggregateTopNMetricFirst;
 
     // timeseries query contexts
     private Boolean skipEmptyBuckets;
@@ -90,6 +91,7 @@ public class Context {
                     Boolean serializeDateTimeAsLong,
                     Boolean serializeDateTimeAsLongInner,
                     Integer minTopNThreshold,
+                    Boolean doAggregateTopNMetricFirst,
                     Boolean skipEmptyBuckets,
                     Long maxMergingDictionarySize,
                     Long maxOnDiskStorage,
@@ -124,6 +126,7 @@ public class Context {
         this.serializeDateTimeAsLong = serializeDateTimeAsLong;
         this.serializeDateTimeAsLongInner = serializeDateTimeAsLongInner;
         this.minTopNThreshold = minTopNThreshold;
+        this.doAggregateTopNMetricFirst = doAggregateTopNMetricFirst;
         this.skipEmptyBuckets = skipEmptyBuckets;
         this.maxMergingDictionarySize = maxMergingDictionarySize;
         this.maxOnDiskStorage = maxOnDiskStorage;
