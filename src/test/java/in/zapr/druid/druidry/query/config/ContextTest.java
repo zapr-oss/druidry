@@ -83,6 +83,7 @@ public class ContextTest {
                 .useOffheap(false)
                 .vectorize(Vectorize.FORCE)
                 .vectorSize(1024)
+                .doAggregateTopNMetricFirst(true)
                 .build();
 
         JSONObject jsonObject = new JSONObject();
@@ -101,6 +102,7 @@ public class ContextTest {
         jsonObject.put("serializeDateTimeAsLong", true);
         jsonObject.put("serializeDateTimeAsLongInner", true);
         jsonObject.put("minTopNThreshold", 10);
+        jsonObject.put("doAggregateTopNMetricFirst", true);
         jsonObject.put("skipEmptyBuckets", true);
         jsonObject.put("maxMergingDictionarySize", 65536L);
         jsonObject.put("maxOnDiskStorage", 262144L);
