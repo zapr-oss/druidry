@@ -72,6 +72,7 @@ public class DruidScanQueryTest {
                 .batchSize(10000)
                 .limit(1000L)
                 .legacy(true)
+                .order(DruidScanQueryOrder.ASCENDING)
                 .build();
 
         String expectedJsonAsString = "{\n" +
@@ -99,6 +100,7 @@ public class DruidScanQueryTest {
                 "  \"batchSize\": 10000,\n" +
                 "  \"limit\": 1000,\n" +
                 "  \"legacy\": true,\n" +
+                "  \"order\": \"ascending\",\n" +
                 "  \"intervals\": [" +
                 "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
                 "  ]" +
