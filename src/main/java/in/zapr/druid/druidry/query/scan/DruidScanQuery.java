@@ -45,12 +45,13 @@ public class DruidScanQuery extends DruidQuery {
     private List<String> columns;
     private ResultFormat resultFormat;
     private Long limit;
+    private Long offset;
     private Boolean legacy;
 
     @Builder
     private DruidScanQuery(@NonNull DataSource dataSource, List<DruidVirtualColumn> virtualColumns, DruidFilter filter,
             Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat,
-            Long limit, Boolean legacy, Context context) {
+            Long limit, Long offset, Boolean legacy, Context context) {
         this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.intervals = intervals;
@@ -61,6 +62,7 @@ public class DruidScanQuery extends DruidQuery {
         this.dataSource = dataSource;
         this.legacy = legacy;
         this.limit = limit;
+        this.offset = offset;
         this.batchSize = batchSize;
         if (limit != null) {
             Preconditions.checkArgument(limit > 0, "limit specified must be more than 0");
