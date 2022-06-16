@@ -66,6 +66,7 @@ public class ContextTest {
                 .serializeDateTimeAsLongInner(true)
                 .minTopNThreshold(10)
                 .skipEmptyBuckets(true)
+                .grandTotal(true)
                 .maxMergingDictionarySize(65536L)
                 .maxOnDiskStorage(262144L)
                 .groupByStrategy(GroupByStrategy.STRATEGY_V2)
@@ -102,6 +103,7 @@ public class ContextTest {
         jsonObject.put("serializeDateTimeAsLongInner", true);
         jsonObject.put("minTopNThreshold", 10);
         jsonObject.put("skipEmptyBuckets", true);
+        jsonObject.put("grandTotal", true);
         jsonObject.put("maxMergingDictionarySize", 65536L);
         jsonObject.put("maxOnDiskStorage", 262144L);
         jsonObject.put("groupByStrategy", "v2");

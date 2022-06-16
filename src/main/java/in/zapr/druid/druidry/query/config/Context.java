@@ -53,6 +53,7 @@ public class Context {
 
     // timeseries query contexts
     private Boolean skipEmptyBuckets;
+    private Boolean grandTotal;
 
     // groupBy query contexts
     private Long maxMergingDictionarySize;
@@ -91,6 +92,7 @@ public class Context {
                     Boolean serializeDateTimeAsLongInner,
                     Integer minTopNThreshold,
                     Boolean skipEmptyBuckets,
+                    Boolean grandTotal,
                     Long maxMergingDictionarySize,
                     Long maxOnDiskStorage,
                     GroupByStrategy groupByStrategy,
@@ -125,6 +127,7 @@ public class Context {
         this.serializeDateTimeAsLongInner = serializeDateTimeAsLongInner;
         this.minTopNThreshold = minTopNThreshold;
         this.skipEmptyBuckets = skipEmptyBuckets;
+        this.grandTotal = grandTotal;
         this.maxMergingDictionarySize = maxMergingDictionarySize;
         this.maxOnDiskStorage = maxOnDiskStorage;
         this.groupByStrategy = groupByStrategy;
