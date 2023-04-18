@@ -21,7 +21,7 @@
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.18.10</lombok.version>
         <testng.version>6.11</testng.version>
-        <logback.version>1.2.1</logback.version>
+        <logback.version>1.2.9</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
         <commons.version>3.5</commons.version>
         <jersey.version>2.26</jersey.version>
