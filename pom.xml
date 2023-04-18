@@ -20,7 +20,7 @@
         <jackson.datatype.version>2.9.9</jackson.datatype.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.18.10</lombok.version>
-        <testng.version>6.11</testng.version>
+        <testng.version>7.7.0</testng.version>
         <logback.version>1.2.1</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
         <commons.version>3.5</commons.version>
