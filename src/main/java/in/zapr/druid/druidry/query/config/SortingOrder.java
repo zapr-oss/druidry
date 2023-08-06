@@ -22,7 +22,8 @@ public enum SortingOrder {
     LEXICOGRAPHIC("lexicographic"),
     ALPHANUMERIC("alphanumeric"),
     NUMERIC("numeric"),
-    STRLEN("strlen");
+    STRLEN("strlen"),
+    VERSION("version");
 
     private String value;
 
